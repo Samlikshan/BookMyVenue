@@ -10,7 +10,7 @@
 */
 
 export const UserRole = {
-  CUSTOMER: 'CUSTOMER',
+  USER: 'USER',
   OWNER: 'OWNER',
   ADMIN: 'ADMIN'
 } as const
