@@ -22,7 +22,7 @@ export const supabaseAdmin = createClient(
       persistSession: false,
     },
     realtime: {
-      transport: WebSocket,
+      transport: WebSocket as unknown as typeof globalThis.WebSocket,
     },
   }
 );
