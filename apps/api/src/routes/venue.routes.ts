@@ -14,8 +14,13 @@ import {
   deleteVideo,
   setPrimaryImage,
 } from "../controllers/venue-media.controller.js";
+import { authMiddleware } from "../middlewares/auth.middleware.js";
+import { requireRole } from "../middlewares/require-role.middleware.js";
 
 const router = Router();
+
+router.use(authMiddleware);
+router.use(requireRole(["OWNER"]));
 
 router.post("/", createVenue);
 router.get("/:venueId", getVenue);
