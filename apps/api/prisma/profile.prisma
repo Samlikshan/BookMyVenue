@@ -9,6 +9,7 @@ model Profile {
   updatedAt DateTime   @updatedAt @map("updated_at")
 
   ownerApplication OwnerApplication?
+  venues           Venue[]
 
   @@map("profiles")
 }

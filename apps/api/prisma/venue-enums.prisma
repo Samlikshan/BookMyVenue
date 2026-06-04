@@ -1,0 +1,7 @@
+enum VenueStatus {
+  DRAFT
+  PENDING_APPROVAL
+  ACTIVE
+  REJECTED
+  SUSPENDED
+}

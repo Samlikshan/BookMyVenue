@@ -52,7 +52,13 @@ export const AnyNull = runtime.AnyNull
 
 export const ModelName = {
   OwnerApplication: 'OwnerApplication',
-  Profile: 'Profile'
+  Profile: 'Profile',
+  EventType: 'EventType',
+  VenueEventType: 'VenueEventType',
+  VenueAmenity: 'VenueAmenity',
+  VenueImage: 'VenueImage',
+  VenueVideo: 'VenueVideo',
+  Venue: 'Venue'
 } as const
 
 export type ModelName = (typeof ModelName)[keyof typeof ModelName]
@@ -99,6 +105,84 @@ export const ProfileScalarFieldEnum = {
 } as const
 
 export type ProfileScalarFieldEnum = (typeof ProfileScalarFieldEnum)[keyof typeof ProfileScalarFieldEnum]
+
+
+export const EventTypeScalarFieldEnum = {
+  id: 'id',
+  name: 'name',
+  isActive: 'isActive',
+  createdAt: 'createdAt'
+} as const
+
+export type EventTypeScalarFieldEnum = (typeof EventTypeScalarFieldEnum)[keyof typeof EventTypeScalarFieldEnum]
+
+
+export const VenueEventTypeScalarFieldEnum = {
+  venueId: 'venueId',
+  eventTypeId: 'eventTypeId'
+} as const
+
+export type VenueEventTypeScalarFieldEnum = (typeof VenueEventTypeScalarFieldEnum)[keyof typeof VenueEventTypeScalarFieldEnum]
+
+
+export const VenueAmenityScalarFieldEnum = {
+  id: 'id',
+  venueId: 'venueId',
+  name: 'name'
+} as const
+
+export type VenueAmenityScalarFieldEnum = (typeof VenueAmenityScalarFieldEnum)[keyof typeof VenueAmenityScalarFieldEnum]
+
+
+export const VenueImageScalarFieldEnum = {
+  id: 'id',
+  venueId: 'venueId',
+  imageUrl: 'imageUrl',
+  storagePath: 'storagePath',
+  isPrimary: 'isPrimary',
+  createdAt: 'createdAt'
+} as const
+
+export type VenueImageScalarFieldEnum = (typeof VenueImageScalarFieldEnum)[keyof typeof VenueImageScalarFieldEnum]
+
+
+export const VenueVideoScalarFieldEnum = {
+  id: 'id',
+  venueId: 'venueId',
+  videoUrl: 'videoUrl',
+  storagePath: 'storagePath',
+  createdAt: 'createdAt'
+} as const
+
+export type VenueVideoScalarFieldEnum = (typeof VenueVideoScalarFieldEnum)[keyof typeof VenueVideoScalarFieldEnum]
+
+
+export const VenueScalarFieldEnum = {
+  id: 'id',
+  ownerId: 'ownerId',
+  name: 'name',
+  slug: 'slug',
+  shortDescription: 'shortDescription',
+  description: 'description',
+  status: 'status',
+  capacityMin: 'capacityMin',
+  capacityMax: 'capacityMax',
+  addressLine1: 'addressLine1',
+  addressLine2: 'addressLine2',
+  city: 'city',
+  district: 'district',
+  state: 'state',
+  country: 'country',
+  postalCode: 'postalCode',
+  rejectionReason: 'rejectionReason',
+  reviewedBy: 'reviewedBy',
+  reviewedAt: 'reviewedAt',
+  deletedAt: 'deletedAt',
+  createdAt: 'createdAt',
+  updatedAt: 'updatedAt'
+} as const
+
+export type VenueScalarFieldEnum = (typeof VenueScalarFieldEnum)[keyof typeof VenueScalarFieldEnum]
 
 
 export const SortOrder = {

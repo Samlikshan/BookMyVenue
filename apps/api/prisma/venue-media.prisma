@@ -1,0 +1,26 @@
+model VenueImage {
+  id          String   @id @default(cuid())
+  venueId     String   @map("venue_id")
+  imageUrl    String   @map("image_url")
+  storagePath String?  @map("storage_path")
+  isPrimary   Boolean  @default(false) @map("is_primary")
+  createdAt   DateTime @default(now()) @map("created_at")
+
+  venue Venue @relation(fields: [venueId], references: [id], onDelete: Cascade)
+
+  @@index([venueId])
+  @@map("venue_images")
+}
+
+model VenueVideo {
+  id          String   @id @default(cuid())
+  venueId     String   @map("venue_id")
+  videoUrl    String   @map("video_url")
+  storagePath String?  @map("storage_path")
+  createdAt   DateTime @default(now()) @map("created_at")
+
+  venue Venue @relation(fields: [venueId], references: [id], onDelete: Cascade)
+
+  @@index([venueId])
+  @@map("venue_videos")
+}
