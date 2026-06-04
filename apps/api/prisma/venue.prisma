@@ -1,0 +1,37 @@
+model Venue {
+  id               String      @id @default(cuid())
+  ownerId          String      @map("owner_id") @db.Uuid
+  name             String
+  slug             String      @unique
+  shortDescription String?     @map("short_description")
+  description      String?
+  status           VenueStatus @default(DRAFT)
+  capacityMin      Int?        @map("capacity_min")
+  capacityMax      Int?        @map("capacity_max")
+  addressLine1     String      @map("address_line1")
+  addressLine2     String?     @map("address_line2")
+  city             String
+  district         String?
+  state            String
+  country          String      @default("India")
+  postalCode       String?     @map("postal_code")
+  rejectionReason  String?     @map("rejection_reason")
+  reviewedBy       String?     @map("reviewed_by") @db.Uuid
+  reviewedAt       DateTime?   @map("reviewed_at")
+  deletedAt        DateTime?   @map("deleted_at")
+  createdAt        DateTime    @default(now()) @map("created_at")
+  updatedAt        DateTime    @updatedAt @map("updated_at")
+
+  owner      Profile          @relation(fields: [ownerId], references: [id])
+  images     VenueImage[]
+  videos     VenueVideo[]
+  amenities  VenueAmenity[]
+  eventTypes VenueEventType[]
+
+  @@index([ownerId])
+  @@index([status])
+  @@index([city])
+  @@index([state])
+  @@index([deletedAt])
+  @@map("venues")
+}

@@ -27,3 +27,33 @@ export type OwnerApplication = Prisma.OwnerApplicationModel
  * 
  */
 export type Profile = Prisma.ProfileModel
+/**
+ * Model EventType
+ * 
+ */
+export type EventType = Prisma.EventTypeModel
+/**
+ * Model VenueEventType
+ * 
+ */
+export type VenueEventType = Prisma.VenueEventTypeModel
+/**
+ * Model VenueAmenity
+ * 
+ */
+export type VenueAmenity = Prisma.VenueAmenityModel
+/**
+ * Model VenueImage
+ * 
+ */
+export type VenueImage = Prisma.VenueImageModel
+/**
+ * Model VenueVideo
+ * 
+ */
+export type VenueVideo = Prisma.VenueVideoModel
+/**
+ * Model Venue
+ * 
+ */
+export type Venue = Prisma.VenueModel

@@ -207,6 +207,7 @@ export type ProfileWhereInput = {
   createdAt?: Prisma.DateTimeFilter<"Profile"> | Date | string
   updatedAt?: Prisma.DateTimeFilter<"Profile"> | Date | string
   ownerApplication?: Prisma.XOR<Prisma.OwnerApplicationNullableScalarRelationFilter, Prisma.OwnerApplicationWhereInput> | null
+  venues?: Prisma.VenueListRelationFilter
 }
 
 export type ProfileOrderByWithRelationInput = {
@@ -219,6 +220,7 @@ export type ProfileOrderByWithRelationInput = {
   createdAt?: Prisma.SortOrder
   updatedAt?: Prisma.SortOrder
   ownerApplication?: Prisma.OwnerApplicationOrderByWithRelationInput
+  venues?: Prisma.VenueOrderByRelationAggregateInput
 }
 
 export type ProfileWhereUniqueInput = Prisma.AtLeast<{
@@ -234,6 +236,7 @@ export type ProfileWhereUniqueInput = Prisma.AtLeast<{
   createdAt?: Prisma.DateTimeFilter<"Profile"> | Date | string
   updatedAt?: Prisma.DateTimeFilter<"Profile"> | Date | string
   ownerApplication?: Prisma.XOR<Prisma.OwnerApplicationNullableScalarRelationFilter, Prisma.OwnerApplicationWhereInput> | null
+  venues?: Prisma.VenueListRelationFilter
 }, "id" | "email">
 
 export type ProfileOrderByWithAggregationInput = {
@@ -274,6 +277,7 @@ export type ProfileCreateInput = {
   createdAt?: Date | string
   updatedAt?: Date | string
   ownerApplication?: Prisma.OwnerApplicationCreateNestedOneWithoutUserInput
+  venues?: Prisma.VenueCreateNestedManyWithoutOwnerInput
 }
 
 export type ProfileUncheckedCreateInput = {
@@ -286,6 +290,7 @@ export type ProfileUncheckedCreateInput = {
   createdAt?: Date | string
   updatedAt?: Date | string
   ownerApplication?: Prisma.OwnerApplicationUncheckedCreateNestedOneWithoutUserInput
+  venues?: Prisma.VenueUncheckedCreateNestedManyWithoutOwnerInput
 }
 
 export type ProfileUpdateInput = {
@@ -298,6 +303,7 @@ export type ProfileUpdateInput = {
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   ownerApplication?: Prisma.OwnerApplicationUpdateOneWithoutUserNestedInput
+  venues?: Prisma.VenueUpdateManyWithoutOwnerNestedInput
 }
 
 export type ProfileUncheckedUpdateInput = {
@@ -310,6 +316,7 @@ export type ProfileUncheckedUpdateInput = {
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   ownerApplication?: Prisma.OwnerApplicationUncheckedUpdateOneWithoutUserNestedInput
+  venues?: Prisma.VenueUncheckedUpdateManyWithoutOwnerNestedInput
 }
 
 export type ProfileCreateManyInput = {
@@ -405,6 +412,20 @@ export type EnumUserStatusFieldUpdateOperationsInput = {
   set?: $Enums.UserStatus
 }
 
+export type ProfileCreateNestedOneWithoutVenuesInput = {
+  create?: Prisma.XOR<Prisma.ProfileCreateWithoutVenuesInput, Prisma.ProfileUncheckedCreateWithoutVenuesInput>
+  connectOrCreate?: Prisma.ProfileCreateOrConnectWithoutVenuesInput
+  connect?: Prisma.ProfileWhereUniqueInput
+}
+
+export type ProfileUpdateOneRequiredWithoutVenuesNestedInput = {
+  create?: Prisma.XOR<Prisma.ProfileCreateWithoutVenuesInput, Prisma.ProfileUncheckedCreateWithoutVenuesInput>
+  connectOrCreate?: Prisma.ProfileCreateOrConnectWithoutVenuesInput
+  upsert?: Prisma.ProfileUpsertWithoutVenuesInput
+  connect?: Prisma.ProfileWhereUniqueInput
+  update?: Prisma.XOR<Prisma.XOR<Prisma.ProfileUpdateToOneWithWhereWithoutVenuesInput, Prisma.ProfileUpdateWithoutVenuesInput>, Prisma.ProfileUncheckedUpdateWithoutVenuesInput>
+}
+
 export type ProfileCreateWithoutOwnerApplicationInput = {
   id: string
   fullName: string
@@ -414,6 +435,7 @@ export type ProfileCreateWithoutOwnerApplicationInput = {
   status?: $Enums.UserStatus
   createdAt?: Date | string
   updatedAt?: Date | string
+  venues?: Prisma.VenueCreateNestedManyWithoutOwnerInput
 }
 
 export type ProfileUncheckedCreateWithoutOwnerApplicationInput = {
@@ -425,6 +447,7 @@ export type ProfileUncheckedCreateWithoutOwnerApplicationInput = {
   status?: $Enums.UserStatus
   createdAt?: Date | string
   updatedAt?: Date | string
+  venues?: Prisma.VenueUncheckedCreateNestedManyWithoutOwnerInput
 }
 
 export type ProfileCreateOrConnectWithoutOwnerApplicationInput = {
@@ -452,6 +475,7 @@ export type ProfileUpdateWithoutOwnerApplicationInput = {
   status?: Prisma.EnumUserStatusFieldUpdateOperationsInput | $Enums.UserStatus
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  venues?: Prisma.VenueUpdateManyWithoutOwnerNestedInput
 }
 
 export type ProfileUncheckedUpdateWithoutOwnerApplicationInput = {
@@ -463,8 +487,102 @@ export type ProfileUncheckedUpdateWithoutOwnerApplicationInput = {
   status?: Prisma.EnumUserStatusFieldUpdateOperationsInput | $Enums.UserStatus
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  venues?: Prisma.VenueUncheckedUpdateManyWithoutOwnerNestedInput
 }
 
+export type ProfileCreateWithoutVenuesInput = {
+  id: string
+  fullName: string
+  email: string
+  phone?: string | null
+  role: $Enums.UserRole
+  status?: $Enums.UserStatus
+  createdAt?: Date | string
+  updatedAt?: Date | string
+  ownerApplication?: Prisma.OwnerApplicationCreateNestedOneWithoutUserInput
+}
+
+export type ProfileUncheckedCreateWithoutVenuesInput = {
+  id: string
+  fullName: string
+  email: string
+  phone?: string | null
+  role: $Enums.UserRole
+  status?: $Enums.UserStatus
+  createdAt?: Date | string
+  updatedAt?: Date | string
+  ownerApplication?: Prisma.OwnerApplicationUncheckedCreateNestedOneWithoutUserInput
+}
+
+export type ProfileCreateOrConnectWithoutVenuesInput = {
+  where: Prisma.ProfileWhereUniqueInput
+  create: Prisma.XOR<Prisma.ProfileCreateWithoutVenuesInput, Prisma.ProfileUncheckedCreateWithoutVenuesInput>
+}
+
+export type ProfileUpsertWithoutVenuesInput = {
+  update: Prisma.XOR<Prisma.ProfileUpdateWithoutVenuesInput, Prisma.ProfileUncheckedUpdateWithoutVenuesInput>
+  create: Prisma.XOR<Prisma.ProfileCreateWithoutVenuesInput, Prisma.ProfileUncheckedCreateWithoutVenuesInput>
+  where?: Prisma.ProfileWhereInput
+}
+
+export type ProfileUpdateToOneWithWhereWithoutVenuesInput = {
+  where?: Prisma.ProfileWhereInput
+  data: Prisma.XOR<Prisma.ProfileUpdateWithoutVenuesInput, Prisma.ProfileUncheckedUpdateWithoutVenuesInput>
+}
+
+export type ProfileUpdateWithoutVenuesInput = {
+  id?: Prisma.StringFieldUpdateOperationsInput | string
+  fullName?: Prisma.StringFieldUpdateOperationsInput | string
+  email?: Prisma.StringFieldUpdateOperationsInput | string
+  phone?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  role?: Prisma.EnumUserRoleFieldUpdateOperationsInput | $Enums.UserRole
+  status?: Prisma.EnumUserStatusFieldUpdateOperationsInput | $Enums.UserStatus
+  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  ownerApplication?: Prisma.OwnerApplicationUpdateOneWithoutUserNestedInput
+}
+
+export type ProfileUncheckedUpdateWithoutVenuesInput = {
+  id?: Prisma.StringFieldUpdateOperationsInput | string
+  fullName?: Prisma.StringFieldUpdateOperationsInput | string
+  email?: Prisma.StringFieldUpdateOperationsInput | string
+  phone?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  role?: Prisma.EnumUserRoleFieldUpdateOperationsInput | $Enums.UserRole
+  status?: Prisma.EnumUserStatusFieldUpdateOperationsInput | $Enums.UserStatus
+  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  ownerApplication?: Prisma.OwnerApplicationUncheckedUpdateOneWithoutUserNestedInput
+}
+
+
+/**
+ * Count Type ProfileCountOutputType
+ */
+
+export type ProfileCountOutputType = {
+  venues: number
+}
+
+export type ProfileCountOutputTypeSelect<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  venues?: boolean | ProfileCountOutputTypeCountVenuesArgs
+}
+
+/**
+ * ProfileCountOutputType without action
+ */
+export type ProfileCountOutputTypeDefaultArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  /**
+   * Select specific fields to fetch from the ProfileCountOutputType
+   */
+  select?: Prisma.ProfileCountOutputTypeSelect<ExtArgs> | null
+}
+
+/**
+ * ProfileCountOutputType without action
+ */
+export type ProfileCountOutputTypeCountVenuesArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  where?: Prisma.VenueWhereInput
+}
 
 
 export type ProfileSelect<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetSelect<{
@@ -477,6 +595,8 @@ export type ProfileSelect<ExtArgs extends runtime.Types.Extensions.InternalArgs 
   createdAt?: boolean
   updatedAt?: boolean
   ownerApplication?: boolean | Prisma.Profile$ownerApplicationArgs<ExtArgs>
+  venues?: boolean | Prisma.Profile$venuesArgs<ExtArgs>
+  _count?: boolean | Prisma.ProfileCountOutputTypeDefaultArgs<ExtArgs>
 }, ExtArgs["result"]["profile"]>
 
 export type ProfileSelectCreateManyAndReturn<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetSelect<{
@@ -515,6 +635,8 @@ export type ProfileSelectScalar = {
 export type ProfileOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "fullName" | "email" | "phone" | "role" | "status" | "createdAt" | "updatedAt", ExtArgs["result"]["profile"]>
 export type ProfileInclude<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   ownerApplication?: boolean | Prisma.Profile$ownerApplicationArgs<ExtArgs>
+  venues?: boolean | Prisma.Profile$venuesArgs<ExtArgs>
+  _count?: boolean | Prisma.ProfileCountOutputTypeDefaultArgs<ExtArgs>
 }
 export type ProfileIncludeCreateManyAndReturn<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {}
 export type ProfileIncludeUpdateManyAndReturn<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {}
@@ -523,6 +645,7 @@ export type $ProfilePayload<ExtArgs extends runtime.Types.Extensions.InternalArg
   name: "Profile"
   objects: {
     ownerApplication: Prisma.$OwnerApplicationPayload<ExtArgs> | null
+    venues: Prisma.$VenuePayload<ExtArgs>[]
   }
   scalars: runtime.Types.Extensions.GetPayloadResult<{
     id: string
@@ -928,6 +1051,7 @@ readonly fields: ProfileFieldRefs;
 export interface Prisma__ProfileClient<T, Null = never, ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs, GlobalOmitOptions = {}> extends Prisma.PrismaPromise<T> {
   readonly [Symbol.toStringTag]: "PrismaPromise"
   ownerApplication<T extends Prisma.Profile$ownerApplicationArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.Profile$ownerApplicationArgs<ExtArgs>>): Prisma.Prisma__OwnerApplicationClient<runtime.Types.Result.GetResult<Prisma.$OwnerApplicationPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
+  venues<T extends Prisma.Profile$venuesArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.Profile$venuesArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$VenuePayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
   /**
    * Attaches callbacks for the resolution and/or rejection of the Promise.
    * @param onfulfilled The callback to execute when the Promise is resolved.
@@ -1374,6 +1498,30 @@ export type Profile$ownerApplicationArgs<ExtArgs extends runtime.Types.Extension
    */
   include?: Prisma.OwnerApplicationInclude<ExtArgs> | null
   where?: Prisma.OwnerApplicationWhereInput
+}
+
+/**
+ * Profile.venues
+ */
+export type Profile$venuesArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  /**
+   * Select specific fields to fetch from the Venue
+   */
+  select?: Prisma.VenueSelect<ExtArgs> | null
+  /**
+   * Omit specific fields from the Venue
+   */
+  omit?: Prisma.VenueOmit<ExtArgs> | null
+  /**
+   * Choose, which related nodes to fetch as well
+   */
+  include?: Prisma.VenueInclude<ExtArgs> | null
+  where?: Prisma.VenueWhereInput
+  orderBy?: Prisma.VenueOrderByWithRelationInput | Prisma.VenueOrderByWithRelationInput[]
+  cursor?: Prisma.VenueWhereUniqueInput
+  take?: number
+  skip?: number
+  distinct?: Prisma.VenueScalarFieldEnum | Prisma.VenueScalarFieldEnum[]
 }
 
 /**

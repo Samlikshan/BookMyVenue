@@ -1,0 +1,33 @@
+model EventType {
+  id        String   @id @default(cuid())
+  name      String   @unique
+  isActive  Boolean  @default(true) @map("is_active")
+  createdAt DateTime @default(now()) @map("created_at")
+
+  venues VenueEventType[]
+
+  @@map("event_types")
+}
+
+model VenueEventType {
+  venueId     String @map("venue_id")
+  eventTypeId String @map("event_type_id")
+
+  venue     Venue     @relation(fields: [venueId], references: [id], onDelete: Cascade)
+  eventType EventType @relation(fields: [eventTypeId], references: [id])
+
+  @@id([venueId, eventTypeId])
+  @@map("venue_event_types")
+}
+
+model VenueAmenity {
+  id      String @id @default(cuid())
+  venueId String @map("venue_id")
+  name    String
+
+  venue Venue @relation(fields: [venueId], references: [id], onDelete: Cascade)
+
+  @@unique([venueId, name])
+  @@index([venueId])
+  @@map("venue_amenities")
+}

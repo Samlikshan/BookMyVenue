@@ -10,4 +10,10 @@
  */
 export type * from './models/OwnerApplication.js'
 export type * from './models/Profile.js'
+export type * from './models/EventType.js'
+export type * from './models/VenueEventType.js'
+export type * from './models/VenueAmenity.js'
+export type * from './models/VenueImage.js'
+export type * from './models/VenueVideo.js'
+export type * from './models/Venue.js'
 export type * from './commonInputTypes.js'
