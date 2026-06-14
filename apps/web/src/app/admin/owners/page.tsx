@@ -1,13 +1,8 @@
-import { RoleGuard } from "@/components/auth/role-guard";
-import { LogoutButton } from "@/features/auth/logout-button";
+"use client";
+
+import { redirect } from "next/navigation";
+import { ROUTES } from "@/lib/routes";
 
 export default function AdminOwnersPage() {
-  return (
-    <RoleGuard allowedRoles={["ADMIN"]}>
-      <main className="flex min-h-screen flex-col items-center justify-center gap-4">
-        <h1 className="text-2xl font-semibold">Owners</h1>
-        <LogoutButton />
-      </main>
-    </RoleGuard>
-  );
+  redirect(ROUTES.admin.pendingOwners);
 }
