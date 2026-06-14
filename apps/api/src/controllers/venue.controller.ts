@@ -3,6 +3,7 @@ import {
   createVenueService,
   deleteVenueService,
   getVenueService,
+  listMyVenuesService,
   updateVenueService,
 } from "../services/venue.service.js";
 import { paramString } from "../utils/params.util.js";
@@ -51,5 +52,11 @@ export async function updateVenue(req: Request, res: Response) {
 export async function deleteVenue(req: Request, res: Response) {
   const venueId = paramString(req.params.venueId, "venueId");
   const result = await deleteVenueService(venueId);
+  return res.status(result.statusCode).json(result);
+}
+
+export async function listMyVenues(req: Request, res: Response) {
+  const ownerId = req.user!.profile.id;
+  const result = await listMyVenuesService(ownerId);
   return res.status(result.statusCode).json(result);
 }

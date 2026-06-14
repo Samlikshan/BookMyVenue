@@ -355,3 +355,18 @@ export async function deleteVenueService(venueId: string): Promise<ServiceResult
     message: "Venue deleted successfully",
   };
 }
+
+export async function listMyVenuesService(ownerId: string): Promise<ServiceResult> {
+  const venues = await prisma.venue.findMany({
+    where: { ownerId, deletedAt: null },
+    include: venueInclude,
+    orderBy: { createdAt: "desc" },
+  });
+
+  return {
+    success: true,
+    statusCode: 200,
+    message: "Venues fetched successfully",
+    data: { venues },
+  };
+}

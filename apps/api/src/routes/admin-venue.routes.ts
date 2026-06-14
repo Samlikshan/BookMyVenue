@@ -1,6 +1,7 @@
 import { Router } from "express";
 import {
   approveVenue,
+  listAdminVenues,
   rejectVenue,
 } from "../controllers/admin-venue.controller.js";
 import { requireRole } from "../middlewares/require-role.middleware.js";
@@ -11,6 +12,7 @@ const router = Router();
 router.use(authMiddleware);
 router.use(requireRole(["ADMIN"]));
 
+router.get("/", listAdminVenues);
 router.patch("/:venueId/approve", approveVenue);
 router.patch("/:venueId/reject", rejectVenue);
 

@@ -9,9 +9,8 @@ import { requireRole } from "../middlewares/require-role.middleware.js";
 const router = Router();
 
 router.use(authMiddleware);
-router.use(requireRole(["ADMIN"]));
 
-router.get("/event-types", listEventTypes);
-router.post("/event-types", createEventType);
+router.get("/event-types", requireRole(["ADMIN", "OWNER", "USER"]), listEventTypes);
+router.post("/event-types", requireRole(["ADMIN"]), createEventType);
 
 export default router;
