@@ -6,7 +6,6 @@ import {
   Clock,
   ShieldCheck,
   UserCheck,
-  Users,
 } from "lucide-react";
 import Link from "next/link";
 import { useEffect, useState } from "react";
@@ -14,7 +13,10 @@ import { useEffect, useState } from "react";
 import { RoleGuard } from "@/components/auth/role-guard";
 import { AdminLayout } from "@/components/layout/admin-layout";
 import { Button } from "@/components/ui/button";
-import { listPendingOwnersApi, listAdminVenuesApi } from "@/features/admin/admin-api";
+import {
+  listAdminVenuesApi,
+  listPendingOwnersApi,
+} from "@/features/admin/admin-api";
 import type { AuthUser } from "@/features/auth/types";
 import type { Venue } from "@/features/venues/types";
 import { ROUTES } from "@/lib/routes";
@@ -30,23 +32,29 @@ export default function AdminDashboardPage() {
 
   useEffect(() => {
     async function loadAdminData() {
-      if (!accessToken) return;
+      if (!accessToken) {
+        return;
+      }
+
       try {
-        const owners = await listPendingOwnersApi(accessToken);
+        setIsLoading(true);
+        const [owners, pendingVenuesData, activeVenues] = await Promise.all([
+          listPendingOwnersApi(accessToken),
+          listAdminVenuesApi("PENDING_APPROVAL", accessToken),
+          listAdminVenuesApi("ACTIVE", accessToken),
+        ]);
+
         setPendingOwners(owners);
-
-        const pVenues = await listAdminVenuesApi("PENDING_APPROVAL", accessToken);
-        setPendingVenues(pVenues);
-
-        const aVenues = await listAdminVenuesApi("ACTIVE", accessToken);
-        setActiveVenuesCount(aVenues.length);
+        setPendingVenues(pendingVenuesData);
+        setActiveVenuesCount(activeVenues.length);
       } catch (error) {
         console.error("Failed to load admin dashboard stats", error);
       } finally {
         setIsLoading(false);
       }
     }
-    loadAdminData();
+
+    void loadAdminData();
   }, [accessToken]);
 
   const kpis = [
@@ -54,21 +62,24 @@ export default function AdminDashboardPage() {
       name: "Pending Owners",
       value: pendingOwners.length,
       icon: UserCheck,
-      color: "text-amber-600 bg-amber-50 dark:text-amber-400 dark:bg-amber-950/20",
+      color:
+        "text-amber-600 bg-amber-50 dark:text-amber-400 dark:bg-amber-950/20",
       href: ROUTES.admin.pendingOwners,
     },
     {
       name: "Pending Venues",
       value: pendingVenues.length,
       icon: Clock,
-      color: "text-orange-600 bg-orange-50 dark:text-orange-400 dark:bg-orange-950/20",
+      color:
+        "text-orange-600 bg-orange-50 dark:text-orange-400 dark:bg-orange-950/20",
       href: ROUTES.admin.venues,
     },
     {
       name: "Published Venues",
       value: activeVenuesCount,
       icon: Building2,
-      color: "text-emerald-600 bg-emerald-50 dark:text-emerald-400 dark:bg-emerald-950/20",
+      color:
+        "text-emerald-600 bg-emerald-50 dark:text-emerald-400 dark:bg-emerald-950/20",
       href: ROUTES.admin.venues,
     },
     {
@@ -83,27 +94,28 @@ export default function AdminDashboardPage() {
     <RoleGuard allowedRoles={["ADMIN"]}>
       <AdminLayout>
         <div className="space-y-8 animate-fade-in-up">
-          {/* Welcome Header */}
           <div>
             <h1 className="text-3xl font-extrabold tracking-tight text-zinc-950 dark:text-white">
               System Admin Dashboard
             </h1>
             <p className="mt-1 text-sm text-zinc-500 dark:text-zinc-400">
-              Audit venue listings, verify owner profiles, and publish events spaces.
+              Audit venue listings, verify owner profiles, and publish event
+              spaces.
             </p>
           </div>
 
-          {/* Stats Grid */}
           <div className="grid gap-6 sm:grid-cols-2 lg:grid-cols-4">
             {kpis.map((kpi) => {
               const Icon = kpi.icon;
-              const CardContent = (
+              const cardContent = (
                 <div className="relative overflow-hidden rounded-2xl border border-zinc-200 bg-white p-6 shadow-xs transition-all hover:border-zinc-300 dark:border-zinc-800 dark:bg-zinc-900/50">
                   <div className="flex items-center justify-between">
                     <span className="text-sm font-medium text-zinc-500 dark:text-zinc-400">
                       {kpi.name}
                     </span>
-                    <div className={`flex size-10 items-center justify-center rounded-xl ${kpi.color}`}>
+                    <div
+                      className={`flex size-10 items-center justify-center rounded-xl ${kpi.color}`}
+                    >
                       <Icon className="size-5" />
                     </div>
                   </div>
@@ -121,131 +133,124 @@ export default function AdminDashboardPage() {
 
               return kpi.href ? (
                 <Link key={kpi.name} href={kpi.href}>
-                  {CardContent}
+                  {cardContent}
                 </Link>
               ) : (
-                <div key={kpi.name}>{CardContent}</div>
+                <div key={kpi.name}>{cardContent}</div>
               );
             })}
           </div>
 
           <div className="grid gap-8 lg:grid-cols-2">
-            {/* Left Queue: Pending Owners */}
-            <div className="rounded-2xl border border-zinc-200 bg-white shadow-xs dark:border-zinc-800 dark:bg-zinc-900/50 overflow-hidden">
-              <div className="border-b border-zinc-100 px-6 py-5 dark:border-zinc-800 flex items-center justify-between">
-                <div>
-                  <h3 className="text-lg font-bold text-zinc-900 dark:text-white">
-                    Pending Owners
-                  </h3>
-                  <p className="text-2xs text-zinc-500 dark:text-zinc-400">
-                    Venue managers awaiting verification.
-                  </p>
-                </div>
-                <Link href={ROUTES.admin.pendingOwners}>
-                  <Button variant="ghost" size="sm" className="text-xs">
-                    View Queue
-                  </Button>
-                </Link>
-              </div>
+            <DashboardQueue
+              title="Pending Owners"
+              description="Venue managers awaiting verification."
+              emptyText="All owner applications reviewed."
+              href={ROUTES.admin.pendingOwners}
+              actionLabel="Review"
+              isLoading={isLoading}
+              items={pendingOwners.slice(0, 3).map((owner) => ({
+                id: owner.id,
+                title: owner.fullName,
+                subtitle: `${owner.ownerApplication?.businessName || "No business name"} • ${owner.ownerApplication?.city || "No city"}`,
+              }))}
+            />
 
-              <div className="p-6">
-                {isLoading ? (
-                  <div className="space-y-4">
-                    {[1, 2].map((n) => (
-                      <div key={n} className="h-14 w-full animate-pulse rounded-lg bg-zinc-100 dark:bg-zinc-800" />
-                    ))}
-                  </div>
-                ) : pendingOwners.length === 0 ? (
-                  <div className="text-center py-8 text-zinc-400 text-sm">
-                    <CheckCircle className="size-8 mx-auto text-emerald-500 mb-2" />
-                    All owner applications reviewed.
-                  </div>
-                ) : (
-                  <div className="space-y-3">
-                    {pendingOwners.slice(0, 3).map((owner) => (
-                      <div
-                        key={owner.id}
-                        className="flex items-center justify-between rounded-xl border border-zinc-100 p-4 dark:border-zinc-800"
-                      >
-                        <div>
-                          <p className="text-sm font-bold text-zinc-900 dark:text-white">
-                            {owner.fullName}
-                          </p>
-                          <p className="text-2xs text-zinc-500">
-                            {owner.ownerApplication?.businessName || "No business name"} • {owner.ownerApplication?.city}
-                          </p>
-                        </div>
-                        <Link href={ROUTES.admin.pendingOwners}>
-                          <Button size="sm" variant="outline" className="text-2xs h-8">
-                            Review
-                          </Button>
-                        </Link>
-                      </div>
-                    ))}
-                  </div>
-                )}
-              </div>
-            </div>
-
-            {/* Right Queue: Pending Venues */}
-            <div className="rounded-2xl border border-zinc-200 bg-white shadow-xs dark:border-zinc-800 dark:bg-zinc-900/50 overflow-hidden">
-              <div className="border-b border-zinc-100 px-6 py-5 dark:border-zinc-800 flex items-center justify-between">
-                <div>
-                  <h3 className="text-lg font-bold text-zinc-900 dark:text-white">
-                    Pending Venues
-                  </h3>
-                  <p className="text-2xs text-zinc-500 dark:text-zinc-400">
-                    Event spaces submitted for audit.
-                  </p>
-                </div>
-                <Link href={ROUTES.admin.venues}>
-                  <Button variant="ghost" size="sm" className="text-xs">
-                    View Queue
-                  </Button>
-                </Link>
-              </div>
-
-              <div className="p-6">
-                {isLoading ? (
-                  <div className="space-y-4">
-                    {[1, 2].map((n) => (
-                      <div key={n} className="h-14 w-full animate-pulse rounded-lg bg-zinc-100 dark:bg-zinc-800" />
-                    ))}
-                  </div>
-                ) : pendingVenues.length === 0 ? (
-                  <div className="text-center py-8 text-zinc-400 text-sm">
-                    <CheckCircle className="size-8 mx-auto text-emerald-500 mb-2" />
-                    All venue listings reviewed.
-                  </div>
-                ) : (
-                  <div className="space-y-3">
-                    {pendingVenues.slice(0, 3).map((venue) => (
-                      <div
-                        key={venue.id}
-                        className="flex items-center justify-between rounded-xl border border-zinc-100 p-4 dark:border-zinc-800"
-                      >
-                        <div>
-                          <p className="text-sm font-bold text-zinc-900 dark:text-white">
-                            {venue.name}
-                          </p>
-                          <p className="text-2xs text-zinc-500">
-                            {venue.city}, {venue.state}
-                          </p>
-                        </div>
-                        <Link href={ROUTES.admin.venues}>
-                          <Button size="sm" variant="outline" className="text-2xs h-8">
-                            Audit
-                          </Button>
-                        </Link>
-                      </div>
-                    ))}
-                  </div>
-                )}
-              </div>
-            </div>
+            <DashboardQueue
+              title="Pending Venues"
+              description="Event spaces submitted for audit."
+              emptyText="All venue listings reviewed."
+              href={ROUTES.admin.venues}
+              actionLabel="Audit"
+              isLoading={isLoading}
+              items={pendingVenues.slice(0, 3).map((venue) => ({
+                id: venue.id,
+                title: venue.name,
+                subtitle: `${venue.city}, ${venue.state}`,
+              }))}
+            />
           </div>
         </div>
       </AdminLayout>
     </RoleGuard>
+  );
+}
+
+type DashboardQueueProps = {
+  title: string;
+  description: string;
+  emptyText: string;
+  href: string;
+  actionLabel: string;
+  isLoading: boolean;
+  items: Array<{
+    id: string;
+    title: string;
+    subtitle: string;
+  }>;
+};
+
+function DashboardQueue({
+  title,
+  description,
+  emptyText,
+  href,
+  actionLabel,
+  isLoading,
+  items,
+}: DashboardQueueProps) {
+  return (
+    <div className="overflow-hidden rounded-2xl border border-zinc-200 bg-white shadow-xs dark:border-zinc-800 dark:bg-zinc-900/50">
+      <div className="flex items-center justify-between border-b border-zinc-100 px-6 py-5 dark:border-zinc-800">
+        <div>
+          <h3 className="text-lg font-bold text-zinc-900 dark:text-white">
+            {title}
+          </h3>
+          <p className="text-2xs text-zinc-500 dark:text-zinc-400">
+            {description}
+          </p>
+        </div>
+        <Button asChild variant="ghost" size="sm" className="text-xs">
+          <Link href={href}>View Queue</Link>
+        </Button>
+      </div>
+
+      <div className="p-6">
+        {isLoading ? (
+          <div className="space-y-4">
+            {[1, 2].map((item) => (
+              <div
+                key={item}
+                className="h-14 w-full animate-pulse rounded-lg bg-zinc-100 dark:bg-zinc-800"
+              />
+            ))}
+          </div>
+        ) : items.length === 0 ? (
+          <div className="py-8 text-center text-sm text-zinc-400">
+            <CheckCircle className="mx-auto mb-2 size-8 text-emerald-500" />
+            {emptyText}
+          </div>
+        ) : (
+          <div className="space-y-3">
+            {items.map((item) => (
+              <div
+                key={item.id}
+                className="flex items-center justify-between rounded-xl border border-zinc-100 p-4 dark:border-zinc-800"
+              >
+                <div>
+                  <p className="text-sm font-bold text-zinc-900 dark:text-white">
+                    {item.title}
+                  </p>
+                  <p className="text-2xs text-zinc-500">{item.subtitle}</p>
+                </div>
+                <Button asChild size="sm" variant="outline" className="h-8 text-2xs">
+                  <Link href={href}>{actionLabel}</Link>
+                </Button>
+              </div>
+            ))}
+          </div>
+        )}
+      </div>
+    </div>
   );
 }

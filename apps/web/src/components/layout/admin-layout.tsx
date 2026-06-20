@@ -44,9 +44,19 @@ export function AdminLayout({ children }: AdminLayoutProps) {
       icon: Users,
     },
     {
+      name: "Owners Directory",
+      href: ROUTES.admin.owners,
+      icon: Building2,
+    },
+    {
       name: "Venues Approval",
       href: ROUTES.admin.venues,
       icon: Building2,
+    },
+    {
+      name: "Users Directory",
+      href: ROUTES.admin.users,
+      icon: User,
     },
   ];
 

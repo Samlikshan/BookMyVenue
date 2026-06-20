@@ -2,6 +2,24 @@ import { apiRequest } from "@/lib/api";
 import type { AuthUser } from "../auth/types";
 import type { Venue } from "../venues/types";
 
+export async function getOwnersApi(accessToken: string) {
+  const response = await apiRequest<{ owners: AuthUser[] }>("/admin/owners", {
+    method: "GET",
+    accessToken,
+  });
+
+  return response.data?.owners ?? [];
+}
+
+export async function getUsersApi(accessToken: string) {
+  const response = await apiRequest<{ users: AuthUser[] }>("/admin/users", {
+    method: "GET",
+    accessToken,
+  });
+
+  return response.data?.users ?? [];
+}
+
 // Pending Owners
 export async function listPendingOwnersApi(accessToken: string) {
   const response = await apiRequest<{ owners: AuthUser[] }>(
