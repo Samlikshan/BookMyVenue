@@ -41,6 +41,43 @@ export interface VenueAmenity {
   name: string;
 }
 
+export interface VenueAvailability {
+  id: string;
+  venueId: string;
+  dayOfWeek: number;
+  startTime: string;
+  endTime: string;
+  isActive: boolean;
+  createdAt: string;
+  updatedAt: string;
+}
+
+export interface VenueSlotTemplate {
+  id: string;
+  venueId: string;
+  name: string | null;
+  startTime: string;
+  endTime: string;
+  isActive: boolean;
+  createdAt: string;
+  updatedAt: string;
+}
+
+export type VenueDateSlotSource = "TEMPLATE" | "CUSTOM";
+
+export interface VenueDateSlot {
+  id: string;
+  venueId: string;
+  slotTemplateId: string | null;
+  date: string;
+  startTime: string;
+  endTime: string;
+  isAvailable: boolean;
+  source: VenueDateSlotSource;
+  createdAt: string;
+  updatedAt: string;
+}
+
 export interface Venue {
   id: string;
   ownerId: string;
@@ -89,3 +126,47 @@ export interface CreateVenueInput {
 }
 
 export type UpdateVenueInput = Partial<Omit<CreateVenueInput, "ownerId">>;
+
+export interface CreateVenueAvailabilityPayload {
+  dayOfWeek: number;
+  startTime: string;
+  endTime: string;
+}
+
+export interface UpdateVenueAvailabilityPayload {
+  dayOfWeek?: number;
+  startTime?: string;
+  endTime?: string;
+  isActive?: boolean;
+}
+
+export interface CreateVenueSlotTemplatePayload {
+  name?: string | null;
+  startTime: string;
+  endTime: string;
+}
+
+export interface UpdateVenueSlotTemplatePayload {
+  name?: string | null;
+  startTime?: string;
+  endTime?: string;
+  isActive?: boolean;
+}
+
+export interface ApplyVenueSlotTemplatesPayload {
+  dates: string[];
+  slotTemplateIds: string[];
+  mode: "MERGE";
+}
+
+export interface CreateCustomVenueDateSlotPayload {
+  date: string;
+  startTime: string;
+  endTime: string;
+}
+
+export interface UpdateVenueDateSlotPayload {
+  startTime?: string;
+  endTime?: string;
+  isAvailable?: boolean;
+}

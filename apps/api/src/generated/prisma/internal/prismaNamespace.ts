@@ -386,6 +386,9 @@ type FieldRefInputType<Model, FieldType> = Model extends never ? never : FieldRe
 export const ModelName = {
   OwnerApplication: 'OwnerApplication',
   Profile: 'Profile',
+  VenueAvailability: 'VenueAvailability',
+  VenueSlotTemplate: 'VenueSlotTemplate',
+  VenueDateSlot: 'VenueDateSlot',
   EventType: 'EventType',
   VenueEventType: 'VenueEventType',
   VenueAmenity: 'VenueAmenity',
@@ -407,7 +410,7 @@ export type TypeMap<ExtArgs extends runtime.Types.Extensions.InternalArgs = runt
     omit: GlobalOmitOptions
   }
   meta: {
-    modelProps: "ownerApplication" | "profile" | "eventType" | "venueEventType" | "venueAmenity" | "venueImage" | "venueVideo" | "venue"
+    modelProps: "ownerApplication" | "profile" | "venueAvailability" | "venueSlotTemplate" | "venueDateSlot" | "eventType" | "venueEventType" | "venueAmenity" | "venueImage" | "venueVideo" | "venue"
     txIsolationLevel: TransactionIsolationLevel
   }
   model: {
@@ -556,6 +559,228 @@ export type TypeMap<ExtArgs extends runtime.Types.Extensions.InternalArgs = runt
         count: {
           args: Prisma.ProfileCountArgs<ExtArgs>
           result: runtime.Types.Utils.Optional<Prisma.ProfileCountAggregateOutputType> | number
+        }
+      }
+    }
+    VenueAvailability: {
+      payload: Prisma.$VenueAvailabilityPayload<ExtArgs>
+      fields: Prisma.VenueAvailabilityFieldRefs
+      operations: {
+        findUnique: {
+          args: Prisma.VenueAvailabilityFindUniqueArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$VenueAvailabilityPayload> | null
+        }
+        findUniqueOrThrow: {
+          args: Prisma.VenueAvailabilityFindUniqueOrThrowArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$VenueAvailabilityPayload>
+        }
+        findFirst: {
+          args: Prisma.VenueAvailabilityFindFirstArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$VenueAvailabilityPayload> | null
+        }
+        findFirstOrThrow: {
+          args: Prisma.VenueAvailabilityFindFirstOrThrowArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$VenueAvailabilityPayload>
+        }
+        findMany: {
+          args: Prisma.VenueAvailabilityFindManyArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$VenueAvailabilityPayload>[]
+        }
+        create: {
+          args: Prisma.VenueAvailabilityCreateArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$VenueAvailabilityPayload>
+        }
+        createMany: {
+          args: Prisma.VenueAvailabilityCreateManyArgs<ExtArgs>
+          result: BatchPayload
+        }
+        createManyAndReturn: {
+          args: Prisma.VenueAvailabilityCreateManyAndReturnArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$VenueAvailabilityPayload>[]
+        }
+        delete: {
+          args: Prisma.VenueAvailabilityDeleteArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$VenueAvailabilityPayload>
+        }
+        update: {
+          args: Prisma.VenueAvailabilityUpdateArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$VenueAvailabilityPayload>
+        }
+        deleteMany: {
+          args: Prisma.VenueAvailabilityDeleteManyArgs<ExtArgs>
+          result: BatchPayload
+        }
+        updateMany: {
+          args: Prisma.VenueAvailabilityUpdateManyArgs<ExtArgs>
+          result: BatchPayload
+        }
+        updateManyAndReturn: {
+          args: Prisma.VenueAvailabilityUpdateManyAndReturnArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$VenueAvailabilityPayload>[]
+        }
+        upsert: {
+          args: Prisma.VenueAvailabilityUpsertArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$VenueAvailabilityPayload>
+        }
+        aggregate: {
+          args: Prisma.VenueAvailabilityAggregateArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.AggregateVenueAvailability>
+        }
+        groupBy: {
+          args: Prisma.VenueAvailabilityGroupByArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.VenueAvailabilityGroupByOutputType>[]
+        }
+        count: {
+          args: Prisma.VenueAvailabilityCountArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.VenueAvailabilityCountAggregateOutputType> | number
+        }
+      }
+    }
+    VenueSlotTemplate: {
+      payload: Prisma.$VenueSlotTemplatePayload<ExtArgs>
+      fields: Prisma.VenueSlotTemplateFieldRefs
+      operations: {
+        findUnique: {
+          args: Prisma.VenueSlotTemplateFindUniqueArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$VenueSlotTemplatePayload> | null
+        }
+        findUniqueOrThrow: {
+          args: Prisma.VenueSlotTemplateFindUniqueOrThrowArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$VenueSlotTemplatePayload>
+        }
+        findFirst: {
+          args: Prisma.VenueSlotTemplateFindFirstArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$VenueSlotTemplatePayload> | null
+        }
+        findFirstOrThrow: {
+          args: Prisma.VenueSlotTemplateFindFirstOrThrowArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$VenueSlotTemplatePayload>
+        }
+        findMany: {
+          args: Prisma.VenueSlotTemplateFindManyArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$VenueSlotTemplatePayload>[]
+        }
+        create: {
+          args: Prisma.VenueSlotTemplateCreateArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$VenueSlotTemplatePayload>
+        }
+        createMany: {
+          args: Prisma.VenueSlotTemplateCreateManyArgs<ExtArgs>
+          result: BatchPayload
+        }
+        createManyAndReturn: {
+          args: Prisma.VenueSlotTemplateCreateManyAndReturnArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$VenueSlotTemplatePayload>[]
+        }
+        delete: {
+          args: Prisma.VenueSlotTemplateDeleteArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$VenueSlotTemplatePayload>
+        }
+        update: {
+          args: Prisma.VenueSlotTemplateUpdateArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$VenueSlotTemplatePayload>
+        }
+        deleteMany: {
+          args: Prisma.VenueSlotTemplateDeleteManyArgs<ExtArgs>
+          result: BatchPayload
+        }
+        updateMany: {
+          args: Prisma.VenueSlotTemplateUpdateManyArgs<ExtArgs>
+          result: BatchPayload
+        }
+        updateManyAndReturn: {
+          args: Prisma.VenueSlotTemplateUpdateManyAndReturnArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$VenueSlotTemplatePayload>[]
+        }
+        upsert: {
+          args: Prisma.VenueSlotTemplateUpsertArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$VenueSlotTemplatePayload>
+        }
+        aggregate: {
+          args: Prisma.VenueSlotTemplateAggregateArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.AggregateVenueSlotTemplate>
+        }
+        groupBy: {
+          args: Prisma.VenueSlotTemplateGroupByArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.VenueSlotTemplateGroupByOutputType>[]
+        }
+        count: {
+          args: Prisma.VenueSlotTemplateCountArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.VenueSlotTemplateCountAggregateOutputType> | number
+        }
+      }
+    }
+    VenueDateSlot: {
+      payload: Prisma.$VenueDateSlotPayload<ExtArgs>
+      fields: Prisma.VenueDateSlotFieldRefs
+      operations: {
+        findUnique: {
+          args: Prisma.VenueDateSlotFindUniqueArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$VenueDateSlotPayload> | null
+        }
+        findUniqueOrThrow: {
+          args: Prisma.VenueDateSlotFindUniqueOrThrowArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$VenueDateSlotPayload>
+        }
+        findFirst: {
+          args: Prisma.VenueDateSlotFindFirstArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$VenueDateSlotPayload> | null
+        }
+        findFirstOrThrow: {
+          args: Prisma.VenueDateSlotFindFirstOrThrowArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$VenueDateSlotPayload>
+        }
+        findMany: {
+          args: Prisma.VenueDateSlotFindManyArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$VenueDateSlotPayload>[]
+        }
+        create: {
+          args: Prisma.VenueDateSlotCreateArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$VenueDateSlotPayload>
+        }
+        createMany: {
+          args: Prisma.VenueDateSlotCreateManyArgs<ExtArgs>
+          result: BatchPayload
+        }
+        createManyAndReturn: {
+          args: Prisma.VenueDateSlotCreateManyAndReturnArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$VenueDateSlotPayload>[]
+        }
+        delete: {
+          args: Prisma.VenueDateSlotDeleteArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$VenueDateSlotPayload>
+        }
+        update: {
+          args: Prisma.VenueDateSlotUpdateArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$VenueDateSlotPayload>
+        }
+        deleteMany: {
+          args: Prisma.VenueDateSlotDeleteManyArgs<ExtArgs>
+          result: BatchPayload
+        }
+        updateMany: {
+          args: Prisma.VenueDateSlotUpdateManyArgs<ExtArgs>
+          result: BatchPayload
+        }
+        updateManyAndReturn: {
+          args: Prisma.VenueDateSlotUpdateManyAndReturnArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$VenueDateSlotPayload>[]
+        }
+        upsert: {
+          args: Prisma.VenueDateSlotUpsertArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$VenueDateSlotPayload>
+        }
+        aggregate: {
+          args: Prisma.VenueDateSlotAggregateArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.AggregateVenueDateSlot>
+        }
+        groupBy: {
+          args: Prisma.VenueDateSlotGroupByArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.VenueDateSlotGroupByOutputType>[]
+        }
+        count: {
+          args: Prisma.VenueDateSlotCountArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.VenueDateSlotCountAggregateOutputType> | number
         }
       }
     }
@@ -1072,6 +1297,50 @@ export const ProfileScalarFieldEnum = {
 export type ProfileScalarFieldEnum = (typeof ProfileScalarFieldEnum)[keyof typeof ProfileScalarFieldEnum]
 
 
+export const VenueAvailabilityScalarFieldEnum = {
+  id: 'id',
+  venueId: 'venueId',
+  dayOfWeek: 'dayOfWeek',
+  startTime: 'startTime',
+  endTime: 'endTime',
+  isActive: 'isActive',
+  createdAt: 'createdAt',
+  updatedAt: 'updatedAt'
+} as const
+
+export type VenueAvailabilityScalarFieldEnum = (typeof VenueAvailabilityScalarFieldEnum)[keyof typeof VenueAvailabilityScalarFieldEnum]
+
+
+export const VenueSlotTemplateScalarFieldEnum = {
+  id: 'id',
+  venueId: 'venueId',
+  name: 'name',
+  startTime: 'startTime',
+  endTime: 'endTime',
+  isActive: 'isActive',
+  createdAt: 'createdAt',
+  updatedAt: 'updatedAt'
+} as const
+
+export type VenueSlotTemplateScalarFieldEnum = (typeof VenueSlotTemplateScalarFieldEnum)[keyof typeof VenueSlotTemplateScalarFieldEnum]
+
+
+export const VenueDateSlotScalarFieldEnum = {
+  id: 'id',
+  venueId: 'venueId',
+  slotTemplateId: 'slotTemplateId',
+  date: 'date',
+  startTime: 'startTime',
+  endTime: 'endTime',
+  isAvailable: 'isAvailable',
+  source: 'source',
+  createdAt: 'createdAt',
+  updatedAt: 'updatedAt'
+} as const
+
+export type VenueDateSlotScalarFieldEnum = (typeof VenueDateSlotScalarFieldEnum)[keyof typeof VenueDateSlotScalarFieldEnum]
+
+
 export const EventTypeScalarFieldEnum = {
   id: 'id',
   name: 'name',
@@ -1251,9 +1520,37 @@ export type ListEnumUserStatusFieldRefInput<$PrismaModel> = FieldRefInputType<$P
 
 
 /**
+ * Reference to a field of type 'Int'
+ */
+export type IntFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'Int'>
+    
+
+
+/**
+ * Reference to a field of type 'Int[]'
+ */
+export type ListIntFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'Int[]'>
+    
+
+
+/**
  * Reference to a field of type 'Boolean'
  */
 export type BooleanFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'Boolean'>
+    
+
+
+/**
+ * Reference to a field of type 'VenueDateSlotSource'
+ */
+export type EnumVenueDateSlotSourceFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'VenueDateSlotSource'>
+    
+
+
+/**
+ * Reference to a field of type 'VenueDateSlotSource[]'
+ */
+export type ListEnumVenueDateSlotSourceFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'VenueDateSlotSource[]'>
     
 
 
@@ -1268,20 +1565,6 @@ export type EnumVenueStatusFieldRefInput<$PrismaModel> = FieldRefInputType<$Pris
  * Reference to a field of type 'VenueStatus[]'
  */
 export type ListEnumVenueStatusFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'VenueStatus[]'>
-    
-
-
-/**
- * Reference to a field of type 'Int'
- */
-export type IntFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'Int'>
-    
-
-
-/**
- * Reference to a field of type 'Int[]'
- */
-export type ListIntFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'Int[]'>
     
 
 
@@ -1410,6 +1693,9 @@ export type PrismaClientOptions = ({
 export type GlobalOmitConfig = {
   ownerApplication?: Prisma.OwnerApplicationOmit
   profile?: Prisma.ProfileOmit
+  venueAvailability?: Prisma.VenueAvailabilityOmit
+  venueSlotTemplate?: Prisma.VenueSlotTemplateOmit
+  venueDateSlot?: Prisma.VenueDateSlotOmit
   eventType?: Prisma.EventTypeOmit
   venueEventType?: Prisma.VenueEventTypeOmit
   venueAmenity?: Prisma.VenueAmenityOmit

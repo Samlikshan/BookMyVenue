@@ -53,6 +53,9 @@ export const AnyNull = runtime.AnyNull
 export const ModelName = {
   OwnerApplication: 'OwnerApplication',
   Profile: 'Profile',
+  VenueAvailability: 'VenueAvailability',
+  VenueSlotTemplate: 'VenueSlotTemplate',
+  VenueDateSlot: 'VenueDateSlot',
   EventType: 'EventType',
   VenueEventType: 'VenueEventType',
   VenueAmenity: 'VenueAmenity',
@@ -105,6 +108,50 @@ export const ProfileScalarFieldEnum = {
 } as const
 
 export type ProfileScalarFieldEnum = (typeof ProfileScalarFieldEnum)[keyof typeof ProfileScalarFieldEnum]
+
+
+export const VenueAvailabilityScalarFieldEnum = {
+  id: 'id',
+  venueId: 'venueId',
+  dayOfWeek: 'dayOfWeek',
+  startTime: 'startTime',
+  endTime: 'endTime',
+  isActive: 'isActive',
+  createdAt: 'createdAt',
+  updatedAt: 'updatedAt'
+} as const
+
+export type VenueAvailabilityScalarFieldEnum = (typeof VenueAvailabilityScalarFieldEnum)[keyof typeof VenueAvailabilityScalarFieldEnum]
+
+
+export const VenueSlotTemplateScalarFieldEnum = {
+  id: 'id',
+  venueId: 'venueId',
+  name: 'name',
+  startTime: 'startTime',
+  endTime: 'endTime',
+  isActive: 'isActive',
+  createdAt: 'createdAt',
+  updatedAt: 'updatedAt'
+} as const
+
+export type VenueSlotTemplateScalarFieldEnum = (typeof VenueSlotTemplateScalarFieldEnum)[keyof typeof VenueSlotTemplateScalarFieldEnum]
+
+
+export const VenueDateSlotScalarFieldEnum = {
+  id: 'id',
+  venueId: 'venueId',
+  slotTemplateId: 'slotTemplateId',
+  date: 'date',
+  startTime: 'startTime',
+  endTime: 'endTime',
+  isAvailable: 'isAvailable',
+  source: 'source',
+  createdAt: 'createdAt',
+  updatedAt: 'updatedAt'
+} as const
+
+export type VenueDateSlotScalarFieldEnum = (typeof VenueDateSlotScalarFieldEnum)[keyof typeof VenueDateSlotScalarFieldEnum]
 
 
 export const EventTypeScalarFieldEnum = {

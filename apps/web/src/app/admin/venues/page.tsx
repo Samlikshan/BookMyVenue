@@ -1,7 +1,6 @@
 "use client";
 
 import {
-  AlertCircle,
   Building2,
   Check,
   Clock,
@@ -26,16 +25,30 @@ import type { Venue } from "@/features/venues/types";
 import { useAppSelector } from "@/store/hooks";
 
 export default function AdminVenuesQueuePage() {
+  return (
+    <RoleGuard allowedRoles={["ADMIN"]}>
+      <AdminLayout>
+        <AdminVenuesQueueContent />
+      </AdminLayout>
+    </RoleGuard>
+  );
+}
+
+function AdminVenuesQueueContent() {
   const { accessToken } = useAppSelector((state) => state.auth);
 
   const [venues, setVenues] = useState<Venue[]>([]);
   const [isLoading, setIsLoading] = useState(true);
   const [selectedVenue, setSelectedVenue] = useState<Venue | null>(null);
-  const [isAuditing, setIsAuditing] = useState(false);
 
   async function loadPendingVenues() {
-    if (!accessToken) return;
+    if (!accessToken) {
+      setIsLoading(false);
+      return;
+    }
+
     try {
+      setIsLoading(true);
       const data = await listAdminVenuesApi("PENDING_APPROVAL", accessToken);
       setVenues(data);
     } catch (error) {
@@ -47,7 +60,9 @@ export default function AdminVenuesQueuePage() {
   }
 
   useEffect(() => {
-    loadPendingVenues();
+    // eslint-disable-next-line react-hooks/set-state-in-effect
+    void loadPendingVenues();
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [accessToken]);
 
   async function handleApprove(venueId: string, name: string) {
@@ -62,7 +77,7 @@ export default function AdminVenuesQueuePage() {
         setVenues((prev) => prev.filter((v) => v.id !== venueId));
         setSelectedVenue(null);
       }
-    } catch (error) {
+    } catch {
       toast.error("Failed to approve venue");
     }
   }
@@ -84,15 +99,14 @@ export default function AdminVenuesQueuePage() {
         setVenues((prev) => prev.filter((v) => v.id !== venueId));
         setSelectedVenue(null);
       }
-    } catch (error) {
+    } catch {
       toast.error("Failed to reject venue");
     }
   }
 
   return (
-    <RoleGuard allowedRoles={["ADMIN"]}>
-      <AdminLayout>
-        <div className="space-y-8 animate-fade-in-up">
+    <>
+      <div className="space-y-8 animate-fade-in-up">
           {/* Header */}
           <div>
             <h1 className="text-3xl font-extrabold tracking-tight text-zinc-950 dark:text-white">
@@ -176,11 +190,11 @@ export default function AdminVenuesQueuePage() {
               })}
             </div>
           )}
-        </div>
+      </div>
 
-        {/* Audit Modal Overlay */}
-        {selectedVenue && (
-          <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/60 p-4 backdrop-blur-xs animate-fade-in">
+      {/* Audit Modal Overlay */}
+      {selectedVenue && (
+        <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/60 p-4 backdrop-blur-xs animate-fade-in">
             <div className="relative w-full max-w-4xl max-h-[90vh] overflow-y-auto rounded-2xl border border-zinc-200 bg-white shadow-2xl dark:border-zinc-800 dark:bg-zinc-900 animate-scale-up">
               
               {/* Modal Header */}
@@ -316,9 +330,8 @@ export default function AdminVenuesQueuePage() {
               </div>
 
             </div>
-          </div>
-        )}
-      </AdminLayout>
-    </RoleGuard>
+        </div>
+      )}
+    </>
   );
 }

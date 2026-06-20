@@ -1,0 +1,48 @@
+model VenueSlotTemplate {
+  id String @id @default(uuid())
+
+  venueId String @map("venue_id")
+  venue   Venue  @relation(fields: [venueId], references: [id], onDelete: Cascade)
+
+  name      String?
+  startTime String  @map("start_time")
+  endTime   String  @map("end_time")
+
+  isActive Boolean @default(true) @map("is_active")
+
+  createdAt DateTime @default(now()) @map("created_at")
+  updatedAt DateTime @updatedAt @map("updated_at")
+
+  dateSlots VenueDateSlot[]
+
+  @@index([venueId])
+  @@index([venueId, isActive])
+  @@map("venue_slot_templates")
+}
+
+model VenueDateSlot {
+  id String @id @default(uuid())
+
+  venueId String @map("venue_id")
+  venue   Venue  @relation(fields: [venueId], references: [id], onDelete: Cascade)
+
+  slotTemplateId String?             @map("slot_template_id")
+  slotTemplate   VenueSlotTemplate?  @relation(fields: [slotTemplateId], references: [id], onDelete: SetNull)
+
+  date DateTime
+
+  startTime String @map("start_time")
+  endTime   String @map("end_time")
+
+  isAvailable Boolean @default(true) @map("is_available")
+
+  source VenueDateSlotSource @default(TEMPLATE)
+
+  createdAt DateTime @default(now()) @map("created_at")
+  updatedAt DateTime @updatedAt @map("updated_at")
+
+  @@index([venueId, date])
+  @@index([venueId, date, isAvailable])
+  @@index([venueId, slotTemplateId])
+  @@map("venue_date_slots")
+}

@@ -295,10 +295,6 @@ export type EventTypeScalarRelationFilter = {
   isNot?: Prisma.EventTypeWhereInput
 }
 
-export type BoolFieldUpdateOperationsInput = {
-  set?: boolean
-}
-
 export type EventTypeCreateNestedOneWithoutVenuesInput = {
   create?: Prisma.XOR<Prisma.EventTypeCreateWithoutVenuesInput, Prisma.EventTypeUncheckedCreateWithoutVenuesInput>
   connectOrCreate?: Prisma.EventTypeCreateOrConnectWithoutVenuesInput
