@@ -3,6 +3,7 @@ import {
   createVenue,
   deleteVenue,
   getVenue,
+  listMyVenues,
   updateVenue,
 } from "../controllers/venue.controller.js";
 import {
@@ -23,6 +24,7 @@ router.use(authMiddleware);
 router.use(requireRole(["OWNER"]));
 
 router.post("/", createVenue);
+router.get("/", listMyVenues);
 router.get("/:venueId", getVenue);
 router.patch("/:venueId", updateVenue);
 router.delete("/:venueId", deleteVenue);

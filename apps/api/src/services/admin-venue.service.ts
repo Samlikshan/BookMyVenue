@@ -1,5 +1,6 @@
 import { prisma } from "../config/prisma.js";
 import { venueInclude } from "../utils/venue.util.js";
+import type { VenueStatus } from "../generated/prisma/enums.js";
 import type {
   ApproveVenueInput,
   RejectVenueInput,
@@ -87,5 +88,23 @@ export async function rejectVenueService(
     statusCode: 200,
     message: "Venue rejected successfully",
     data: { venue: updated },
+  };
+}
+
+export async function listAdminVenuesService(status?: string): Promise<ServiceResult> {
+  const venues = await prisma.venue.findMany({
+    where: {
+      deletedAt: null,
+      status: status ? (status as VenueStatus) : undefined,
+    },
+    include: venueInclude,
+    orderBy: { createdAt: "desc" },
+  });
+
+  return {
+    success: true,
+    statusCode: 200,
+    message: "Admin venues fetched successfully",
+    data: { venues },
   };
 }

@@ -27,6 +27,7 @@ export const ROUTES = {
     dashboard: "/admin/dashboard",
     owners: "/admin/owners",
     pendingOwners: "/admin/owners/pending",
+    venues: "/admin/venues",
     users: "/admin/users",
   },
 } as const;

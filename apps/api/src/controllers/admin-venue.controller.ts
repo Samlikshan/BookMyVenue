@@ -1,6 +1,7 @@
 import type { Request, Response } from "express";
 import {
   approveVenueService,
+  listAdminVenuesService,
   rejectVenueService,
 } from "../services/admin-venue.service.js";
 import { paramString } from "../utils/params.util.js";
@@ -38,5 +39,11 @@ export async function rejectVenue(req: Request, res: Response) {
 
   const venueId = paramString(req.params.venueId, "venueId");
   const result = await rejectVenueService(venueId, parsed.data);
+  return res.status(result.statusCode).json(result);
+}
+
+export async function listAdminVenues(req: Request, res: Response) {
+  const status = typeof req.query.status === "string" ? req.query.status : undefined;
+  const result = await listAdminVenuesService(status);
   return res.status(result.statusCode).json(result);
 }
