@@ -23,6 +23,8 @@ export type AuthUser = {
   role: UserRole;
   status: UserStatus;
   ownerApplication: OwnerApplication | null;
+  createdAt?: string;
+  updatedAt?: string;
 };
 
 export type LoginInput = {

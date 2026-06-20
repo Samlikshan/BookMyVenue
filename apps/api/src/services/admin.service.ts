@@ -1,5 +1,51 @@
 import { prisma } from "../config/prisma.js";
 
+export async function getOwnersService() {
+  const owners = await prisma.profile.findMany({
+    where: {
+      role: "OWNER",
+    },
+    include: {
+      ownerApplication: true,
+    },
+    orderBy: {
+      createdAt: "desc",
+    },
+  });
+
+  return {
+    success: true,
+    statusCode: 200,
+    message: "Owners fetched successfully",
+    data: {
+      owners,
+    },
+  };
+}
+
+export async function getUsersService() {
+  const users = await prisma.profile.findMany({
+    where: {
+      role: "USER",
+    },
+    include: {
+      ownerApplication: true,
+    },
+    orderBy: {
+      createdAt: "desc",
+    },
+  });
+
+  return {
+    success: true,
+    statusCode: 200,
+    message: "Users fetched successfully",
+    data: {
+      users,
+    },
+  };
+}
+
 export async function getPendingOwnersService() {
   const pendingOwners = await prisma.profile.findMany({
     where: {
