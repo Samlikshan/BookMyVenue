@@ -10,6 +10,9 @@
  */
 export type * from './models/OwnerApplication.js'
 export type * from './models/Profile.js'
+export type * from './models/VenueAvailability.js'
+export type * from './models/VenueSlotTemplate.js'
+export type * from './models/VenueDateSlot.js'
 export type * from './models/EventType.js'
 export type * from './models/VenueEventType.js'
 export type * from './models/VenueAmenity.js'

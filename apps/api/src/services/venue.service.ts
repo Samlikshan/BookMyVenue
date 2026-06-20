@@ -226,6 +226,24 @@ export async function getVenueService(venueId: string): Promise<ServiceResult> {
   };
 }
 
+export async function listPublicVenuesService(): Promise<ServiceResult> {
+  const venues = await prisma.venue.findMany({
+    where: {
+      status: "ACTIVE",
+      deletedAt: null,
+    },
+    include: venueInclude,
+    orderBy: { createdAt: "desc" },
+  });
+
+  return {
+    success: true,
+    statusCode: 200,
+    message: "Public venues fetched successfully",
+    data: { venues },
+  };
+}
+
 export async function updateVenueService(
   venueId: string,
   data: UpdateVenueInput

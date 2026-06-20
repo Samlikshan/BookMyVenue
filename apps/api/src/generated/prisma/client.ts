@@ -52,6 +52,21 @@ export type OwnerApplication = Prisma.OwnerApplicationModel
  */
 export type Profile = Prisma.ProfileModel
 /**
+ * Model VenueAvailability
+ * 
+ */
+export type VenueAvailability = Prisma.VenueAvailabilityModel
+/**
+ * Model VenueSlotTemplate
+ * 
+ */
+export type VenueSlotTemplate = Prisma.VenueSlotTemplateModel
+/**
+ * Model VenueDateSlot
+ * 
+ */
+export type VenueDateSlot = Prisma.VenueDateSlotModel
+/**
  * Model EventType
  * 
  */

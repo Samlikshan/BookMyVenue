@@ -27,6 +27,9 @@ model Venue {
   videos     VenueVideo[]
   amenities  VenueAmenity[]
   eventTypes VenueEventType[]
+  availability VenueAvailability[]
+  slotTemplates VenueSlotTemplate[]
+  dateSlots     VenueDateSlot[]
 
   @@index([ownerId])
   @@index([status])

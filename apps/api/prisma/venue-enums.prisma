@@ -5,3 +5,8 @@ enum VenueStatus {
   REJECTED
   SUSPENDED
 }
+
+enum VenueDateSlotSource {
+  TEMPLATE
+  CUSTOM
+}

@@ -46,3 +46,11 @@ export const VenueStatus = {
 } as const
 
 export type VenueStatus = (typeof VenueStatus)[keyof typeof VenueStatus]
+
+
+export const VenueDateSlotSource = {
+  TEMPLATE: 'TEMPLATE',
+  CUSTOM: 'CUSTOM'
+} as const
+
+export type VenueDateSlotSource = (typeof VenueDateSlotSource)[keyof typeof VenueDateSlotSource]

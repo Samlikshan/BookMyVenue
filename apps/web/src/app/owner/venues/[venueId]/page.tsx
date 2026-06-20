@@ -2,12 +2,10 @@
 
 import axios from "axios";
 import {
-  AlertCircle,
   AlertTriangle,
   ArrowLeft,
   CheckCircle,
   Clock,
-  Building2,
   Image as ImageIcon,
   Plus,
   Star,
@@ -17,7 +15,7 @@ import {
   X,
 } from "lucide-react";
 import Link from "next/link";
-import { useParams, useRouter } from "next/navigation";
+import { useParams, useRouter, useSearchParams } from "next/navigation";
 import { useEffect, useState, type FormEvent, type ChangeEvent } from "react";
 import { toast } from "sonner";
 
@@ -38,6 +36,7 @@ import {
   setPrimaryImageApi,
   updateVenueApi,
 } from "@/features/venues/venues-api";
+import { VenueCalendarAvailabilityManager } from "@/features/venues/venue-calendar-availability-manager";
 import type { EventType, Venue } from "@/features/venues/types";
 import { ROUTES } from "@/lib/routes";
 import { useAppSelector } from "@/store/hooks";
@@ -45,6 +44,7 @@ import { useAppSelector } from "@/store/hooks";
 export default function EditVenuePage() {
   const params = useParams();
   const router = useRouter();
+  const searchParams = useSearchParams();
   const venueId = String(params.venueId ?? "");
 
   const { accessToken } = useAppSelector((state) => state.auth);
@@ -55,7 +55,9 @@ export default function EditVenuePage() {
   const [amenities, setAmenities] = useState<string[]>([]);
   const [amenityInput, setAmenityInput] = useState("");
 
-  const [activeTab, setActiveTab] = useState<"general" | "events" | "media">("general");
+  const [activeTab, setActiveTab] = useState<
+    "general" | "events" | "media" | "availability"
+  >(searchParams.get("tab") === "availability" ? "availability" : "general");
   const [isLoading, setIsLoading] = useState(true);
   const [isSaving, setIsSaving] = useState(false);
   const [isUploading, setIsUploading] = useState(false);
@@ -84,7 +86,9 @@ export default function EditVenuePage() {
   }
 
   useEffect(() => {
-    loadData();
+    // eslint-disable-next-line react-hooks/set-state-in-effect
+    void loadData();
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [accessToken, venueId]);
 
   if (isLoading) {
@@ -496,7 +500,7 @@ export default function EditVenuePage() {
 
           {/* Tabs Navigation */}
           <div className="flex border-b border-zinc-200 dark:border-zinc-800">
-            {(["general", "events", "media"] as const).map((tab) => (
+            {(["general", "events", "media", "availability"] as const).map((tab) => (
               <button
                 key={tab}
                 onClick={() => setActiveTab(tab)}
@@ -504,9 +508,15 @@ export default function EditVenuePage() {
                   activeTab === tab
                     ? "border-zinc-900 text-zinc-900 dark:border-zinc-100 dark:text-white"
                     : "border-transparent text-zinc-500 hover:text-zinc-800 dark:hover:text-zinc-350"
-                }`}
+                  }`}
               >
-                {tab === "general" ? "General Details" : tab === "events" ? "Event Types & Amenities" : "Photos & Media"}
+                {tab === "general"
+                  ? "General Details"
+                  : tab === "events"
+                    ? "Event Types & Amenities"
+                    : tab === "media"
+                      ? "Photos & Media"
+                      : "Availability"}
               </button>
             ))}
           </div>
@@ -906,6 +916,13 @@ export default function EditVenuePage() {
                   )}
                 </div>
               </div>
+            )}
+
+            {activeTab === "availability" && (
+              <VenueCalendarAvailabilityManager
+                venueId={venue.id}
+                accessToken={accessToken}
+              />
             )}
           </div>
         </div>
