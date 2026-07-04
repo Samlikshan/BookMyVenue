@@ -52,6 +52,20 @@ export async function registerOwnerApi(input: RegisterOwnerInput) {
   return response.data.profile;
 }
 
+export async function refreshSessionApi(refreshToken: string) {
+  const response = await apiRequest<AuthSession>("/auth/refresh", {
+    method: "POST",
+    body: { refreshToken },
+    skipAuthRefresh: true,
+  });
+
+  if (!response.data) {
+    throw new Error("Refresh response is missing session data");
+  }
+
+  return response.data;
+}
+
 export async function getCurrentUserApi(accessToken: string) {
   const response = await apiRequest<{ user: AuthUser }>("/auth/me", {
     accessToken,
