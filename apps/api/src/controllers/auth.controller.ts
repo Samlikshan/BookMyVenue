@@ -1,11 +1,13 @@
 import type { Request, Response } from "express";
 import {
   loginService,
+  refreshSessionService,
   registerUserService,
   registerOwnerService,
 } from "../services/auth.service.js";
 import {
   loginSchema,
+  refreshTokenSchema,
   registerUserSchema,
   registerOwnerSchema,
 } from "../validations/auth.validation.js";
@@ -54,6 +56,22 @@ export async function registerUser(req: Request, res: Response) {
   }
 
   const result = await registerUserService(parsed.data);
+
+  return res.status(result.statusCode).json(result);
+}
+
+export async function refreshSession(req: Request, res: Response) {
+  const parsed = refreshTokenSchema.safeParse(req.body);
+
+  if (!parsed.success) {
+    return res.status(400).json({
+      success: false,
+      message: "Validation failed",
+      errors: parsed.error.flatten().fieldErrors,
+    });
+  }
+
+  const result = await refreshSessionService(parsed.data);
 
   return res.status(result.statusCode).json(result);
 }

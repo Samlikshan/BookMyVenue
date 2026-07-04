@@ -3,17 +3,18 @@
 import {
   Building2,
   ChevronRight,
+  ClipboardCheck,
   LayoutDashboard,
   LogOut,
   Menu,
-  ShieldAlert,
-  User,
+  Shield,
+  UserCheck,
   Users,
   X,
 } from "lucide-react";
 import Link from "next/link";
 import { usePathname, useRouter } from "next/navigation";
-import { useState } from "react";
+import { useMemo, useState } from "react";
 import { toast } from "sonner";
 
 import { logout } from "@/features/auth/auth-slice";
@@ -25,6 +26,94 @@ type AdminLayoutProps = {
   children: React.ReactNode;
 };
 
+const navItems = [
+  {
+    name: "Dashboard",
+    href: ROUTES.admin.dashboard,
+    icon: LayoutDashboard,
+  },
+  {
+    name: "Owner Approvals",
+    href: ROUTES.admin.pendingOwners,
+    icon: UserCheck,
+  },
+  {
+    name: "Owners",
+    href: ROUTES.admin.owners,
+    icon: Building2,
+  },
+  {
+    name: "Venues",
+    href: ROUTES.admin.venues,
+    icon: ClipboardCheck,
+  },
+  {
+    name: "Users",
+    href: ROUTES.admin.users,
+    icon: Users,
+  },
+];
+
+const pageTitles: Record<string, string> = {
+  [ROUTES.admin.dashboard]: "Dashboard",
+  [ROUTES.admin.pendingOwners]: "Owner Approvals",
+  [ROUTES.admin.owners]: "Owners",
+  [ROUTES.admin.venues]: "Venues",
+  [ROUTES.admin.users]: "Users",
+};
+
+function getInitials(fullName: string) {
+  return fullName
+    .split(" ")
+    .filter(Boolean)
+    .slice(0, 2)
+    .map((part) => part[0]?.toUpperCase() ?? "")
+    .join("");
+}
+
+function SidebarNav({
+  pathname,
+  onNavigate,
+}: {
+  pathname: string;
+  onNavigate?: () => void;
+}) {
+  return (
+    <nav className="space-y-1">
+      {navItems.map((item) => {
+        const isActive =
+          pathname === item.href ||
+          (item.href !== ROUTES.admin.dashboard &&
+            pathname.startsWith(`${item.href}/`));
+        const Icon = item.icon;
+
+        return (
+          <Link
+            key={item.name}
+            href={item.href}
+            onClick={onNavigate}
+            className={`flex items-center justify-between rounded-lg px-3 py-2.5 text-sm font-medium transition-colors ${
+              isActive
+                ? "bg-zinc-900 text-white dark:bg-zinc-100 dark:text-zinc-900"
+                : "text-zinc-600 hover:bg-zinc-100 hover:text-zinc-900 dark:text-zinc-400 dark:hover:bg-zinc-800 dark:hover:text-zinc-50"
+            }`}
+          >
+            <span className="flex items-center gap-3">
+              <Icon className="size-4" />
+              {item.name}
+            </span>
+            <ChevronRight
+              className={`size-3.5 transition-opacity ${
+                isActive ? "opacity-100" : "opacity-0"
+              }`}
+            />
+          </Link>
+        );
+      })}
+    </nav>
+  );
+}
+
 export function AdminLayout({ children }: AdminLayoutProps) {
   const pathname = usePathname();
   const router = useRouter();
@@ -32,33 +121,19 @@ export function AdminLayout({ children }: AdminLayoutProps) {
   const { user } = useAppSelector((state) => state.auth);
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
 
-  const navItems = [
-    {
-      name: "Dashboard",
-      href: ROUTES.admin.dashboard,
-      icon: LayoutDashboard,
-    },
-    {
-      name: "Owners Approval",
-      href: ROUTES.admin.pendingOwners,
-      icon: Users,
-    },
-    {
-      name: "Owners Directory",
-      href: ROUTES.admin.owners,
-      icon: Building2,
-    },
-    {
-      name: "Venues Approval",
-      href: ROUTES.admin.venues,
-      icon: Building2,
-    },
-    {
-      name: "Users Directory",
-      href: ROUTES.admin.users,
-      icon: User,
-    },
-  ];
+  const pageTitle = useMemo(() => {
+    if (pageTitles[pathname]) {
+      return pageTitles[pathname];
+    }
+
+    const match = navItems.find(
+      (item) =>
+        item.href !== ROUTES.admin.dashboard &&
+        pathname.startsWith(item.href),
+    );
+
+    return match?.name ?? "Admin";
+  }, [pathname]);
 
   function handleLogout() {
     dispatch(logout());
@@ -68,187 +143,120 @@ export function AdminLayout({ children }: AdminLayoutProps) {
 
   return (
     <div className="flex min-h-screen bg-zinc-50 font-sans dark:bg-zinc-950">
-      {/* Desktop Sidebar */}
       <aside className="fixed inset-y-0 left-0 z-20 hidden w-64 border-r border-zinc-200 bg-white dark:border-zinc-800 dark:bg-zinc-900 md:block">
-        <div className="flex h-full flex-col justify-between p-6">
+        <div className="flex h-full flex-col justify-between p-5">
           <div className="space-y-6">
-            <div className="flex items-center gap-2 px-2">
-              <div className="flex size-9 items-center justify-center rounded-lg bg-zinc-900 text-white dark:bg-zinc-100 dark:text-zinc-900">
-                <ShieldAlert className="size-5 animate-pulse" />
+            <Link href={ROUTES.admin.dashboard} className="flex items-center gap-3 px-1">
+              <div className="flex size-9 items-center justify-center rounded-xl bg-zinc-900 text-white dark:bg-zinc-100 dark:text-zinc-900">
+                <Shield className="size-4.5" />
               </div>
               <div>
-                <h2 className="text-sm font-bold tracking-tight text-zinc-900 dark:text-zinc-50">
+                <p className="text-sm font-bold text-zinc-900 dark:text-zinc-50">
                   BookMyVenue
-                </h2>
+                </p>
                 <p className="text-xs text-zinc-500 dark:text-zinc-400">
-                  Admin Control Panel
+                  Admin panel
                 </p>
               </div>
-            </div>
+            </Link>
 
-            <nav className="space-y-1">
-              {navItems.map((item) => {
-                const isActive = pathname === item.href || pathname.startsWith(item.href + "/");
-                const Icon = item.icon;
-                return (
-                  <Link
-                    key={item.name}
-                    href={item.href}
-                    className={`flex items-center justify-between rounded-lg px-3 py-2 text-sm font-medium transition-all duration-200 group ${
-                      isActive
-                        ? "bg-zinc-900 text-white shadow-sm dark:bg-zinc-100 dark:text-zinc-900"
-                        : "text-zinc-600 hover:bg-zinc-100 hover:text-zinc-900 dark:text-zinc-400 dark:hover:bg-zinc-800 dark:hover:text-zinc-50"
-                    }`}
-                  >
-                    <div className="flex items-center gap-3">
-                      <Icon className="size-4.5" />
-                      {item.name}
-                    </div>
-                    <ChevronRight className={`size-3.5 opacity-0 transition-transform duration-200 group-hover:opacity-100 group-hover:translate-x-0.5 ${isActive ? "opacity-100" : ""}`} />
-                  </Link>
-                );
-              })}
-            </nav>
+            <SidebarNav pathname={pathname} />
           </div>
 
-          <div className="space-y-4">
-            <div className="border-t border-zinc-100 pt-4 dark:border-zinc-800">
-              <div className="flex items-center gap-3 px-2">
-                <div className="flex size-10 items-center justify-center rounded-full bg-zinc-100 text-zinc-700 dark:bg-zinc-800 dark:text-zinc-300">
-                  <User className="size-5" />
-                </div>
-                <div className="overflow-hidden">
-                  <p className="truncate text-xs font-semibold text-zinc-900 dark:text-zinc-50">
-                    {user?.fullName}
-                  </p>
-                  <p className="truncate text-2xs text-zinc-500 dark:text-zinc-400">
-                    Platform Administrator
-                  </p>
-                </div>
+          <div className="space-y-3 border-t border-zinc-100 pt-4 dark:border-zinc-800">
+            <div className="flex items-center gap-3 px-1">
+              <span className="flex size-9 items-center justify-center rounded-full bg-zinc-100 text-xs font-bold text-zinc-700 dark:bg-zinc-800 dark:text-zinc-300">
+                {user ? getInitials(user.fullName) : "A"}
+              </span>
+              <div className="min-w-0">
+                <p className="truncate text-sm font-semibold text-zinc-900 dark:text-zinc-50">
+                  {user?.fullName}
+                </p>
+                <p className="truncate text-xs text-zinc-500 dark:text-zinc-400">
+                  Administrator
+                </p>
               </div>
             </div>
             <Button
               onClick={handleLogout}
               variant="outline"
-              className="w-full justify-start gap-3 border-zinc-200 text-zinc-600 hover:bg-red-50 hover:text-red-600 dark:border-zinc-800 dark:text-zinc-400 dark:hover:bg-red-950/30 dark:hover:text-red-400"
+              className="w-full justify-start gap-2"
             >
               <LogOut className="size-4" />
-              Sign Out
+              Sign out
             </Button>
           </div>
         </div>
       </aside>
 
-      {/* Main Content Area */}
       <div className="flex flex-1 flex-col md:pl-64">
-        {/* Top Header */}
-        <header className="sticky top-0 z-10 flex h-16 items-center justify-between border-b border-zinc-200 bg-white/80 px-6 backdrop-blur-md dark:border-zinc-800 dark:bg-zinc-900/80">
-          <div className="flex items-center gap-4">
-            <button
-              onClick={() => setIsMobileMenuOpen(true)}
-              className="rounded-lg p-1 text-zinc-500 hover:bg-zinc-100 dark:text-zinc-400 dark:hover:bg-zinc-800 md:hidden"
-            >
-              <Menu className="size-6" />
-            </button>
-            <div className="hidden md:block">
-              <span className="text-sm font-semibold text-zinc-900 dark:text-zinc-100">
-                System Console
-              </span>
-            </div>
-          </div>
-
+        <header className="sticky top-0 z-10 flex h-14 items-center justify-between border-b border-zinc-200 bg-white/90 px-4 backdrop-blur-md dark:border-zinc-800 dark:bg-zinc-950/90 sm:px-6">
           <div className="flex items-center gap-3">
-            <span className="inline-flex items-center rounded-full bg-zinc-900 text-white dark:bg-zinc-100 dark:text-zinc-900 px-2.5 py-0.5 text-xs font-semibold">
-              Root Admin
-            </span>
+            <button
+              type="button"
+              onClick={() => setIsMobileMenuOpen(true)}
+              className="rounded-lg p-2 text-zinc-500 hover:bg-zinc-100 dark:hover:bg-zinc-800 md:hidden"
+              aria-label="Open menu"
+            >
+              <Menu className="size-5" />
+            </button>
+            <div>
+              <p className="text-sm font-semibold text-zinc-900 dark:text-zinc-100">
+                {pageTitle}
+              </p>
+              <Link
+                href={ROUTES.home}
+                className="text-xs text-zinc-500 hover:text-zinc-700 dark:text-zinc-400 dark:hover:text-zinc-300"
+              >
+                Back to site
+              </Link>
+            </div>
           </div>
         </header>
 
-        {/* Content Wrapper */}
-        <main className="flex-1 p-6 md:p-8">{children}</main>
+        <main className="flex-1 p-4 sm:p-6 lg:p-8">{children}</main>
       </div>
 
-      {/* Mobile Menu Backdrop */}
-      {isMobileMenuOpen && (
+      {isMobileMenuOpen ? (
         <div
           onClick={() => setIsMobileMenuOpen(false)}
-          className="fixed inset-0 z-30 bg-black/40 backdrop-blur-xs md:hidden"
+          className="fixed inset-0 z-30 bg-black/40 md:hidden"
         />
-      )}
+      ) : null}
 
-      {/* Mobile Drawer */}
       <div
-        className={`fixed inset-y-0 left-0 z-40 w-72 bg-white p-6 shadow-xl transition-transform duration-300 dark:bg-zinc-900 md:hidden ${
+        className={`fixed inset-y-0 left-0 z-40 w-72 border-r border-zinc-200 bg-white p-5 shadow-xl transition-transform duration-300 dark:border-zinc-800 dark:bg-zinc-900 md:hidden ${
           isMobileMenuOpen ? "translate-x-0" : "-translate-x-full"
         }`}
       >
         <div className="flex h-full flex-col justify-between">
           <div className="space-y-6">
             <div className="flex items-center justify-between">
-              <div className="flex items-center gap-2">
-                <div className="flex size-8 items-center justify-center rounded-lg bg-zinc-900 text-white dark:bg-zinc-100 dark:text-zinc-900">
-                  <ShieldAlert className="size-4.5" />
-                </div>
-                <span className="text-sm font-bold tracking-tight text-zinc-900 dark:text-zinc-50">
-                  BookMyVenue
-                </span>
-              </div>
+              <span className="text-sm font-bold text-zinc-900 dark:text-zinc-50">
+                Admin menu
+              </span>
               <button
+                type="button"
                 onClick={() => setIsMobileMenuOpen(false)}
-                className="rounded-lg p-1 text-zinc-500 hover:bg-zinc-100 dark:text-zinc-400 dark:hover:bg-zinc-800"
+                className="rounded-lg p-1 text-zinc-500 hover:bg-zinc-100 dark:hover:bg-zinc-800"
               >
                 <X className="size-5" />
               </button>
             </div>
-
-            <nav className="space-y-1">
-              {navItems.map((item) => {
-                const isActive = pathname === item.href || pathname.startsWith(item.href + "/");
-                const Icon = item.icon;
-                return (
-                  <Link
-                    key={item.name}
-                    href={item.href}
-                    onClick={() => setIsMobileMenuOpen(false)}
-                    className={`flex items-center gap-3 rounded-lg px-3 py-2 text-sm font-medium transition-all duration-200 ${
-                      isActive
-                        ? "bg-zinc-900 text-white dark:bg-zinc-100 dark:text-zinc-900"
-                        : "text-zinc-600 hover:bg-zinc-100 hover:text-zinc-900 dark:text-zinc-400 dark:hover:bg-zinc-800 dark:hover:text-zinc-50"
-                    }`}
-                  >
-                    <Icon className="size-4.5" />
-                    {item.name}
-                  </Link>
-                );
-              })}
-            </nav>
+            <SidebarNav
+              pathname={pathname}
+              onNavigate={() => setIsMobileMenuOpen(false)}
+            />
           </div>
 
-          <div className="space-y-4">
-            <div className="border-t border-zinc-100 pt-4 dark:border-zinc-800">
-              <div className="flex items-center gap-3 px-2">
-                <div className="flex size-10 items-center justify-center rounded-full bg-zinc-100 text-zinc-700 dark:bg-zinc-800 dark:text-zinc-300">
-                  <User className="size-5" />
-                </div>
-                <div className="overflow-hidden">
-                  <p className="truncate text-xs font-semibold text-zinc-900 dark:text-zinc-50">
-                    {user?.fullName}
-                  </p>
-                  <p className="truncate text-2xs text-zinc-500 dark:text-zinc-400">
-                    Platform Administrator
-                  </p>
-                </div>
-              </div>
-            </div>
-            <Button
-              onClick={handleLogout}
-              variant="outline"
-              className="w-full justify-start gap-3 border-zinc-200 text-zinc-600 hover:bg-red-50 hover:text-red-600 dark:border-zinc-800 dark:text-zinc-400 dark:hover:bg-red-950/30 dark:hover:text-red-400"
-            >
-              <LogOut className="size-4" />
-              Sign Out
-            </Button>
-          </div>
+          <Button
+            onClick={handleLogout}
+            variant="outline"
+            className="w-full justify-start gap-2"
+          >
+            <LogOut className="size-4" />
+            Sign out
+          </Button>
         </div>
       </div>
     </div>

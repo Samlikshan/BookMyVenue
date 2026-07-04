@@ -2,9 +2,42 @@ import { prisma } from "../config/prisma.js";
 import { supabaseAdmin } from "../config/supabase.js";
 import type {
   LoginInput,
+  RefreshTokenInput,
   RegisterUserInput,
   RegisterOwnerInput,
 } from "../validations/auth.validation.js";
+
+function toAuthSession(
+  session: {
+    access_token: string;
+    refresh_token: string;
+    expires_in: number;
+  },
+  profile: {
+    id: string;
+    fullName: string;
+    email: string;
+    phone: string | null;
+    role: string;
+    status: string;
+    ownerApplication: unknown;
+  }
+) {
+  return {
+    accessToken: session.access_token,
+    refreshToken: session.refresh_token,
+    expiresIn: session.expires_in,
+    user: {
+      id: profile.id,
+      fullName: profile.fullName,
+      email: profile.email,
+      phone: profile.phone ?? "",
+      role: profile.role,
+      status: profile.status,
+      ownerApplication: profile.ownerApplication,
+    },
+  };
+}
 
 export async function registerOwnerService(data: RegisterOwnerInput) {
   const existingProfile = await prisma.profile.findUnique({
@@ -117,20 +150,45 @@ export async function loginService(data: LoginInput) {
     success: true,
     statusCode: 200,
     message: "Login successful",
-    data: {
-      accessToken: authData.session.access_token,
-      refreshToken: authData.session.refresh_token,
-      expiresIn: authData.session.expires_in,
-      user: {
-        id: profile.id,
-        fullName: profile.fullName,
-        email: profile.email,
-        phone: profile.phone,
-        role: profile.role,
-        status: profile.status,
-        ownerApplication: profile.ownerApplication,
-      },
+    data: toAuthSession(authData.session, profile),
+  };
+}
+
+export async function refreshSessionService(data: RefreshTokenInput) {
+  const { data: authData, error } = await supabaseAdmin.auth.refreshSession({
+    refresh_token: data.refreshToken,
+  });
+
+  if (error || !authData.session || !authData.user) {
+    return {
+      success: false,
+      statusCode: 401,
+      message: "Invalid or expired refresh token",
+    };
+  }
+
+  const profile = await prisma.profile.findUnique({
+    where: {
+      id: authData.user.id,
     },
+    include: {
+      ownerApplication: true,
+    },
+  });
+
+  if (!profile) {
+    return {
+      success: false,
+      statusCode: 401,
+      message: "Profile not found",
+    };
+  }
+
+  return {
+    success: true,
+    statusCode: 200,
+    message: "Session refreshed successfully",
+    data: toAuthSession(authData.session, profile),
   };
 }
 
