@@ -44,6 +44,7 @@ type TemplateFormRow = {
   name: string;
   startTime: string;
   endTime: string;
+  priceOverride: string;
 };
 
 type DateSlotForm = {
@@ -52,7 +53,18 @@ type DateSlotForm = {
   startTime: string;
   endTime: string;
   isAvailable: boolean;
+  priceOverride: string;
 };
+
+function formatSlotPrice(price: number | null) {
+  return price == null
+    ? "Venue default price"
+    : new Intl.NumberFormat("en-IN", {
+        style: "currency",
+        currency: "INR",
+        maximumFractionDigits: 2,
+      }).format(price);
+}
 
 const WEEKDAY_LABELS = ["Sun", "Mon", "Tue", "Wed", "Thu", "Fri", "Sat"];
 
@@ -152,7 +164,7 @@ export function VenueBulkAvailabilitySetup({
   const [isSaving, setIsSaving] = useState(false);
   const [isTemplateModalOpen, setIsTemplateModalOpen] = useState(false);
   const [templateRows, setTemplateRows] = useState<TemplateFormRow[]>([
-    { id: crypto.randomUUID(), name: "", startTime: "", endTime: "" },
+    { id: crypto.randomUUID(), name: "", startTime: "", endTime: "", priceOverride: "" },
   ]);
   const [dayModalDate, setDayModalDate] = useState<string | null>(null);
   const [dateSlotForm, setDateSlotForm] = useState<DateSlotForm | null>(null);
@@ -231,7 +243,7 @@ export function VenueBulkAvailabilitySetup({
 
   function openTemplateModal() {
     setTemplateRows([
-      { id: crypto.randomUUID(), name: "", startTime: "", endTime: "" },
+      { id: crypto.randomUUID(), name: "", startTime: "", endTime: "", priceOverride: "" },
     ]);
     setIsTemplateModalOpen(true);
   }
@@ -274,6 +286,7 @@ export function VenueBulkAvailabilitySetup({
             name: row.name.trim() || null,
             startTime: row.startTime,
             endTime: row.endTime,
+            ...(row.priceOverride ? { priceOverride: Number(row.priceOverride) } : {}),
           },
           accessToken
         );
@@ -369,6 +382,7 @@ export function VenueBulkAvailabilitySetup({
       startTime: "",
       endTime: "",
       isAvailable: true,
+      priceOverride: "",
     });
     setDayModalDate(dateString);
   }
@@ -380,6 +394,7 @@ export function VenueBulkAvailabilitySetup({
       startTime: slot.startTime,
       endTime: slot.endTime,
       isAvailable: slot.isAvailable,
+      priceOverride: slot.priceOverride?.toString() ?? "",
     });
   }
 
@@ -406,6 +421,9 @@ export function VenueBulkAvailabilitySetup({
             date: dayModalDate,
             startTime: dateSlotForm.startTime,
             endTime: dateSlotForm.endTime,
+            ...(dateSlotForm.priceOverride
+              ? { priceOverride: Number(dateSlotForm.priceOverride) }
+              : {}),
           },
           accessToken
         );
@@ -418,6 +436,9 @@ export function VenueBulkAvailabilitySetup({
             startTime: dateSlotForm.startTime,
             endTime: dateSlotForm.endTime,
             isAvailable: dateSlotForm.isAvailable,
+            priceOverride: dateSlotForm.priceOverride
+              ? Number(dateSlotForm.priceOverride)
+              : null,
           },
           accessToken
         );
@@ -646,6 +667,9 @@ export function VenueBulkAvailabilitySetup({
                         <div className="mt-1 text-xs font-semibold text-zinc-500 dark:text-zinc-400">
                           {template.startTime} - {template.endTime}
                         </div>
+                        <div className="mt-1 text-xs font-bold text-zinc-700 dark:text-zinc-300">
+                          {formatSlotPrice(template.priceOverride)}
+                        </div>
                       </div>
                       {selected && (
                         <span className="flex size-6 items-center justify-center rounded-full bg-zinc-900 text-white dark:bg-zinc-100 dark:text-zinc-900">
@@ -767,7 +791,7 @@ export function VenueBulkAvailabilitySetup({
               {templateRows.map((row, index) => (
                 <div
                   key={row.id}
-                  className="grid gap-3 rounded-xl border border-zinc-200 p-4 dark:border-zinc-800 md:grid-cols-[1fr_140px_140px_40px]"
+                  className="grid gap-3 rounded-xl border border-zinc-200 p-4 dark:border-zinc-800 md:grid-cols-[minmax(140px,1fr)_120px_120px_140px_40px]"
                 >
                   <div className="space-y-2">
                     <Label htmlFor={`slotName-${row.id}`}>Name</Label>
@@ -822,6 +846,26 @@ export function VenueBulkAvailabilitySetup({
                       required
                     />
                   </div>
+                  <div className="space-y-2">
+                    <Label htmlFor={`slotPrice-${row.id}`}>Custom price (INR)</Label>
+                    <Input
+                      id={`slotPrice-${row.id}`}
+                      type="number"
+                      min="0.01"
+                      step="0.01"
+                      value={row.priceOverride}
+                      placeholder="Venue default"
+                      onChange={(event) =>
+                        setTemplateRows((prev) =>
+                          prev.map((item) =>
+                            item.id === row.id
+                              ? { ...item, priceOverride: event.target.value }
+                              : item
+                          )
+                        )
+                      }
+                    />
+                  </div>
                   <div className="flex items-end">
                     <Button
                       type="button"
@@ -858,6 +902,7 @@ export function VenueBulkAvailabilitySetup({
                       name: "",
                       startTime: "",
                       endTime: "",
+                      priceOverride: "",
                     },
                   ])
                 }
@@ -933,6 +978,9 @@ export function VenueBulkAvailabilitySetup({
                         {slot.source.toLowerCase()} /{" "}
                         {slot.isAvailable ? "available" : "unavailable"}
                       </div>
+                      <div className="mt-1 text-xs font-bold text-zinc-700 dark:text-zinc-300">
+                        {formatSlotPrice(slot.priceOverride)}
+                      </div>
                     </div>
                     <div className="flex shrink-0 gap-1">
                       <Button
@@ -995,6 +1043,24 @@ export function VenueBulkAvailabilitySetup({
                       required
                     />
                   </div>
+                </div>
+
+                <div className="mt-4 space-y-2">
+                  <Label htmlFor="bulkDateSlotPrice">Custom price for this slot (INR)</Label>
+                  <Input
+                    id="bulkDateSlotPrice"
+                    type="number"
+                    min="0.01"
+                    step="0.01"
+                    value={dateSlotForm.priceOverride}
+                    placeholder="Venue default"
+                    onChange={(event) =>
+                      setDateSlotForm((prev) =>
+                        prev ? { ...prev, priceOverride: event.target.value } : prev
+                      )
+                    }
+                  />
+                  <p className="text-xs text-zinc-500">Leave empty to use the venue default price.</p>
                 </div>
 
                 {dateSlotForm.mode === "edit" && (

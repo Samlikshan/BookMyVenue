@@ -37,6 +37,7 @@ type DateSlotForm = {
   startTime: string;
   endTime: string;
   isAvailable: boolean;
+  priceOverride: string;
 };
 
 const WEEKDAY_LABELS = ["Sun", "Mon", "Tue", "Wed", "Thu", "Fri", "Sat"];
@@ -112,6 +113,16 @@ function formatHumanDate(dateString: string) {
 
 function normalizeSlotDate(slotDate: string) {
   return slotDate.slice(0, 10);
+}
+
+function formatSlotPrice(price: number | null) {
+  return price == null
+    ? "Venue default price"
+    : new Intl.NumberFormat("en-IN", {
+        style: "currency",
+        currency: "INR",
+        maximumFractionDigits: 2,
+      }).format(price);
 }
 
 export function VenueCalendarAvailabilityManager({
@@ -202,6 +213,7 @@ export function VenueCalendarAvailabilityManager({
       startTime: "",
       endTime: "",
       isAvailable: true,
+      priceOverride: "",
     });
     setDayModalDate(dateString);
   }
@@ -213,6 +225,7 @@ export function VenueCalendarAvailabilityManager({
       startTime: slot.startTime,
       endTime: slot.endTime,
       isAvailable: slot.isAvailable,
+      priceOverride: slot.priceOverride?.toString() ?? "",
     });
   }
 
@@ -239,6 +252,7 @@ export function VenueCalendarAvailabilityManager({
             date: dayModalDate,
             startTime: dateSlotForm.startTime,
             endTime: dateSlotForm.endTime,
+            ...(dateSlotForm.priceOverride ? { priceOverride: Number(dateSlotForm.priceOverride) } : {}),
           },
           accessToken
         );
@@ -251,6 +265,7 @@ export function VenueCalendarAvailabilityManager({
             startTime: dateSlotForm.startTime,
             endTime: dateSlotForm.endTime,
             isAvailable: dateSlotForm.isAvailable,
+            priceOverride: dateSlotForm.priceOverride ? Number(dateSlotForm.priceOverride) : null,
           },
           accessToken
         );
@@ -474,6 +489,9 @@ export function VenueCalendarAvailabilityManager({
                         {slot.source.toLowerCase()} /{" "}
                         {slot.isAvailable ? "available" : "unavailable"}
                       </div>
+                      <div className="mt-1 text-xs font-bold text-zinc-700 dark:text-zinc-300">
+                        {formatSlotPrice(slot.priceOverride)}
+                      </div>
                     </div>
                     <div className="flex shrink-0 gap-1">
                       <Button
@@ -536,6 +554,12 @@ export function VenueCalendarAvailabilityManager({
                       required
                     />
                   </div>
+                </div>
+
+                <div className="mt-4 space-y-2">
+                  <Label htmlFor="dateSlotPrice">Custom price for this slot (INR)</Label>
+                  <Input id="dateSlotPrice" type="number" min="0.01" step="0.01" value={dateSlotForm.priceOverride} onChange={(event) => setDateSlotForm((prev) => prev ? { ...prev, priceOverride: event.target.value } : prev)} />
+                  <p className="text-xs text-zinc-500">Leave empty to use the venue default price.</p>
                 </div>
 
                 {dateSlotForm.mode === "edit" && (

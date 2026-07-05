@@ -20,8 +20,18 @@ export type VenueDateSlotModel = runtime.Types.Result.DefaultSelection<Prisma.$V
 
 export type AggregateVenueDateSlot = {
   _count: VenueDateSlotCountAggregateOutputType | null
+  _avg: VenueDateSlotAvgAggregateOutputType | null
+  _sum: VenueDateSlotSumAggregateOutputType | null
   _min: VenueDateSlotMinAggregateOutputType | null
   _max: VenueDateSlotMaxAggregateOutputType | null
+}
+
+export type VenueDateSlotAvgAggregateOutputType = {
+  priceOverride: runtime.Decimal | null
+}
+
+export type VenueDateSlotSumAggregateOutputType = {
+  priceOverride: runtime.Decimal | null
 }
 
 export type VenueDateSlotMinAggregateOutputType = {
@@ -31,6 +41,7 @@ export type VenueDateSlotMinAggregateOutputType = {
   date: Date | null
   startTime: string | null
   endTime: string | null
+  priceOverride: runtime.Decimal | null
   isAvailable: boolean | null
   source: $Enums.VenueDateSlotSource | null
   createdAt: Date | null
@@ -44,6 +55,7 @@ export type VenueDateSlotMaxAggregateOutputType = {
   date: Date | null
   startTime: string | null
   endTime: string | null
+  priceOverride: runtime.Decimal | null
   isAvailable: boolean | null
   source: $Enums.VenueDateSlotSource | null
   createdAt: Date | null
@@ -57,6 +69,7 @@ export type VenueDateSlotCountAggregateOutputType = {
   date: number
   startTime: number
   endTime: number
+  priceOverride: number
   isAvailable: number
   source: number
   createdAt: number
@@ -65,6 +78,14 @@ export type VenueDateSlotCountAggregateOutputType = {
 }
 
 
+export type VenueDateSlotAvgAggregateInputType = {
+  priceOverride?: true
+}
+
+export type VenueDateSlotSumAggregateInputType = {
+  priceOverride?: true
+}
+
 export type VenueDateSlotMinAggregateInputType = {
   id?: true
   venueId?: true
@@ -72,6 +93,7 @@ export type VenueDateSlotMinAggregateInputType = {
   date?: true
   startTime?: true
   endTime?: true
+  priceOverride?: true
   isAvailable?: true
   source?: true
   createdAt?: true
@@ -85,6 +107,7 @@ export type VenueDateSlotMaxAggregateInputType = {
   date?: true
   startTime?: true
   endTime?: true
+  priceOverride?: true
   isAvailable?: true
   source?: true
   createdAt?: true
@@ -98,6 +121,7 @@ export type VenueDateSlotCountAggregateInputType = {
   date?: true
   startTime?: true
   endTime?: true
+  priceOverride?: true
   isAvailable?: true
   source?: true
   createdAt?: true
@@ -143,6 +167,18 @@ export type VenueDateSlotAggregateArgs<ExtArgs extends runtime.Types.Extensions.
   /**
    * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
    * 
+   * Select which fields to average
+  **/
+  _avg?: VenueDateSlotAvgAggregateInputType
+  /**
+   * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+   * 
+   * Select which fields to sum
+  **/
+  _sum?: VenueDateSlotSumAggregateInputType
+  /**
+   * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+   * 
    * Select which fields to find the minimum value
   **/
   _min?: VenueDateSlotMinAggregateInputType
@@ -173,6 +209,8 @@ export type VenueDateSlotGroupByArgs<ExtArgs extends runtime.Types.Extensions.In
   take?: number
   skip?: number
   _count?: VenueDateSlotCountAggregateInputType | true
+  _avg?: VenueDateSlotAvgAggregateInputType
+  _sum?: VenueDateSlotSumAggregateInputType
   _min?: VenueDateSlotMinAggregateInputType
   _max?: VenueDateSlotMaxAggregateInputType
 }
@@ -184,11 +222,14 @@ export type VenueDateSlotGroupByOutputType = {
   date: Date
   startTime: string
   endTime: string
+  priceOverride: runtime.Decimal | null
   isAvailable: boolean
   source: $Enums.VenueDateSlotSource
   createdAt: Date
   updatedAt: Date
   _count: VenueDateSlotCountAggregateOutputType | null
+  _avg: VenueDateSlotAvgAggregateOutputType | null
+  _sum: VenueDateSlotSumAggregateOutputType | null
   _min: VenueDateSlotMinAggregateOutputType | null
   _max: VenueDateSlotMaxAggregateOutputType | null
 }
@@ -218,6 +259,7 @@ export type VenueDateSlotWhereInput = {
   date?: Prisma.DateTimeFilter<"VenueDateSlot"> | Date | string
   startTime?: Prisma.StringFilter<"VenueDateSlot"> | string
   endTime?: Prisma.StringFilter<"VenueDateSlot"> | string
+  priceOverride?: Prisma.DecimalNullableFilter<"VenueDateSlot"> | runtime.Decimal | runtime.DecimalJsLike | number | string | null
   isAvailable?: Prisma.BoolFilter<"VenueDateSlot"> | boolean
   source?: Prisma.EnumVenueDateSlotSourceFilter<"VenueDateSlot"> | $Enums.VenueDateSlotSource
   createdAt?: Prisma.DateTimeFilter<"VenueDateSlot"> | Date | string
@@ -233,6 +275,7 @@ export type VenueDateSlotOrderByWithRelationInput = {
   date?: Prisma.SortOrder
   startTime?: Prisma.SortOrder
   endTime?: Prisma.SortOrder
+  priceOverride?: Prisma.SortOrderInput | Prisma.SortOrder
   isAvailable?: Prisma.SortOrder
   source?: Prisma.SortOrder
   createdAt?: Prisma.SortOrder
@@ -251,6 +294,7 @@ export type VenueDateSlotWhereUniqueInput = Prisma.AtLeast<{
   date?: Prisma.DateTimeFilter<"VenueDateSlot"> | Date | string
   startTime?: Prisma.StringFilter<"VenueDateSlot"> | string
   endTime?: Prisma.StringFilter<"VenueDateSlot"> | string
+  priceOverride?: Prisma.DecimalNullableFilter<"VenueDateSlot"> | runtime.Decimal | runtime.DecimalJsLike | number | string | null
   isAvailable?: Prisma.BoolFilter<"VenueDateSlot"> | boolean
   source?: Prisma.EnumVenueDateSlotSourceFilter<"VenueDateSlot"> | $Enums.VenueDateSlotSource
   createdAt?: Prisma.DateTimeFilter<"VenueDateSlot"> | Date | string
@@ -266,13 +310,16 @@ export type VenueDateSlotOrderByWithAggregationInput = {
   date?: Prisma.SortOrder
   startTime?: Prisma.SortOrder
   endTime?: Prisma.SortOrder
+  priceOverride?: Prisma.SortOrderInput | Prisma.SortOrder
   isAvailable?: Prisma.SortOrder
   source?: Prisma.SortOrder
   createdAt?: Prisma.SortOrder
   updatedAt?: Prisma.SortOrder
   _count?: Prisma.VenueDateSlotCountOrderByAggregateInput
+  _avg?: Prisma.VenueDateSlotAvgOrderByAggregateInput
   _max?: Prisma.VenueDateSlotMaxOrderByAggregateInput
   _min?: Prisma.VenueDateSlotMinOrderByAggregateInput
+  _sum?: Prisma.VenueDateSlotSumOrderByAggregateInput
 }
 
 export type VenueDateSlotScalarWhereWithAggregatesInput = {
@@ -285,6 +332,7 @@ export type VenueDateSlotScalarWhereWithAggregatesInput = {
   date?: Prisma.DateTimeWithAggregatesFilter<"VenueDateSlot"> | Date | string
   startTime?: Prisma.StringWithAggregatesFilter<"VenueDateSlot"> | string
   endTime?: Prisma.StringWithAggregatesFilter<"VenueDateSlot"> | string
+  priceOverride?: Prisma.DecimalNullableWithAggregatesFilter<"VenueDateSlot"> | runtime.Decimal | runtime.DecimalJsLike | number | string | null
   isAvailable?: Prisma.BoolWithAggregatesFilter<"VenueDateSlot"> | boolean
   source?: Prisma.EnumVenueDateSlotSourceWithAggregatesFilter<"VenueDateSlot"> | $Enums.VenueDateSlotSource
   createdAt?: Prisma.DateTimeWithAggregatesFilter<"VenueDateSlot"> | Date | string
@@ -296,6 +344,7 @@ export type VenueDateSlotCreateInput = {
   date: Date | string
   startTime: string
   endTime: string
+  priceOverride?: runtime.Decimal | runtime.DecimalJsLike | number | string | null
   isAvailable?: boolean
   source?: $Enums.VenueDateSlotSource
   createdAt?: Date | string
@@ -311,6 +360,7 @@ export type VenueDateSlotUncheckedCreateInput = {
   date: Date | string
   startTime: string
   endTime: string
+  priceOverride?: runtime.Decimal | runtime.DecimalJsLike | number | string | null
   isAvailable?: boolean
   source?: $Enums.VenueDateSlotSource
   createdAt?: Date | string
@@ -322,6 +372,7 @@ export type VenueDateSlotUpdateInput = {
   date?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   startTime?: Prisma.StringFieldUpdateOperationsInput | string
   endTime?: Prisma.StringFieldUpdateOperationsInput | string
+  priceOverride?: Prisma.NullableDecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string | null
   isAvailable?: Prisma.BoolFieldUpdateOperationsInput | boolean
   source?: Prisma.EnumVenueDateSlotSourceFieldUpdateOperationsInput | $Enums.VenueDateSlotSource
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
@@ -337,6 +388,7 @@ export type VenueDateSlotUncheckedUpdateInput = {
   date?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   startTime?: Prisma.StringFieldUpdateOperationsInput | string
   endTime?: Prisma.StringFieldUpdateOperationsInput | string
+  priceOverride?: Prisma.NullableDecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string | null
   isAvailable?: Prisma.BoolFieldUpdateOperationsInput | boolean
   source?: Prisma.EnumVenueDateSlotSourceFieldUpdateOperationsInput | $Enums.VenueDateSlotSource
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
@@ -350,6 +402,7 @@ export type VenueDateSlotCreateManyInput = {
   date: Date | string
   startTime: string
   endTime: string
+  priceOverride?: runtime.Decimal | runtime.DecimalJsLike | number | string | null
   isAvailable?: boolean
   source?: $Enums.VenueDateSlotSource
   createdAt?: Date | string
@@ -361,6 +414,7 @@ export type VenueDateSlotUpdateManyMutationInput = {
   date?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   startTime?: Prisma.StringFieldUpdateOperationsInput | string
   endTime?: Prisma.StringFieldUpdateOperationsInput | string
+  priceOverride?: Prisma.NullableDecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string | null
   isAvailable?: Prisma.BoolFieldUpdateOperationsInput | boolean
   source?: Prisma.EnumVenueDateSlotSourceFieldUpdateOperationsInput | $Enums.VenueDateSlotSource
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
@@ -374,6 +428,7 @@ export type VenueDateSlotUncheckedUpdateManyInput = {
   date?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   startTime?: Prisma.StringFieldUpdateOperationsInput | string
   endTime?: Prisma.StringFieldUpdateOperationsInput | string
+  priceOverride?: Prisma.NullableDecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string | null
   isAvailable?: Prisma.BoolFieldUpdateOperationsInput | boolean
   source?: Prisma.EnumVenueDateSlotSourceFieldUpdateOperationsInput | $Enums.VenueDateSlotSource
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
@@ -397,10 +452,15 @@ export type VenueDateSlotCountOrderByAggregateInput = {
   date?: Prisma.SortOrder
   startTime?: Prisma.SortOrder
   endTime?: Prisma.SortOrder
+  priceOverride?: Prisma.SortOrder
   isAvailable?: Prisma.SortOrder
   source?: Prisma.SortOrder
   createdAt?: Prisma.SortOrder
   updatedAt?: Prisma.SortOrder
+}
+
+export type VenueDateSlotAvgOrderByAggregateInput = {
+  priceOverride?: Prisma.SortOrder
 }
 
 export type VenueDateSlotMaxOrderByAggregateInput = {
@@ -410,6 +470,7 @@ export type VenueDateSlotMaxOrderByAggregateInput = {
   date?: Prisma.SortOrder
   startTime?: Prisma.SortOrder
   endTime?: Prisma.SortOrder
+  priceOverride?: Prisma.SortOrder
   isAvailable?: Prisma.SortOrder
   source?: Prisma.SortOrder
   createdAt?: Prisma.SortOrder
@@ -423,10 +484,15 @@ export type VenueDateSlotMinOrderByAggregateInput = {
   date?: Prisma.SortOrder
   startTime?: Prisma.SortOrder
   endTime?: Prisma.SortOrder
+  priceOverride?: Prisma.SortOrder
   isAvailable?: Prisma.SortOrder
   source?: Prisma.SortOrder
   createdAt?: Prisma.SortOrder
   updatedAt?: Prisma.SortOrder
+}
+
+export type VenueDateSlotSumOrderByAggregateInput = {
+  priceOverride?: Prisma.SortOrder
 }
 
 export type VenueDateSlotCreateNestedManyWithoutSlotTemplateInput = {
@@ -522,6 +588,7 @@ export type VenueDateSlotCreateWithoutSlotTemplateInput = {
   date: Date | string
   startTime: string
   endTime: string
+  priceOverride?: runtime.Decimal | runtime.DecimalJsLike | number | string | null
   isAvailable?: boolean
   source?: $Enums.VenueDateSlotSource
   createdAt?: Date | string
@@ -535,6 +602,7 @@ export type VenueDateSlotUncheckedCreateWithoutSlotTemplateInput = {
   date: Date | string
   startTime: string
   endTime: string
+  priceOverride?: runtime.Decimal | runtime.DecimalJsLike | number | string | null
   isAvailable?: boolean
   source?: $Enums.VenueDateSlotSource
   createdAt?: Date | string
@@ -577,6 +645,7 @@ export type VenueDateSlotScalarWhereInput = {
   date?: Prisma.DateTimeFilter<"VenueDateSlot"> | Date | string
   startTime?: Prisma.StringFilter<"VenueDateSlot"> | string
   endTime?: Prisma.StringFilter<"VenueDateSlot"> | string
+  priceOverride?: Prisma.DecimalNullableFilter<"VenueDateSlot"> | runtime.Decimal | runtime.DecimalJsLike | number | string | null
   isAvailable?: Prisma.BoolFilter<"VenueDateSlot"> | boolean
   source?: Prisma.EnumVenueDateSlotSourceFilter<"VenueDateSlot"> | $Enums.VenueDateSlotSource
   createdAt?: Prisma.DateTimeFilter<"VenueDateSlot"> | Date | string
@@ -588,6 +657,7 @@ export type VenueDateSlotCreateWithoutVenueInput = {
   date: Date | string
   startTime: string
   endTime: string
+  priceOverride?: runtime.Decimal | runtime.DecimalJsLike | number | string | null
   isAvailable?: boolean
   source?: $Enums.VenueDateSlotSource
   createdAt?: Date | string
@@ -601,6 +671,7 @@ export type VenueDateSlotUncheckedCreateWithoutVenueInput = {
   date: Date | string
   startTime: string
   endTime: string
+  priceOverride?: runtime.Decimal | runtime.DecimalJsLike | number | string | null
   isAvailable?: boolean
   source?: $Enums.VenueDateSlotSource
   createdAt?: Date | string
@@ -639,6 +710,7 @@ export type VenueDateSlotCreateManySlotTemplateInput = {
   date: Date | string
   startTime: string
   endTime: string
+  priceOverride?: runtime.Decimal | runtime.DecimalJsLike | number | string | null
   isAvailable?: boolean
   source?: $Enums.VenueDateSlotSource
   createdAt?: Date | string
@@ -650,6 +722,7 @@ export type VenueDateSlotUpdateWithoutSlotTemplateInput = {
   date?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   startTime?: Prisma.StringFieldUpdateOperationsInput | string
   endTime?: Prisma.StringFieldUpdateOperationsInput | string
+  priceOverride?: Prisma.NullableDecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string | null
   isAvailable?: Prisma.BoolFieldUpdateOperationsInput | boolean
   source?: Prisma.EnumVenueDateSlotSourceFieldUpdateOperationsInput | $Enums.VenueDateSlotSource
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
@@ -663,6 +736,7 @@ export type VenueDateSlotUncheckedUpdateWithoutSlotTemplateInput = {
   date?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   startTime?: Prisma.StringFieldUpdateOperationsInput | string
   endTime?: Prisma.StringFieldUpdateOperationsInput | string
+  priceOverride?: Prisma.NullableDecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string | null
   isAvailable?: Prisma.BoolFieldUpdateOperationsInput | boolean
   source?: Prisma.EnumVenueDateSlotSourceFieldUpdateOperationsInput | $Enums.VenueDateSlotSource
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
@@ -675,6 +749,7 @@ export type VenueDateSlotUncheckedUpdateManyWithoutSlotTemplateInput = {
   date?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   startTime?: Prisma.StringFieldUpdateOperationsInput | string
   endTime?: Prisma.StringFieldUpdateOperationsInput | string
+  priceOverride?: Prisma.NullableDecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string | null
   isAvailable?: Prisma.BoolFieldUpdateOperationsInput | boolean
   source?: Prisma.EnumVenueDateSlotSourceFieldUpdateOperationsInput | $Enums.VenueDateSlotSource
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
@@ -687,6 +762,7 @@ export type VenueDateSlotCreateManyVenueInput = {
   date: Date | string
   startTime: string
   endTime: string
+  priceOverride?: runtime.Decimal | runtime.DecimalJsLike | number | string | null
   isAvailable?: boolean
   source?: $Enums.VenueDateSlotSource
   createdAt?: Date | string
@@ -698,6 +774,7 @@ export type VenueDateSlotUpdateWithoutVenueInput = {
   date?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   startTime?: Prisma.StringFieldUpdateOperationsInput | string
   endTime?: Prisma.StringFieldUpdateOperationsInput | string
+  priceOverride?: Prisma.NullableDecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string | null
   isAvailable?: Prisma.BoolFieldUpdateOperationsInput | boolean
   source?: Prisma.EnumVenueDateSlotSourceFieldUpdateOperationsInput | $Enums.VenueDateSlotSource
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
@@ -711,6 +788,7 @@ export type VenueDateSlotUncheckedUpdateWithoutVenueInput = {
   date?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   startTime?: Prisma.StringFieldUpdateOperationsInput | string
   endTime?: Prisma.StringFieldUpdateOperationsInput | string
+  priceOverride?: Prisma.NullableDecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string | null
   isAvailable?: Prisma.BoolFieldUpdateOperationsInput | boolean
   source?: Prisma.EnumVenueDateSlotSourceFieldUpdateOperationsInput | $Enums.VenueDateSlotSource
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
@@ -723,6 +801,7 @@ export type VenueDateSlotUncheckedUpdateManyWithoutVenueInput = {
   date?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   startTime?: Prisma.StringFieldUpdateOperationsInput | string
   endTime?: Prisma.StringFieldUpdateOperationsInput | string
+  priceOverride?: Prisma.NullableDecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string | null
   isAvailable?: Prisma.BoolFieldUpdateOperationsInput | boolean
   source?: Prisma.EnumVenueDateSlotSourceFieldUpdateOperationsInput | $Enums.VenueDateSlotSource
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
@@ -738,6 +817,7 @@ export type VenueDateSlotSelect<ExtArgs extends runtime.Types.Extensions.Interna
   date?: boolean
   startTime?: boolean
   endTime?: boolean
+  priceOverride?: boolean
   isAvailable?: boolean
   source?: boolean
   createdAt?: boolean
@@ -753,6 +833,7 @@ export type VenueDateSlotSelectCreateManyAndReturn<ExtArgs extends runtime.Types
   date?: boolean
   startTime?: boolean
   endTime?: boolean
+  priceOverride?: boolean
   isAvailable?: boolean
   source?: boolean
   createdAt?: boolean
@@ -768,6 +849,7 @@ export type VenueDateSlotSelectUpdateManyAndReturn<ExtArgs extends runtime.Types
   date?: boolean
   startTime?: boolean
   endTime?: boolean
+  priceOverride?: boolean
   isAvailable?: boolean
   source?: boolean
   createdAt?: boolean
@@ -783,13 +865,14 @@ export type VenueDateSlotSelectScalar = {
   date?: boolean
   startTime?: boolean
   endTime?: boolean
+  priceOverride?: boolean
   isAvailable?: boolean
   source?: boolean
   createdAt?: boolean
   updatedAt?: boolean
 }
 
-export type VenueDateSlotOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "venueId" | "slotTemplateId" | "date" | "startTime" | "endTime" | "isAvailable" | "source" | "createdAt" | "updatedAt", ExtArgs["result"]["venueDateSlot"]>
+export type VenueDateSlotOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "venueId" | "slotTemplateId" | "date" | "startTime" | "endTime" | "priceOverride" | "isAvailable" | "source" | "createdAt" | "updatedAt", ExtArgs["result"]["venueDateSlot"]>
 export type VenueDateSlotInclude<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   venue?: boolean | Prisma.VenueDefaultArgs<ExtArgs>
   slotTemplate?: boolean | Prisma.VenueDateSlot$slotTemplateArgs<ExtArgs>
@@ -816,6 +899,7 @@ export type $VenueDateSlotPayload<ExtArgs extends runtime.Types.Extensions.Inter
     date: Date
     startTime: string
     endTime: string
+    priceOverride: runtime.Decimal | null
     isAvailable: boolean
     source: $Enums.VenueDateSlotSource
     createdAt: Date
@@ -1251,6 +1335,7 @@ export interface VenueDateSlotFieldRefs {
   readonly date: Prisma.FieldRef<"VenueDateSlot", 'DateTime'>
   readonly startTime: Prisma.FieldRef<"VenueDateSlot", 'String'>
   readonly endTime: Prisma.FieldRef<"VenueDateSlot", 'String'>
+  readonly priceOverride: Prisma.FieldRef<"VenueDateSlot", 'Decimal'>
   readonly isAvailable: Prisma.FieldRef<"VenueDateSlot", 'Boolean'>
   readonly source: Prisma.FieldRef<"VenueDateSlot", 'VenueDateSlotSource'>
   readonly createdAt: Prisma.FieldRef<"VenueDateSlot", 'DateTime'>

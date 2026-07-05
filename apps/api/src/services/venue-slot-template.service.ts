@@ -79,6 +79,7 @@ export async function createVenueSlotTemplateService(
           name: payload.name ?? null,
           startTime: payload.startTime,
           endTime: payload.endTime,
+          priceOverride: payload.priceOverride ?? null,
         },
       });
     });
@@ -149,6 +150,9 @@ export async function updateVenueSlotTemplateService(
           ...(payload.endTime !== undefined ? { endTime: payload.endTime } : {}),
           ...(payload.isActive !== undefined
             ? { isActive: payload.isActive }
+            : {}),
+          ...(payload.priceOverride !== undefined
+            ? { priceOverride: payload.priceOverride }
             : {}),
         },
       });

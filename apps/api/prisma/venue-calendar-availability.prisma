@@ -7,6 +7,7 @@ model VenueSlotTemplate {
   name      String?
   startTime String  @map("start_time")
   endTime   String  @map("end_time")
+  priceOverride Decimal? @map("price_override") @db.Decimal(10, 2)
 
   isActive Boolean @default(true) @map("is_active")
 
@@ -33,6 +34,7 @@ model VenueDateSlot {
 
   startTime String @map("start_time")
   endTime   String @map("end_time")
+  priceOverride Decimal? @map("price_override") @db.Decimal(10, 2)
 
   isAvailable Boolean @default(true) @map("is_available")
 

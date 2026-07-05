@@ -114,10 +114,11 @@ async function validateSubmitReadiness(venueId: string) {
 }
 
 export async function createVenueService(
+  ownerId: string,
   data: CreateVenueInput
 ): Promise<ServiceResult> {
   const owner = await prisma.profile.findUnique({
-    where: { id: data.ownerId },
+    where: { id: ownerId },
   });
 
   if (!owner) {
@@ -140,7 +141,7 @@ export async function createVenueService(
   const venue = await prisma.$transaction(async (tx) => {
     const created = await tx.venue.create({
       data: {
-        ownerId: data.ownerId,
+        ownerId,
         name: data.name,
         slug,
         shortDescription: data.shortDescription ?? null,
@@ -155,6 +156,8 @@ export async function createVenueService(
         country: data.country ?? "India",
         postalCode: data.postalCode ?? null,
         status: (data.status as VenueStatus) ?? "DRAFT",
+        basePricePerSlot: data.basePricePerSlot,
+        currency: data.currency ?? "INR",
       },
     });
 
@@ -245,11 +248,12 @@ export async function listPublicVenuesService(): Promise<ServiceResult> {
 }
 
 export async function updateVenueService(
+  ownerId: string,
   venueId: string,
   data: UpdateVenueInput
 ): Promise<ServiceResult> {
   const venue = await prisma.venue.findFirst({
-    where: { id: venueId, deletedAt: null },
+    where: { id: venueId, ownerId, deletedAt: null },
   });
 
   if (!venue) {
@@ -316,6 +320,10 @@ export async function updateVenueService(
         ...(data.state !== undefined ? { state: data.state } : {}),
         ...(data.country !== undefined ? { country: data.country } : {}),
         ...(data.postalCode !== undefined ? { postalCode: data.postalCode } : {}),
+        ...(data.basePricePerSlot !== undefined
+          ? { basePricePerSlot: data.basePricePerSlot }
+          : {}),
+        ...(data.currency !== undefined ? { currency: data.currency } : {}),
         ...(data.status !== undefined ? { status: data.status as VenueStatus } : {}),
         ...(data.status === "PENDING_APPROVAL"
           ? { rejectionReason: null }
@@ -345,9 +353,9 @@ export async function updateVenueService(
   };
 }
 
-export async function deleteVenueService(venueId: string): Promise<ServiceResult> {
+export async function deleteVenueService(ownerId: string, venueId: string): Promise<ServiceResult> {
   const venue = await prisma.venue.findFirst({
-    where: { id: venueId, deletedAt: null },
+    where: { id: venueId, ownerId, deletedAt: null },
   });
 
   if (!venue) {

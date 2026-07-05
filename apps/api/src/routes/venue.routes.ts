@@ -37,10 +37,12 @@ import {
 } from "../controllers/venue-media.controller.js";
 import { authMiddleware } from "../middlewares/auth.middleware.js";
 import { requireRole } from "../middlewares/require-role.middleware.js";
+import { getAvailability } from "../controllers/booking.controller.js";
 
 const router = Router();
 
 router.get("/public", listPublicVenues);
+router.get("/:venueId/bookable-availability", getAvailability);
 
 router.use(authMiddleware);
 router.use(requireRole(["OWNER"]));

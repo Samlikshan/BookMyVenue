@@ -29,11 +29,13 @@ export type AggregateVenue = {
 export type VenueAvgAggregateOutputType = {
   capacityMin: number | null
   capacityMax: number | null
+  basePricePerSlot: runtime.Decimal | null
 }
 
 export type VenueSumAggregateOutputType = {
   capacityMin: number | null
   capacityMax: number | null
+  basePricePerSlot: runtime.Decimal | null
 }
 
 export type VenueMinAggregateOutputType = {
@@ -59,6 +61,8 @@ export type VenueMinAggregateOutputType = {
   deletedAt: Date | null
   createdAt: Date | null
   updatedAt: Date | null
+  basePricePerSlot: runtime.Decimal | null
+  currency: string | null
 }
 
 export type VenueMaxAggregateOutputType = {
@@ -84,6 +88,8 @@ export type VenueMaxAggregateOutputType = {
   deletedAt: Date | null
   createdAt: Date | null
   updatedAt: Date | null
+  basePricePerSlot: runtime.Decimal | null
+  currency: string | null
 }
 
 export type VenueCountAggregateOutputType = {
@@ -109,6 +115,8 @@ export type VenueCountAggregateOutputType = {
   deletedAt: number
   createdAt: number
   updatedAt: number
+  basePricePerSlot: number
+  currency: number
   _all: number
 }
 
@@ -116,11 +124,13 @@ export type VenueCountAggregateOutputType = {
 export type VenueAvgAggregateInputType = {
   capacityMin?: true
   capacityMax?: true
+  basePricePerSlot?: true
 }
 
 export type VenueSumAggregateInputType = {
   capacityMin?: true
   capacityMax?: true
+  basePricePerSlot?: true
 }
 
 export type VenueMinAggregateInputType = {
@@ -146,6 +156,8 @@ export type VenueMinAggregateInputType = {
   deletedAt?: true
   createdAt?: true
   updatedAt?: true
+  basePricePerSlot?: true
+  currency?: true
 }
 
 export type VenueMaxAggregateInputType = {
@@ -171,6 +183,8 @@ export type VenueMaxAggregateInputType = {
   deletedAt?: true
   createdAt?: true
   updatedAt?: true
+  basePricePerSlot?: true
+  currency?: true
 }
 
 export type VenueCountAggregateInputType = {
@@ -196,6 +210,8 @@ export type VenueCountAggregateInputType = {
   deletedAt?: true
   createdAt?: true
   updatedAt?: true
+  basePricePerSlot?: true
+  currency?: true
   _all?: true
 }
 
@@ -308,6 +324,8 @@ export type VenueGroupByOutputType = {
   deletedAt: Date | null
   createdAt: Date
   updatedAt: Date
+  basePricePerSlot: runtime.Decimal
+  currency: string
   _count: VenueCountAggregateOutputType | null
   _avg: VenueAvgAggregateOutputType | null
   _sum: VenueSumAggregateOutputType | null
@@ -356,6 +374,8 @@ export type VenueWhereInput = {
   deletedAt?: Prisma.DateTimeNullableFilter<"Venue"> | Date | string | null
   createdAt?: Prisma.DateTimeFilter<"Venue"> | Date | string
   updatedAt?: Prisma.DateTimeFilter<"Venue"> | Date | string
+  basePricePerSlot?: Prisma.DecimalFilter<"Venue"> | runtime.Decimal | runtime.DecimalJsLike | number | string
+  currency?: Prisma.StringFilter<"Venue"> | string
   owner?: Prisma.XOR<Prisma.ProfileScalarRelationFilter, Prisma.ProfileWhereInput>
   images?: Prisma.VenueImageListRelationFilter
   videos?: Prisma.VenueVideoListRelationFilter
@@ -364,6 +384,8 @@ export type VenueWhereInput = {
   availability?: Prisma.VenueAvailabilityListRelationFilter
   slotTemplates?: Prisma.VenueSlotTemplateListRelationFilter
   dateSlots?: Prisma.VenueDateSlotListRelationFilter
+  bookings?: Prisma.BookingListRelationFilter
+  bookingSlots?: Prisma.BookingSlotListRelationFilter
 }
 
 export type VenueOrderByWithRelationInput = {
@@ -389,6 +411,8 @@ export type VenueOrderByWithRelationInput = {
   deletedAt?: Prisma.SortOrderInput | Prisma.SortOrder
   createdAt?: Prisma.SortOrder
   updatedAt?: Prisma.SortOrder
+  basePricePerSlot?: Prisma.SortOrder
+  currency?: Prisma.SortOrder
   owner?: Prisma.ProfileOrderByWithRelationInput
   images?: Prisma.VenueImageOrderByRelationAggregateInput
   videos?: Prisma.VenueVideoOrderByRelationAggregateInput
@@ -397,6 +421,8 @@ export type VenueOrderByWithRelationInput = {
   availability?: Prisma.VenueAvailabilityOrderByRelationAggregateInput
   slotTemplates?: Prisma.VenueSlotTemplateOrderByRelationAggregateInput
   dateSlots?: Prisma.VenueDateSlotOrderByRelationAggregateInput
+  bookings?: Prisma.BookingOrderByRelationAggregateInput
+  bookingSlots?: Prisma.BookingSlotOrderByRelationAggregateInput
 }
 
 export type VenueWhereUniqueInput = Prisma.AtLeast<{
@@ -425,6 +451,8 @@ export type VenueWhereUniqueInput = Prisma.AtLeast<{
   deletedAt?: Prisma.DateTimeNullableFilter<"Venue"> | Date | string | null
   createdAt?: Prisma.DateTimeFilter<"Venue"> | Date | string
   updatedAt?: Prisma.DateTimeFilter<"Venue"> | Date | string
+  basePricePerSlot?: Prisma.DecimalFilter<"Venue"> | runtime.Decimal | runtime.DecimalJsLike | number | string
+  currency?: Prisma.StringFilter<"Venue"> | string
   owner?: Prisma.XOR<Prisma.ProfileScalarRelationFilter, Prisma.ProfileWhereInput>
   images?: Prisma.VenueImageListRelationFilter
   videos?: Prisma.VenueVideoListRelationFilter
@@ -433,6 +461,8 @@ export type VenueWhereUniqueInput = Prisma.AtLeast<{
   availability?: Prisma.VenueAvailabilityListRelationFilter
   slotTemplates?: Prisma.VenueSlotTemplateListRelationFilter
   dateSlots?: Prisma.VenueDateSlotListRelationFilter
+  bookings?: Prisma.BookingListRelationFilter
+  bookingSlots?: Prisma.BookingSlotListRelationFilter
 }, "id" | "slug">
 
 export type VenueOrderByWithAggregationInput = {
@@ -458,6 +488,8 @@ export type VenueOrderByWithAggregationInput = {
   deletedAt?: Prisma.SortOrderInput | Prisma.SortOrder
   createdAt?: Prisma.SortOrder
   updatedAt?: Prisma.SortOrder
+  basePricePerSlot?: Prisma.SortOrder
+  currency?: Prisma.SortOrder
   _count?: Prisma.VenueCountOrderByAggregateInput
   _avg?: Prisma.VenueAvgOrderByAggregateInput
   _max?: Prisma.VenueMaxOrderByAggregateInput
@@ -491,6 +523,8 @@ export type VenueScalarWhereWithAggregatesInput = {
   deletedAt?: Prisma.DateTimeNullableWithAggregatesFilter<"Venue"> | Date | string | null
   createdAt?: Prisma.DateTimeWithAggregatesFilter<"Venue"> | Date | string
   updatedAt?: Prisma.DateTimeWithAggregatesFilter<"Venue"> | Date | string
+  basePricePerSlot?: Prisma.DecimalWithAggregatesFilter<"Venue"> | runtime.Decimal | runtime.DecimalJsLike | number | string
+  currency?: Prisma.StringWithAggregatesFilter<"Venue"> | string
 }
 
 export type VenueCreateInput = {
@@ -515,6 +549,8 @@ export type VenueCreateInput = {
   deletedAt?: Date | string | null
   createdAt?: Date | string
   updatedAt?: Date | string
+  basePricePerSlot: runtime.Decimal | runtime.DecimalJsLike | number | string
+  currency?: string
   owner: Prisma.ProfileCreateNestedOneWithoutVenuesInput
   images?: Prisma.VenueImageCreateNestedManyWithoutVenueInput
   videos?: Prisma.VenueVideoCreateNestedManyWithoutVenueInput
@@ -523,6 +559,8 @@ export type VenueCreateInput = {
   availability?: Prisma.VenueAvailabilityCreateNestedManyWithoutVenueInput
   slotTemplates?: Prisma.VenueSlotTemplateCreateNestedManyWithoutVenueInput
   dateSlots?: Prisma.VenueDateSlotCreateNestedManyWithoutVenueInput
+  bookings?: Prisma.BookingCreateNestedManyWithoutVenueInput
+  bookingSlots?: Prisma.BookingSlotCreateNestedManyWithoutVenueInput
 }
 
 export type VenueUncheckedCreateInput = {
@@ -548,6 +586,8 @@ export type VenueUncheckedCreateInput = {
   deletedAt?: Date | string | null
   createdAt?: Date | string
   updatedAt?: Date | string
+  basePricePerSlot: runtime.Decimal | runtime.DecimalJsLike | number | string
+  currency?: string
   images?: Prisma.VenueImageUncheckedCreateNestedManyWithoutVenueInput
   videos?: Prisma.VenueVideoUncheckedCreateNestedManyWithoutVenueInput
   amenities?: Prisma.VenueAmenityUncheckedCreateNestedManyWithoutVenueInput
@@ -555,6 +595,8 @@ export type VenueUncheckedCreateInput = {
   availability?: Prisma.VenueAvailabilityUncheckedCreateNestedManyWithoutVenueInput
   slotTemplates?: Prisma.VenueSlotTemplateUncheckedCreateNestedManyWithoutVenueInput
   dateSlots?: Prisma.VenueDateSlotUncheckedCreateNestedManyWithoutVenueInput
+  bookings?: Prisma.BookingUncheckedCreateNestedManyWithoutVenueInput
+  bookingSlots?: Prisma.BookingSlotUncheckedCreateNestedManyWithoutVenueInput
 }
 
 export type VenueUpdateInput = {
@@ -579,6 +621,8 @@ export type VenueUpdateInput = {
   deletedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  basePricePerSlot?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
+  currency?: Prisma.StringFieldUpdateOperationsInput | string
   owner?: Prisma.ProfileUpdateOneRequiredWithoutVenuesNestedInput
   images?: Prisma.VenueImageUpdateManyWithoutVenueNestedInput
   videos?: Prisma.VenueVideoUpdateManyWithoutVenueNestedInput
@@ -587,6 +631,8 @@ export type VenueUpdateInput = {
   availability?: Prisma.VenueAvailabilityUpdateManyWithoutVenueNestedInput
   slotTemplates?: Prisma.VenueSlotTemplateUpdateManyWithoutVenueNestedInput
   dateSlots?: Prisma.VenueDateSlotUpdateManyWithoutVenueNestedInput
+  bookings?: Prisma.BookingUpdateManyWithoutVenueNestedInput
+  bookingSlots?: Prisma.BookingSlotUpdateManyWithoutVenueNestedInput
 }
 
 export type VenueUncheckedUpdateInput = {
@@ -612,6 +658,8 @@ export type VenueUncheckedUpdateInput = {
   deletedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  basePricePerSlot?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
+  currency?: Prisma.StringFieldUpdateOperationsInput | string
   images?: Prisma.VenueImageUncheckedUpdateManyWithoutVenueNestedInput
   videos?: Prisma.VenueVideoUncheckedUpdateManyWithoutVenueNestedInput
   amenities?: Prisma.VenueAmenityUncheckedUpdateManyWithoutVenueNestedInput
@@ -619,6 +667,8 @@ export type VenueUncheckedUpdateInput = {
   availability?: Prisma.VenueAvailabilityUncheckedUpdateManyWithoutVenueNestedInput
   slotTemplates?: Prisma.VenueSlotTemplateUncheckedUpdateManyWithoutVenueNestedInput
   dateSlots?: Prisma.VenueDateSlotUncheckedUpdateManyWithoutVenueNestedInput
+  bookings?: Prisma.BookingUncheckedUpdateManyWithoutVenueNestedInput
+  bookingSlots?: Prisma.BookingSlotUncheckedUpdateManyWithoutVenueNestedInput
 }
 
 export type VenueCreateManyInput = {
@@ -644,6 +694,8 @@ export type VenueCreateManyInput = {
   deletedAt?: Date | string | null
   createdAt?: Date | string
   updatedAt?: Date | string
+  basePricePerSlot: runtime.Decimal | runtime.DecimalJsLike | number | string
+  currency?: string
 }
 
 export type VenueUpdateManyMutationInput = {
@@ -668,6 +720,8 @@ export type VenueUpdateManyMutationInput = {
   deletedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  basePricePerSlot?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
+  currency?: Prisma.StringFieldUpdateOperationsInput | string
 }
 
 export type VenueUncheckedUpdateManyInput = {
@@ -693,6 +747,13 @@ export type VenueUncheckedUpdateManyInput = {
   deletedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  basePricePerSlot?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
+  currency?: Prisma.StringFieldUpdateOperationsInput | string
+}
+
+export type VenueScalarRelationFilter = {
+  is?: Prisma.VenueWhereInput
+  isNot?: Prisma.VenueWhereInput
 }
 
 export type VenueListRelationFilter = {
@@ -703,11 +764,6 @@ export type VenueListRelationFilter = {
 
 export type VenueOrderByRelationAggregateInput = {
   _count?: Prisma.SortOrder
-}
-
-export type VenueScalarRelationFilter = {
-  is?: Prisma.VenueWhereInput
-  isNot?: Prisma.VenueWhereInput
 }
 
 export type VenueCountOrderByAggregateInput = {
@@ -733,11 +789,14 @@ export type VenueCountOrderByAggregateInput = {
   deletedAt?: Prisma.SortOrder
   createdAt?: Prisma.SortOrder
   updatedAt?: Prisma.SortOrder
+  basePricePerSlot?: Prisma.SortOrder
+  currency?: Prisma.SortOrder
 }
 
 export type VenueAvgOrderByAggregateInput = {
   capacityMin?: Prisma.SortOrder
   capacityMax?: Prisma.SortOrder
+  basePricePerSlot?: Prisma.SortOrder
 }
 
 export type VenueMaxOrderByAggregateInput = {
@@ -763,6 +822,8 @@ export type VenueMaxOrderByAggregateInput = {
   deletedAt?: Prisma.SortOrder
   createdAt?: Prisma.SortOrder
   updatedAt?: Prisma.SortOrder
+  basePricePerSlot?: Prisma.SortOrder
+  currency?: Prisma.SortOrder
 }
 
 export type VenueMinOrderByAggregateInput = {
@@ -788,11 +849,42 @@ export type VenueMinOrderByAggregateInput = {
   deletedAt?: Prisma.SortOrder
   createdAt?: Prisma.SortOrder
   updatedAt?: Prisma.SortOrder
+  basePricePerSlot?: Prisma.SortOrder
+  currency?: Prisma.SortOrder
 }
 
 export type VenueSumOrderByAggregateInput = {
   capacityMin?: Prisma.SortOrder
   capacityMax?: Prisma.SortOrder
+  basePricePerSlot?: Prisma.SortOrder
+}
+
+export type VenueCreateNestedOneWithoutBookingsInput = {
+  create?: Prisma.XOR<Prisma.VenueCreateWithoutBookingsInput, Prisma.VenueUncheckedCreateWithoutBookingsInput>
+  connectOrCreate?: Prisma.VenueCreateOrConnectWithoutBookingsInput
+  connect?: Prisma.VenueWhereUniqueInput
+}
+
+export type VenueUpdateOneRequiredWithoutBookingsNestedInput = {
+  create?: Prisma.XOR<Prisma.VenueCreateWithoutBookingsInput, Prisma.VenueUncheckedCreateWithoutBookingsInput>
+  connectOrCreate?: Prisma.VenueCreateOrConnectWithoutBookingsInput
+  upsert?: Prisma.VenueUpsertWithoutBookingsInput
+  connect?: Prisma.VenueWhereUniqueInput
+  update?: Prisma.XOR<Prisma.XOR<Prisma.VenueUpdateToOneWithWhereWithoutBookingsInput, Prisma.VenueUpdateWithoutBookingsInput>, Prisma.VenueUncheckedUpdateWithoutBookingsInput>
+}
+
+export type VenueCreateNestedOneWithoutBookingSlotsInput = {
+  create?: Prisma.XOR<Prisma.VenueCreateWithoutBookingSlotsInput, Prisma.VenueUncheckedCreateWithoutBookingSlotsInput>
+  connectOrCreate?: Prisma.VenueCreateOrConnectWithoutBookingSlotsInput
+  connect?: Prisma.VenueWhereUniqueInput
+}
+
+export type VenueUpdateOneRequiredWithoutBookingSlotsNestedInput = {
+  create?: Prisma.XOR<Prisma.VenueCreateWithoutBookingSlotsInput, Prisma.VenueUncheckedCreateWithoutBookingSlotsInput>
+  connectOrCreate?: Prisma.VenueCreateOrConnectWithoutBookingSlotsInput
+  upsert?: Prisma.VenueUpsertWithoutBookingSlotsInput
+  connect?: Prisma.VenueWhereUniqueInput
+  update?: Prisma.XOR<Prisma.XOR<Prisma.VenueUpdateToOneWithWhereWithoutBookingSlotsInput, Prisma.VenueUpdateWithoutBookingSlotsInput>, Prisma.VenueUncheckedUpdateWithoutBookingSlotsInput>
 }
 
 export type VenueCreateNestedManyWithoutOwnerInput = {
@@ -947,6 +1039,318 @@ export type NullableIntFieldUpdateOperationsInput = {
   divide?: number
 }
 
+export type VenueCreateWithoutBookingsInput = {
+  id?: string
+  name: string
+  slug: string
+  shortDescription?: string | null
+  description?: string | null
+  status?: $Enums.VenueStatus
+  capacityMin?: number | null
+  capacityMax?: number | null
+  addressLine1: string
+  addressLine2?: string | null
+  city: string
+  district?: string | null
+  state: string
+  country?: string
+  postalCode?: string | null
+  rejectionReason?: string | null
+  reviewedBy?: string | null
+  reviewedAt?: Date | string | null
+  deletedAt?: Date | string | null
+  createdAt?: Date | string
+  updatedAt?: Date | string
+  basePricePerSlot: runtime.Decimal | runtime.DecimalJsLike | number | string
+  currency?: string
+  owner: Prisma.ProfileCreateNestedOneWithoutVenuesInput
+  images?: Prisma.VenueImageCreateNestedManyWithoutVenueInput
+  videos?: Prisma.VenueVideoCreateNestedManyWithoutVenueInput
+  amenities?: Prisma.VenueAmenityCreateNestedManyWithoutVenueInput
+  eventTypes?: Prisma.VenueEventTypeCreateNestedManyWithoutVenueInput
+  availability?: Prisma.VenueAvailabilityCreateNestedManyWithoutVenueInput
+  slotTemplates?: Prisma.VenueSlotTemplateCreateNestedManyWithoutVenueInput
+  dateSlots?: Prisma.VenueDateSlotCreateNestedManyWithoutVenueInput
+  bookingSlots?: Prisma.BookingSlotCreateNestedManyWithoutVenueInput
+}
+
+export type VenueUncheckedCreateWithoutBookingsInput = {
+  id?: string
+  ownerId: string
+  name: string
+  slug: string
+  shortDescription?: string | null
+  description?: string | null
+  status?: $Enums.VenueStatus
+  capacityMin?: number | null
+  capacityMax?: number | null
+  addressLine1: string
+  addressLine2?: string | null
+  city: string
+  district?: string | null
+  state: string
+  country?: string
+  postalCode?: string | null
+  rejectionReason?: string | null
+  reviewedBy?: string | null
+  reviewedAt?: Date | string | null
+  deletedAt?: Date | string | null
+  createdAt?: Date | string
+  updatedAt?: Date | string
+  basePricePerSlot: runtime.Decimal | runtime.DecimalJsLike | number | string
+  currency?: string
+  images?: Prisma.VenueImageUncheckedCreateNestedManyWithoutVenueInput
+  videos?: Prisma.VenueVideoUncheckedCreateNestedManyWithoutVenueInput
+  amenities?: Prisma.VenueAmenityUncheckedCreateNestedManyWithoutVenueInput
+  eventTypes?: Prisma.VenueEventTypeUncheckedCreateNestedManyWithoutVenueInput
+  availability?: Prisma.VenueAvailabilityUncheckedCreateNestedManyWithoutVenueInput
+  slotTemplates?: Prisma.VenueSlotTemplateUncheckedCreateNestedManyWithoutVenueInput
+  dateSlots?: Prisma.VenueDateSlotUncheckedCreateNestedManyWithoutVenueInput
+  bookingSlots?: Prisma.BookingSlotUncheckedCreateNestedManyWithoutVenueInput
+}
+
+export type VenueCreateOrConnectWithoutBookingsInput = {
+  where: Prisma.VenueWhereUniqueInput
+  create: Prisma.XOR<Prisma.VenueCreateWithoutBookingsInput, Prisma.VenueUncheckedCreateWithoutBookingsInput>
+}
+
+export type VenueUpsertWithoutBookingsInput = {
+  update: Prisma.XOR<Prisma.VenueUpdateWithoutBookingsInput, Prisma.VenueUncheckedUpdateWithoutBookingsInput>
+  create: Prisma.XOR<Prisma.VenueCreateWithoutBookingsInput, Prisma.VenueUncheckedCreateWithoutBookingsInput>
+  where?: Prisma.VenueWhereInput
+}
+
+export type VenueUpdateToOneWithWhereWithoutBookingsInput = {
+  where?: Prisma.VenueWhereInput
+  data: Prisma.XOR<Prisma.VenueUpdateWithoutBookingsInput, Prisma.VenueUncheckedUpdateWithoutBookingsInput>
+}
+
+export type VenueUpdateWithoutBookingsInput = {
+  id?: Prisma.StringFieldUpdateOperationsInput | string
+  name?: Prisma.StringFieldUpdateOperationsInput | string
+  slug?: Prisma.StringFieldUpdateOperationsInput | string
+  shortDescription?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  description?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  status?: Prisma.EnumVenueStatusFieldUpdateOperationsInput | $Enums.VenueStatus
+  capacityMin?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
+  capacityMax?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
+  addressLine1?: Prisma.StringFieldUpdateOperationsInput | string
+  addressLine2?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  city?: Prisma.StringFieldUpdateOperationsInput | string
+  district?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  state?: Prisma.StringFieldUpdateOperationsInput | string
+  country?: Prisma.StringFieldUpdateOperationsInput | string
+  postalCode?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  rejectionReason?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  reviewedBy?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  reviewedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  deletedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  basePricePerSlot?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
+  currency?: Prisma.StringFieldUpdateOperationsInput | string
+  owner?: Prisma.ProfileUpdateOneRequiredWithoutVenuesNestedInput
+  images?: Prisma.VenueImageUpdateManyWithoutVenueNestedInput
+  videos?: Prisma.VenueVideoUpdateManyWithoutVenueNestedInput
+  amenities?: Prisma.VenueAmenityUpdateManyWithoutVenueNestedInput
+  eventTypes?: Prisma.VenueEventTypeUpdateManyWithoutVenueNestedInput
+  availability?: Prisma.VenueAvailabilityUpdateManyWithoutVenueNestedInput
+  slotTemplates?: Prisma.VenueSlotTemplateUpdateManyWithoutVenueNestedInput
+  dateSlots?: Prisma.VenueDateSlotUpdateManyWithoutVenueNestedInput
+  bookingSlots?: Prisma.BookingSlotUpdateManyWithoutVenueNestedInput
+}
+
+export type VenueUncheckedUpdateWithoutBookingsInput = {
+  id?: Prisma.StringFieldUpdateOperationsInput | string
+  ownerId?: Prisma.StringFieldUpdateOperationsInput | string
+  name?: Prisma.StringFieldUpdateOperationsInput | string
+  slug?: Prisma.StringFieldUpdateOperationsInput | string
+  shortDescription?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  description?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  status?: Prisma.EnumVenueStatusFieldUpdateOperationsInput | $Enums.VenueStatus
+  capacityMin?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
+  capacityMax?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
+  addressLine1?: Prisma.StringFieldUpdateOperationsInput | string
+  addressLine2?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  city?: Prisma.StringFieldUpdateOperationsInput | string
+  district?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  state?: Prisma.StringFieldUpdateOperationsInput | string
+  country?: Prisma.StringFieldUpdateOperationsInput | string
+  postalCode?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  rejectionReason?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  reviewedBy?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  reviewedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  deletedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  basePricePerSlot?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
+  currency?: Prisma.StringFieldUpdateOperationsInput | string
+  images?: Prisma.VenueImageUncheckedUpdateManyWithoutVenueNestedInput
+  videos?: Prisma.VenueVideoUncheckedUpdateManyWithoutVenueNestedInput
+  amenities?: Prisma.VenueAmenityUncheckedUpdateManyWithoutVenueNestedInput
+  eventTypes?: Prisma.VenueEventTypeUncheckedUpdateManyWithoutVenueNestedInput
+  availability?: Prisma.VenueAvailabilityUncheckedUpdateManyWithoutVenueNestedInput
+  slotTemplates?: Prisma.VenueSlotTemplateUncheckedUpdateManyWithoutVenueNestedInput
+  dateSlots?: Prisma.VenueDateSlotUncheckedUpdateManyWithoutVenueNestedInput
+  bookingSlots?: Prisma.BookingSlotUncheckedUpdateManyWithoutVenueNestedInput
+}
+
+export type VenueCreateWithoutBookingSlotsInput = {
+  id?: string
+  name: string
+  slug: string
+  shortDescription?: string | null
+  description?: string | null
+  status?: $Enums.VenueStatus
+  capacityMin?: number | null
+  capacityMax?: number | null
+  addressLine1: string
+  addressLine2?: string | null
+  city: string
+  district?: string | null
+  state: string
+  country?: string
+  postalCode?: string | null
+  rejectionReason?: string | null
+  reviewedBy?: string | null
+  reviewedAt?: Date | string | null
+  deletedAt?: Date | string | null
+  createdAt?: Date | string
+  updatedAt?: Date | string
+  basePricePerSlot: runtime.Decimal | runtime.DecimalJsLike | number | string
+  currency?: string
+  owner: Prisma.ProfileCreateNestedOneWithoutVenuesInput
+  images?: Prisma.VenueImageCreateNestedManyWithoutVenueInput
+  videos?: Prisma.VenueVideoCreateNestedManyWithoutVenueInput
+  amenities?: Prisma.VenueAmenityCreateNestedManyWithoutVenueInput
+  eventTypes?: Prisma.VenueEventTypeCreateNestedManyWithoutVenueInput
+  availability?: Prisma.VenueAvailabilityCreateNestedManyWithoutVenueInput
+  slotTemplates?: Prisma.VenueSlotTemplateCreateNestedManyWithoutVenueInput
+  dateSlots?: Prisma.VenueDateSlotCreateNestedManyWithoutVenueInput
+  bookings?: Prisma.BookingCreateNestedManyWithoutVenueInput
+}
+
+export type VenueUncheckedCreateWithoutBookingSlotsInput = {
+  id?: string
+  ownerId: string
+  name: string
+  slug: string
+  shortDescription?: string | null
+  description?: string | null
+  status?: $Enums.VenueStatus
+  capacityMin?: number | null
+  capacityMax?: number | null
+  addressLine1: string
+  addressLine2?: string | null
+  city: string
+  district?: string | null
+  state: string
+  country?: string
+  postalCode?: string | null
+  rejectionReason?: string | null
+  reviewedBy?: string | null
+  reviewedAt?: Date | string | null
+  deletedAt?: Date | string | null
+  createdAt?: Date | string
+  updatedAt?: Date | string
+  basePricePerSlot: runtime.Decimal | runtime.DecimalJsLike | number | string
+  currency?: string
+  images?: Prisma.VenueImageUncheckedCreateNestedManyWithoutVenueInput
+  videos?: Prisma.VenueVideoUncheckedCreateNestedManyWithoutVenueInput
+  amenities?: Prisma.VenueAmenityUncheckedCreateNestedManyWithoutVenueInput
+  eventTypes?: Prisma.VenueEventTypeUncheckedCreateNestedManyWithoutVenueInput
+  availability?: Prisma.VenueAvailabilityUncheckedCreateNestedManyWithoutVenueInput
+  slotTemplates?: Prisma.VenueSlotTemplateUncheckedCreateNestedManyWithoutVenueInput
+  dateSlots?: Prisma.VenueDateSlotUncheckedCreateNestedManyWithoutVenueInput
+  bookings?: Prisma.BookingUncheckedCreateNestedManyWithoutVenueInput
+}
+
+export type VenueCreateOrConnectWithoutBookingSlotsInput = {
+  where: Prisma.VenueWhereUniqueInput
+  create: Prisma.XOR<Prisma.VenueCreateWithoutBookingSlotsInput, Prisma.VenueUncheckedCreateWithoutBookingSlotsInput>
+}
+
+export type VenueUpsertWithoutBookingSlotsInput = {
+  update: Prisma.XOR<Prisma.VenueUpdateWithoutBookingSlotsInput, Prisma.VenueUncheckedUpdateWithoutBookingSlotsInput>
+  create: Prisma.XOR<Prisma.VenueCreateWithoutBookingSlotsInput, Prisma.VenueUncheckedCreateWithoutBookingSlotsInput>
+  where?: Prisma.VenueWhereInput
+}
+
+export type VenueUpdateToOneWithWhereWithoutBookingSlotsInput = {
+  where?: Prisma.VenueWhereInput
+  data: Prisma.XOR<Prisma.VenueUpdateWithoutBookingSlotsInput, Prisma.VenueUncheckedUpdateWithoutBookingSlotsInput>
+}
+
+export type VenueUpdateWithoutBookingSlotsInput = {
+  id?: Prisma.StringFieldUpdateOperationsInput | string
+  name?: Prisma.StringFieldUpdateOperationsInput | string
+  slug?: Prisma.StringFieldUpdateOperationsInput | string
+  shortDescription?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  description?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  status?: Prisma.EnumVenueStatusFieldUpdateOperationsInput | $Enums.VenueStatus
+  capacityMin?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
+  capacityMax?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
+  addressLine1?: Prisma.StringFieldUpdateOperationsInput | string
+  addressLine2?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  city?: Prisma.StringFieldUpdateOperationsInput | string
+  district?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  state?: Prisma.StringFieldUpdateOperationsInput | string
+  country?: Prisma.StringFieldUpdateOperationsInput | string
+  postalCode?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  rejectionReason?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  reviewedBy?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  reviewedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  deletedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  basePricePerSlot?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
+  currency?: Prisma.StringFieldUpdateOperationsInput | string
+  owner?: Prisma.ProfileUpdateOneRequiredWithoutVenuesNestedInput
+  images?: Prisma.VenueImageUpdateManyWithoutVenueNestedInput
+  videos?: Prisma.VenueVideoUpdateManyWithoutVenueNestedInput
+  amenities?: Prisma.VenueAmenityUpdateManyWithoutVenueNestedInput
+  eventTypes?: Prisma.VenueEventTypeUpdateManyWithoutVenueNestedInput
+  availability?: Prisma.VenueAvailabilityUpdateManyWithoutVenueNestedInput
+  slotTemplates?: Prisma.VenueSlotTemplateUpdateManyWithoutVenueNestedInput
+  dateSlots?: Prisma.VenueDateSlotUpdateManyWithoutVenueNestedInput
+  bookings?: Prisma.BookingUpdateManyWithoutVenueNestedInput
+}
+
+export type VenueUncheckedUpdateWithoutBookingSlotsInput = {
+  id?: Prisma.StringFieldUpdateOperationsInput | string
+  ownerId?: Prisma.StringFieldUpdateOperationsInput | string
+  name?: Prisma.StringFieldUpdateOperationsInput | string
+  slug?: Prisma.StringFieldUpdateOperationsInput | string
+  shortDescription?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  description?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  status?: Prisma.EnumVenueStatusFieldUpdateOperationsInput | $Enums.VenueStatus
+  capacityMin?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
+  capacityMax?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
+  addressLine1?: Prisma.StringFieldUpdateOperationsInput | string
+  addressLine2?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  city?: Prisma.StringFieldUpdateOperationsInput | string
+  district?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  state?: Prisma.StringFieldUpdateOperationsInput | string
+  country?: Prisma.StringFieldUpdateOperationsInput | string
+  postalCode?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  rejectionReason?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  reviewedBy?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  reviewedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  deletedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  basePricePerSlot?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
+  currency?: Prisma.StringFieldUpdateOperationsInput | string
+  images?: Prisma.VenueImageUncheckedUpdateManyWithoutVenueNestedInput
+  videos?: Prisma.VenueVideoUncheckedUpdateManyWithoutVenueNestedInput
+  amenities?: Prisma.VenueAmenityUncheckedUpdateManyWithoutVenueNestedInput
+  eventTypes?: Prisma.VenueEventTypeUncheckedUpdateManyWithoutVenueNestedInput
+  availability?: Prisma.VenueAvailabilityUncheckedUpdateManyWithoutVenueNestedInput
+  slotTemplates?: Prisma.VenueSlotTemplateUncheckedUpdateManyWithoutVenueNestedInput
+  dateSlots?: Prisma.VenueDateSlotUncheckedUpdateManyWithoutVenueNestedInput
+  bookings?: Prisma.BookingUncheckedUpdateManyWithoutVenueNestedInput
+}
+
 export type VenueCreateWithoutOwnerInput = {
   id?: string
   name: string
@@ -969,6 +1373,8 @@ export type VenueCreateWithoutOwnerInput = {
   deletedAt?: Date | string | null
   createdAt?: Date | string
   updatedAt?: Date | string
+  basePricePerSlot: runtime.Decimal | runtime.DecimalJsLike | number | string
+  currency?: string
   images?: Prisma.VenueImageCreateNestedManyWithoutVenueInput
   videos?: Prisma.VenueVideoCreateNestedManyWithoutVenueInput
   amenities?: Prisma.VenueAmenityCreateNestedManyWithoutVenueInput
@@ -976,6 +1382,8 @@ export type VenueCreateWithoutOwnerInput = {
   availability?: Prisma.VenueAvailabilityCreateNestedManyWithoutVenueInput
   slotTemplates?: Prisma.VenueSlotTemplateCreateNestedManyWithoutVenueInput
   dateSlots?: Prisma.VenueDateSlotCreateNestedManyWithoutVenueInput
+  bookings?: Prisma.BookingCreateNestedManyWithoutVenueInput
+  bookingSlots?: Prisma.BookingSlotCreateNestedManyWithoutVenueInput
 }
 
 export type VenueUncheckedCreateWithoutOwnerInput = {
@@ -1000,6 +1408,8 @@ export type VenueUncheckedCreateWithoutOwnerInput = {
   deletedAt?: Date | string | null
   createdAt?: Date | string
   updatedAt?: Date | string
+  basePricePerSlot: runtime.Decimal | runtime.DecimalJsLike | number | string
+  currency?: string
   images?: Prisma.VenueImageUncheckedCreateNestedManyWithoutVenueInput
   videos?: Prisma.VenueVideoUncheckedCreateNestedManyWithoutVenueInput
   amenities?: Prisma.VenueAmenityUncheckedCreateNestedManyWithoutVenueInput
@@ -1007,6 +1417,8 @@ export type VenueUncheckedCreateWithoutOwnerInput = {
   availability?: Prisma.VenueAvailabilityUncheckedCreateNestedManyWithoutVenueInput
   slotTemplates?: Prisma.VenueSlotTemplateUncheckedCreateNestedManyWithoutVenueInput
   dateSlots?: Prisma.VenueDateSlotUncheckedCreateNestedManyWithoutVenueInput
+  bookings?: Prisma.BookingUncheckedCreateNestedManyWithoutVenueInput
+  bookingSlots?: Prisma.BookingSlotUncheckedCreateNestedManyWithoutVenueInput
 }
 
 export type VenueCreateOrConnectWithoutOwnerInput = {
@@ -1061,6 +1473,8 @@ export type VenueScalarWhereInput = {
   deletedAt?: Prisma.DateTimeNullableFilter<"Venue"> | Date | string | null
   createdAt?: Prisma.DateTimeFilter<"Venue"> | Date | string
   updatedAt?: Prisma.DateTimeFilter<"Venue"> | Date | string
+  basePricePerSlot?: Prisma.DecimalFilter<"Venue"> | runtime.Decimal | runtime.DecimalJsLike | number | string
+  currency?: Prisma.StringFilter<"Venue"> | string
 }
 
 export type VenueCreateWithoutAvailabilityInput = {
@@ -1085,6 +1499,8 @@ export type VenueCreateWithoutAvailabilityInput = {
   deletedAt?: Date | string | null
   createdAt?: Date | string
   updatedAt?: Date | string
+  basePricePerSlot: runtime.Decimal | runtime.DecimalJsLike | number | string
+  currency?: string
   owner: Prisma.ProfileCreateNestedOneWithoutVenuesInput
   images?: Prisma.VenueImageCreateNestedManyWithoutVenueInput
   videos?: Prisma.VenueVideoCreateNestedManyWithoutVenueInput
@@ -1092,6 +1508,8 @@ export type VenueCreateWithoutAvailabilityInput = {
   eventTypes?: Prisma.VenueEventTypeCreateNestedManyWithoutVenueInput
   slotTemplates?: Prisma.VenueSlotTemplateCreateNestedManyWithoutVenueInput
   dateSlots?: Prisma.VenueDateSlotCreateNestedManyWithoutVenueInput
+  bookings?: Prisma.BookingCreateNestedManyWithoutVenueInput
+  bookingSlots?: Prisma.BookingSlotCreateNestedManyWithoutVenueInput
 }
 
 export type VenueUncheckedCreateWithoutAvailabilityInput = {
@@ -1117,12 +1535,16 @@ export type VenueUncheckedCreateWithoutAvailabilityInput = {
   deletedAt?: Date | string | null
   createdAt?: Date | string
   updatedAt?: Date | string
+  basePricePerSlot: runtime.Decimal | runtime.DecimalJsLike | number | string
+  currency?: string
   images?: Prisma.VenueImageUncheckedCreateNestedManyWithoutVenueInput
   videos?: Prisma.VenueVideoUncheckedCreateNestedManyWithoutVenueInput
   amenities?: Prisma.VenueAmenityUncheckedCreateNestedManyWithoutVenueInput
   eventTypes?: Prisma.VenueEventTypeUncheckedCreateNestedManyWithoutVenueInput
   slotTemplates?: Prisma.VenueSlotTemplateUncheckedCreateNestedManyWithoutVenueInput
   dateSlots?: Prisma.VenueDateSlotUncheckedCreateNestedManyWithoutVenueInput
+  bookings?: Prisma.BookingUncheckedCreateNestedManyWithoutVenueInput
+  bookingSlots?: Prisma.BookingSlotUncheckedCreateNestedManyWithoutVenueInput
 }
 
 export type VenueCreateOrConnectWithoutAvailabilityInput = {
@@ -1163,6 +1585,8 @@ export type VenueUpdateWithoutAvailabilityInput = {
   deletedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  basePricePerSlot?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
+  currency?: Prisma.StringFieldUpdateOperationsInput | string
   owner?: Prisma.ProfileUpdateOneRequiredWithoutVenuesNestedInput
   images?: Prisma.VenueImageUpdateManyWithoutVenueNestedInput
   videos?: Prisma.VenueVideoUpdateManyWithoutVenueNestedInput
@@ -1170,6 +1594,8 @@ export type VenueUpdateWithoutAvailabilityInput = {
   eventTypes?: Prisma.VenueEventTypeUpdateManyWithoutVenueNestedInput
   slotTemplates?: Prisma.VenueSlotTemplateUpdateManyWithoutVenueNestedInput
   dateSlots?: Prisma.VenueDateSlotUpdateManyWithoutVenueNestedInput
+  bookings?: Prisma.BookingUpdateManyWithoutVenueNestedInput
+  bookingSlots?: Prisma.BookingSlotUpdateManyWithoutVenueNestedInput
 }
 
 export type VenueUncheckedUpdateWithoutAvailabilityInput = {
@@ -1195,12 +1621,16 @@ export type VenueUncheckedUpdateWithoutAvailabilityInput = {
   deletedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  basePricePerSlot?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
+  currency?: Prisma.StringFieldUpdateOperationsInput | string
   images?: Prisma.VenueImageUncheckedUpdateManyWithoutVenueNestedInput
   videos?: Prisma.VenueVideoUncheckedUpdateManyWithoutVenueNestedInput
   amenities?: Prisma.VenueAmenityUncheckedUpdateManyWithoutVenueNestedInput
   eventTypes?: Prisma.VenueEventTypeUncheckedUpdateManyWithoutVenueNestedInput
   slotTemplates?: Prisma.VenueSlotTemplateUncheckedUpdateManyWithoutVenueNestedInput
   dateSlots?: Prisma.VenueDateSlotUncheckedUpdateManyWithoutVenueNestedInput
+  bookings?: Prisma.BookingUncheckedUpdateManyWithoutVenueNestedInput
+  bookingSlots?: Prisma.BookingSlotUncheckedUpdateManyWithoutVenueNestedInput
 }
 
 export type VenueCreateWithoutSlotTemplatesInput = {
@@ -1225,6 +1655,8 @@ export type VenueCreateWithoutSlotTemplatesInput = {
   deletedAt?: Date | string | null
   createdAt?: Date | string
   updatedAt?: Date | string
+  basePricePerSlot: runtime.Decimal | runtime.DecimalJsLike | number | string
+  currency?: string
   owner: Prisma.ProfileCreateNestedOneWithoutVenuesInput
   images?: Prisma.VenueImageCreateNestedManyWithoutVenueInput
   videos?: Prisma.VenueVideoCreateNestedManyWithoutVenueInput
@@ -1232,6 +1664,8 @@ export type VenueCreateWithoutSlotTemplatesInput = {
   eventTypes?: Prisma.VenueEventTypeCreateNestedManyWithoutVenueInput
   availability?: Prisma.VenueAvailabilityCreateNestedManyWithoutVenueInput
   dateSlots?: Prisma.VenueDateSlotCreateNestedManyWithoutVenueInput
+  bookings?: Prisma.BookingCreateNestedManyWithoutVenueInput
+  bookingSlots?: Prisma.BookingSlotCreateNestedManyWithoutVenueInput
 }
 
 export type VenueUncheckedCreateWithoutSlotTemplatesInput = {
@@ -1257,12 +1691,16 @@ export type VenueUncheckedCreateWithoutSlotTemplatesInput = {
   deletedAt?: Date | string | null
   createdAt?: Date | string
   updatedAt?: Date | string
+  basePricePerSlot: runtime.Decimal | runtime.DecimalJsLike | number | string
+  currency?: string
   images?: Prisma.VenueImageUncheckedCreateNestedManyWithoutVenueInput
   videos?: Prisma.VenueVideoUncheckedCreateNestedManyWithoutVenueInput
   amenities?: Prisma.VenueAmenityUncheckedCreateNestedManyWithoutVenueInput
   eventTypes?: Prisma.VenueEventTypeUncheckedCreateNestedManyWithoutVenueInput
   availability?: Prisma.VenueAvailabilityUncheckedCreateNestedManyWithoutVenueInput
   dateSlots?: Prisma.VenueDateSlotUncheckedCreateNestedManyWithoutVenueInput
+  bookings?: Prisma.BookingUncheckedCreateNestedManyWithoutVenueInput
+  bookingSlots?: Prisma.BookingSlotUncheckedCreateNestedManyWithoutVenueInput
 }
 
 export type VenueCreateOrConnectWithoutSlotTemplatesInput = {
@@ -1303,6 +1741,8 @@ export type VenueUpdateWithoutSlotTemplatesInput = {
   deletedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  basePricePerSlot?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
+  currency?: Prisma.StringFieldUpdateOperationsInput | string
   owner?: Prisma.ProfileUpdateOneRequiredWithoutVenuesNestedInput
   images?: Prisma.VenueImageUpdateManyWithoutVenueNestedInput
   videos?: Prisma.VenueVideoUpdateManyWithoutVenueNestedInput
@@ -1310,6 +1750,8 @@ export type VenueUpdateWithoutSlotTemplatesInput = {
   eventTypes?: Prisma.VenueEventTypeUpdateManyWithoutVenueNestedInput
   availability?: Prisma.VenueAvailabilityUpdateManyWithoutVenueNestedInput
   dateSlots?: Prisma.VenueDateSlotUpdateManyWithoutVenueNestedInput
+  bookings?: Prisma.BookingUpdateManyWithoutVenueNestedInput
+  bookingSlots?: Prisma.BookingSlotUpdateManyWithoutVenueNestedInput
 }
 
 export type VenueUncheckedUpdateWithoutSlotTemplatesInput = {
@@ -1335,12 +1777,16 @@ export type VenueUncheckedUpdateWithoutSlotTemplatesInput = {
   deletedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  basePricePerSlot?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
+  currency?: Prisma.StringFieldUpdateOperationsInput | string
   images?: Prisma.VenueImageUncheckedUpdateManyWithoutVenueNestedInput
   videos?: Prisma.VenueVideoUncheckedUpdateManyWithoutVenueNestedInput
   amenities?: Prisma.VenueAmenityUncheckedUpdateManyWithoutVenueNestedInput
   eventTypes?: Prisma.VenueEventTypeUncheckedUpdateManyWithoutVenueNestedInput
   availability?: Prisma.VenueAvailabilityUncheckedUpdateManyWithoutVenueNestedInput
   dateSlots?: Prisma.VenueDateSlotUncheckedUpdateManyWithoutVenueNestedInput
+  bookings?: Prisma.BookingUncheckedUpdateManyWithoutVenueNestedInput
+  bookingSlots?: Prisma.BookingSlotUncheckedUpdateManyWithoutVenueNestedInput
 }
 
 export type VenueCreateWithoutDateSlotsInput = {
@@ -1365,6 +1811,8 @@ export type VenueCreateWithoutDateSlotsInput = {
   deletedAt?: Date | string | null
   createdAt?: Date | string
   updatedAt?: Date | string
+  basePricePerSlot: runtime.Decimal | runtime.DecimalJsLike | number | string
+  currency?: string
   owner: Prisma.ProfileCreateNestedOneWithoutVenuesInput
   images?: Prisma.VenueImageCreateNestedManyWithoutVenueInput
   videos?: Prisma.VenueVideoCreateNestedManyWithoutVenueInput
@@ -1372,6 +1820,8 @@ export type VenueCreateWithoutDateSlotsInput = {
   eventTypes?: Prisma.VenueEventTypeCreateNestedManyWithoutVenueInput
   availability?: Prisma.VenueAvailabilityCreateNestedManyWithoutVenueInput
   slotTemplates?: Prisma.VenueSlotTemplateCreateNestedManyWithoutVenueInput
+  bookings?: Prisma.BookingCreateNestedManyWithoutVenueInput
+  bookingSlots?: Prisma.BookingSlotCreateNestedManyWithoutVenueInput
 }
 
 export type VenueUncheckedCreateWithoutDateSlotsInput = {
@@ -1397,12 +1847,16 @@ export type VenueUncheckedCreateWithoutDateSlotsInput = {
   deletedAt?: Date | string | null
   createdAt?: Date | string
   updatedAt?: Date | string
+  basePricePerSlot: runtime.Decimal | runtime.DecimalJsLike | number | string
+  currency?: string
   images?: Prisma.VenueImageUncheckedCreateNestedManyWithoutVenueInput
   videos?: Prisma.VenueVideoUncheckedCreateNestedManyWithoutVenueInput
   amenities?: Prisma.VenueAmenityUncheckedCreateNestedManyWithoutVenueInput
   eventTypes?: Prisma.VenueEventTypeUncheckedCreateNestedManyWithoutVenueInput
   availability?: Prisma.VenueAvailabilityUncheckedCreateNestedManyWithoutVenueInput
   slotTemplates?: Prisma.VenueSlotTemplateUncheckedCreateNestedManyWithoutVenueInput
+  bookings?: Prisma.BookingUncheckedCreateNestedManyWithoutVenueInput
+  bookingSlots?: Prisma.BookingSlotUncheckedCreateNestedManyWithoutVenueInput
 }
 
 export type VenueCreateOrConnectWithoutDateSlotsInput = {
@@ -1443,6 +1897,8 @@ export type VenueUpdateWithoutDateSlotsInput = {
   deletedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  basePricePerSlot?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
+  currency?: Prisma.StringFieldUpdateOperationsInput | string
   owner?: Prisma.ProfileUpdateOneRequiredWithoutVenuesNestedInput
   images?: Prisma.VenueImageUpdateManyWithoutVenueNestedInput
   videos?: Prisma.VenueVideoUpdateManyWithoutVenueNestedInput
@@ -1450,6 +1906,8 @@ export type VenueUpdateWithoutDateSlotsInput = {
   eventTypes?: Prisma.VenueEventTypeUpdateManyWithoutVenueNestedInput
   availability?: Prisma.VenueAvailabilityUpdateManyWithoutVenueNestedInput
   slotTemplates?: Prisma.VenueSlotTemplateUpdateManyWithoutVenueNestedInput
+  bookings?: Prisma.BookingUpdateManyWithoutVenueNestedInput
+  bookingSlots?: Prisma.BookingSlotUpdateManyWithoutVenueNestedInput
 }
 
 export type VenueUncheckedUpdateWithoutDateSlotsInput = {
@@ -1475,12 +1933,16 @@ export type VenueUncheckedUpdateWithoutDateSlotsInput = {
   deletedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  basePricePerSlot?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
+  currency?: Prisma.StringFieldUpdateOperationsInput | string
   images?: Prisma.VenueImageUncheckedUpdateManyWithoutVenueNestedInput
   videos?: Prisma.VenueVideoUncheckedUpdateManyWithoutVenueNestedInput
   amenities?: Prisma.VenueAmenityUncheckedUpdateManyWithoutVenueNestedInput
   eventTypes?: Prisma.VenueEventTypeUncheckedUpdateManyWithoutVenueNestedInput
   availability?: Prisma.VenueAvailabilityUncheckedUpdateManyWithoutVenueNestedInput
   slotTemplates?: Prisma.VenueSlotTemplateUncheckedUpdateManyWithoutVenueNestedInput
+  bookings?: Prisma.BookingUncheckedUpdateManyWithoutVenueNestedInput
+  bookingSlots?: Prisma.BookingSlotUncheckedUpdateManyWithoutVenueNestedInput
 }
 
 export type VenueCreateWithoutEventTypesInput = {
@@ -1505,6 +1967,8 @@ export type VenueCreateWithoutEventTypesInput = {
   deletedAt?: Date | string | null
   createdAt?: Date | string
   updatedAt?: Date | string
+  basePricePerSlot: runtime.Decimal | runtime.DecimalJsLike | number | string
+  currency?: string
   owner: Prisma.ProfileCreateNestedOneWithoutVenuesInput
   images?: Prisma.VenueImageCreateNestedManyWithoutVenueInput
   videos?: Prisma.VenueVideoCreateNestedManyWithoutVenueInput
@@ -1512,6 +1976,8 @@ export type VenueCreateWithoutEventTypesInput = {
   availability?: Prisma.VenueAvailabilityCreateNestedManyWithoutVenueInput
   slotTemplates?: Prisma.VenueSlotTemplateCreateNestedManyWithoutVenueInput
   dateSlots?: Prisma.VenueDateSlotCreateNestedManyWithoutVenueInput
+  bookings?: Prisma.BookingCreateNestedManyWithoutVenueInput
+  bookingSlots?: Prisma.BookingSlotCreateNestedManyWithoutVenueInput
 }
 
 export type VenueUncheckedCreateWithoutEventTypesInput = {
@@ -1537,12 +2003,16 @@ export type VenueUncheckedCreateWithoutEventTypesInput = {
   deletedAt?: Date | string | null
   createdAt?: Date | string
   updatedAt?: Date | string
+  basePricePerSlot: runtime.Decimal | runtime.DecimalJsLike | number | string
+  currency?: string
   images?: Prisma.VenueImageUncheckedCreateNestedManyWithoutVenueInput
   videos?: Prisma.VenueVideoUncheckedCreateNestedManyWithoutVenueInput
   amenities?: Prisma.VenueAmenityUncheckedCreateNestedManyWithoutVenueInput
   availability?: Prisma.VenueAvailabilityUncheckedCreateNestedManyWithoutVenueInput
   slotTemplates?: Prisma.VenueSlotTemplateUncheckedCreateNestedManyWithoutVenueInput
   dateSlots?: Prisma.VenueDateSlotUncheckedCreateNestedManyWithoutVenueInput
+  bookings?: Prisma.BookingUncheckedCreateNestedManyWithoutVenueInput
+  bookingSlots?: Prisma.BookingSlotUncheckedCreateNestedManyWithoutVenueInput
 }
 
 export type VenueCreateOrConnectWithoutEventTypesInput = {
@@ -1583,6 +2053,8 @@ export type VenueUpdateWithoutEventTypesInput = {
   deletedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  basePricePerSlot?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
+  currency?: Prisma.StringFieldUpdateOperationsInput | string
   owner?: Prisma.ProfileUpdateOneRequiredWithoutVenuesNestedInput
   images?: Prisma.VenueImageUpdateManyWithoutVenueNestedInput
   videos?: Prisma.VenueVideoUpdateManyWithoutVenueNestedInput
@@ -1590,6 +2062,8 @@ export type VenueUpdateWithoutEventTypesInput = {
   availability?: Prisma.VenueAvailabilityUpdateManyWithoutVenueNestedInput
   slotTemplates?: Prisma.VenueSlotTemplateUpdateManyWithoutVenueNestedInput
   dateSlots?: Prisma.VenueDateSlotUpdateManyWithoutVenueNestedInput
+  bookings?: Prisma.BookingUpdateManyWithoutVenueNestedInput
+  bookingSlots?: Prisma.BookingSlotUpdateManyWithoutVenueNestedInput
 }
 
 export type VenueUncheckedUpdateWithoutEventTypesInput = {
@@ -1615,12 +2089,16 @@ export type VenueUncheckedUpdateWithoutEventTypesInput = {
   deletedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  basePricePerSlot?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
+  currency?: Prisma.StringFieldUpdateOperationsInput | string
   images?: Prisma.VenueImageUncheckedUpdateManyWithoutVenueNestedInput
   videos?: Prisma.VenueVideoUncheckedUpdateManyWithoutVenueNestedInput
   amenities?: Prisma.VenueAmenityUncheckedUpdateManyWithoutVenueNestedInput
   availability?: Prisma.VenueAvailabilityUncheckedUpdateManyWithoutVenueNestedInput
   slotTemplates?: Prisma.VenueSlotTemplateUncheckedUpdateManyWithoutVenueNestedInput
   dateSlots?: Prisma.VenueDateSlotUncheckedUpdateManyWithoutVenueNestedInput
+  bookings?: Prisma.BookingUncheckedUpdateManyWithoutVenueNestedInput
+  bookingSlots?: Prisma.BookingSlotUncheckedUpdateManyWithoutVenueNestedInput
 }
 
 export type VenueCreateWithoutAmenitiesInput = {
@@ -1645,6 +2123,8 @@ export type VenueCreateWithoutAmenitiesInput = {
   deletedAt?: Date | string | null
   createdAt?: Date | string
   updatedAt?: Date | string
+  basePricePerSlot: runtime.Decimal | runtime.DecimalJsLike | number | string
+  currency?: string
   owner: Prisma.ProfileCreateNestedOneWithoutVenuesInput
   images?: Prisma.VenueImageCreateNestedManyWithoutVenueInput
   videos?: Prisma.VenueVideoCreateNestedManyWithoutVenueInput
@@ -1652,6 +2132,8 @@ export type VenueCreateWithoutAmenitiesInput = {
   availability?: Prisma.VenueAvailabilityCreateNestedManyWithoutVenueInput
   slotTemplates?: Prisma.VenueSlotTemplateCreateNestedManyWithoutVenueInput
   dateSlots?: Prisma.VenueDateSlotCreateNestedManyWithoutVenueInput
+  bookings?: Prisma.BookingCreateNestedManyWithoutVenueInput
+  bookingSlots?: Prisma.BookingSlotCreateNestedManyWithoutVenueInput
 }
 
 export type VenueUncheckedCreateWithoutAmenitiesInput = {
@@ -1677,12 +2159,16 @@ export type VenueUncheckedCreateWithoutAmenitiesInput = {
   deletedAt?: Date | string | null
   createdAt?: Date | string
   updatedAt?: Date | string
+  basePricePerSlot: runtime.Decimal | runtime.DecimalJsLike | number | string
+  currency?: string
   images?: Prisma.VenueImageUncheckedCreateNestedManyWithoutVenueInput
   videos?: Prisma.VenueVideoUncheckedCreateNestedManyWithoutVenueInput
   eventTypes?: Prisma.VenueEventTypeUncheckedCreateNestedManyWithoutVenueInput
   availability?: Prisma.VenueAvailabilityUncheckedCreateNestedManyWithoutVenueInput
   slotTemplates?: Prisma.VenueSlotTemplateUncheckedCreateNestedManyWithoutVenueInput
   dateSlots?: Prisma.VenueDateSlotUncheckedCreateNestedManyWithoutVenueInput
+  bookings?: Prisma.BookingUncheckedCreateNestedManyWithoutVenueInput
+  bookingSlots?: Prisma.BookingSlotUncheckedCreateNestedManyWithoutVenueInput
 }
 
 export type VenueCreateOrConnectWithoutAmenitiesInput = {
@@ -1723,6 +2209,8 @@ export type VenueUpdateWithoutAmenitiesInput = {
   deletedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  basePricePerSlot?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
+  currency?: Prisma.StringFieldUpdateOperationsInput | string
   owner?: Prisma.ProfileUpdateOneRequiredWithoutVenuesNestedInput
   images?: Prisma.VenueImageUpdateManyWithoutVenueNestedInput
   videos?: Prisma.VenueVideoUpdateManyWithoutVenueNestedInput
@@ -1730,6 +2218,8 @@ export type VenueUpdateWithoutAmenitiesInput = {
   availability?: Prisma.VenueAvailabilityUpdateManyWithoutVenueNestedInput
   slotTemplates?: Prisma.VenueSlotTemplateUpdateManyWithoutVenueNestedInput
   dateSlots?: Prisma.VenueDateSlotUpdateManyWithoutVenueNestedInput
+  bookings?: Prisma.BookingUpdateManyWithoutVenueNestedInput
+  bookingSlots?: Prisma.BookingSlotUpdateManyWithoutVenueNestedInput
 }
 
 export type VenueUncheckedUpdateWithoutAmenitiesInput = {
@@ -1755,12 +2245,16 @@ export type VenueUncheckedUpdateWithoutAmenitiesInput = {
   deletedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  basePricePerSlot?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
+  currency?: Prisma.StringFieldUpdateOperationsInput | string
   images?: Prisma.VenueImageUncheckedUpdateManyWithoutVenueNestedInput
   videos?: Prisma.VenueVideoUncheckedUpdateManyWithoutVenueNestedInput
   eventTypes?: Prisma.VenueEventTypeUncheckedUpdateManyWithoutVenueNestedInput
   availability?: Prisma.VenueAvailabilityUncheckedUpdateManyWithoutVenueNestedInput
   slotTemplates?: Prisma.VenueSlotTemplateUncheckedUpdateManyWithoutVenueNestedInput
   dateSlots?: Prisma.VenueDateSlotUncheckedUpdateManyWithoutVenueNestedInput
+  bookings?: Prisma.BookingUncheckedUpdateManyWithoutVenueNestedInput
+  bookingSlots?: Prisma.BookingSlotUncheckedUpdateManyWithoutVenueNestedInput
 }
 
 export type VenueCreateWithoutImagesInput = {
@@ -1785,6 +2279,8 @@ export type VenueCreateWithoutImagesInput = {
   deletedAt?: Date | string | null
   createdAt?: Date | string
   updatedAt?: Date | string
+  basePricePerSlot: runtime.Decimal | runtime.DecimalJsLike | number | string
+  currency?: string
   owner: Prisma.ProfileCreateNestedOneWithoutVenuesInput
   videos?: Prisma.VenueVideoCreateNestedManyWithoutVenueInput
   amenities?: Prisma.VenueAmenityCreateNestedManyWithoutVenueInput
@@ -1792,6 +2288,8 @@ export type VenueCreateWithoutImagesInput = {
   availability?: Prisma.VenueAvailabilityCreateNestedManyWithoutVenueInput
   slotTemplates?: Prisma.VenueSlotTemplateCreateNestedManyWithoutVenueInput
   dateSlots?: Prisma.VenueDateSlotCreateNestedManyWithoutVenueInput
+  bookings?: Prisma.BookingCreateNestedManyWithoutVenueInput
+  bookingSlots?: Prisma.BookingSlotCreateNestedManyWithoutVenueInput
 }
 
 export type VenueUncheckedCreateWithoutImagesInput = {
@@ -1817,12 +2315,16 @@ export type VenueUncheckedCreateWithoutImagesInput = {
   deletedAt?: Date | string | null
   createdAt?: Date | string
   updatedAt?: Date | string
+  basePricePerSlot: runtime.Decimal | runtime.DecimalJsLike | number | string
+  currency?: string
   videos?: Prisma.VenueVideoUncheckedCreateNestedManyWithoutVenueInput
   amenities?: Prisma.VenueAmenityUncheckedCreateNestedManyWithoutVenueInput
   eventTypes?: Prisma.VenueEventTypeUncheckedCreateNestedManyWithoutVenueInput
   availability?: Prisma.VenueAvailabilityUncheckedCreateNestedManyWithoutVenueInput
   slotTemplates?: Prisma.VenueSlotTemplateUncheckedCreateNestedManyWithoutVenueInput
   dateSlots?: Prisma.VenueDateSlotUncheckedCreateNestedManyWithoutVenueInput
+  bookings?: Prisma.BookingUncheckedCreateNestedManyWithoutVenueInput
+  bookingSlots?: Prisma.BookingSlotUncheckedCreateNestedManyWithoutVenueInput
 }
 
 export type VenueCreateOrConnectWithoutImagesInput = {
@@ -1863,6 +2365,8 @@ export type VenueUpdateWithoutImagesInput = {
   deletedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  basePricePerSlot?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
+  currency?: Prisma.StringFieldUpdateOperationsInput | string
   owner?: Prisma.ProfileUpdateOneRequiredWithoutVenuesNestedInput
   videos?: Prisma.VenueVideoUpdateManyWithoutVenueNestedInput
   amenities?: Prisma.VenueAmenityUpdateManyWithoutVenueNestedInput
@@ -1870,6 +2374,8 @@ export type VenueUpdateWithoutImagesInput = {
   availability?: Prisma.VenueAvailabilityUpdateManyWithoutVenueNestedInput
   slotTemplates?: Prisma.VenueSlotTemplateUpdateManyWithoutVenueNestedInput
   dateSlots?: Prisma.VenueDateSlotUpdateManyWithoutVenueNestedInput
+  bookings?: Prisma.BookingUpdateManyWithoutVenueNestedInput
+  bookingSlots?: Prisma.BookingSlotUpdateManyWithoutVenueNestedInput
 }
 
 export type VenueUncheckedUpdateWithoutImagesInput = {
@@ -1895,12 +2401,16 @@ export type VenueUncheckedUpdateWithoutImagesInput = {
   deletedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  basePricePerSlot?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
+  currency?: Prisma.StringFieldUpdateOperationsInput | string
   videos?: Prisma.VenueVideoUncheckedUpdateManyWithoutVenueNestedInput
   amenities?: Prisma.VenueAmenityUncheckedUpdateManyWithoutVenueNestedInput
   eventTypes?: Prisma.VenueEventTypeUncheckedUpdateManyWithoutVenueNestedInput
   availability?: Prisma.VenueAvailabilityUncheckedUpdateManyWithoutVenueNestedInput
   slotTemplates?: Prisma.VenueSlotTemplateUncheckedUpdateManyWithoutVenueNestedInput
   dateSlots?: Prisma.VenueDateSlotUncheckedUpdateManyWithoutVenueNestedInput
+  bookings?: Prisma.BookingUncheckedUpdateManyWithoutVenueNestedInput
+  bookingSlots?: Prisma.BookingSlotUncheckedUpdateManyWithoutVenueNestedInput
 }
 
 export type VenueCreateWithoutVideosInput = {
@@ -1925,6 +2435,8 @@ export type VenueCreateWithoutVideosInput = {
   deletedAt?: Date | string | null
   createdAt?: Date | string
   updatedAt?: Date | string
+  basePricePerSlot: runtime.Decimal | runtime.DecimalJsLike | number | string
+  currency?: string
   owner: Prisma.ProfileCreateNestedOneWithoutVenuesInput
   images?: Prisma.VenueImageCreateNestedManyWithoutVenueInput
   amenities?: Prisma.VenueAmenityCreateNestedManyWithoutVenueInput
@@ -1932,6 +2444,8 @@ export type VenueCreateWithoutVideosInput = {
   availability?: Prisma.VenueAvailabilityCreateNestedManyWithoutVenueInput
   slotTemplates?: Prisma.VenueSlotTemplateCreateNestedManyWithoutVenueInput
   dateSlots?: Prisma.VenueDateSlotCreateNestedManyWithoutVenueInput
+  bookings?: Prisma.BookingCreateNestedManyWithoutVenueInput
+  bookingSlots?: Prisma.BookingSlotCreateNestedManyWithoutVenueInput
 }
 
 export type VenueUncheckedCreateWithoutVideosInput = {
@@ -1957,12 +2471,16 @@ export type VenueUncheckedCreateWithoutVideosInput = {
   deletedAt?: Date | string | null
   createdAt?: Date | string
   updatedAt?: Date | string
+  basePricePerSlot: runtime.Decimal | runtime.DecimalJsLike | number | string
+  currency?: string
   images?: Prisma.VenueImageUncheckedCreateNestedManyWithoutVenueInput
   amenities?: Prisma.VenueAmenityUncheckedCreateNestedManyWithoutVenueInput
   eventTypes?: Prisma.VenueEventTypeUncheckedCreateNestedManyWithoutVenueInput
   availability?: Prisma.VenueAvailabilityUncheckedCreateNestedManyWithoutVenueInput
   slotTemplates?: Prisma.VenueSlotTemplateUncheckedCreateNestedManyWithoutVenueInput
   dateSlots?: Prisma.VenueDateSlotUncheckedCreateNestedManyWithoutVenueInput
+  bookings?: Prisma.BookingUncheckedCreateNestedManyWithoutVenueInput
+  bookingSlots?: Prisma.BookingSlotUncheckedCreateNestedManyWithoutVenueInput
 }
 
 export type VenueCreateOrConnectWithoutVideosInput = {
@@ -2003,6 +2521,8 @@ export type VenueUpdateWithoutVideosInput = {
   deletedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  basePricePerSlot?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
+  currency?: Prisma.StringFieldUpdateOperationsInput | string
   owner?: Prisma.ProfileUpdateOneRequiredWithoutVenuesNestedInput
   images?: Prisma.VenueImageUpdateManyWithoutVenueNestedInput
   amenities?: Prisma.VenueAmenityUpdateManyWithoutVenueNestedInput
@@ -2010,6 +2530,8 @@ export type VenueUpdateWithoutVideosInput = {
   availability?: Prisma.VenueAvailabilityUpdateManyWithoutVenueNestedInput
   slotTemplates?: Prisma.VenueSlotTemplateUpdateManyWithoutVenueNestedInput
   dateSlots?: Prisma.VenueDateSlotUpdateManyWithoutVenueNestedInput
+  bookings?: Prisma.BookingUpdateManyWithoutVenueNestedInput
+  bookingSlots?: Prisma.BookingSlotUpdateManyWithoutVenueNestedInput
 }
 
 export type VenueUncheckedUpdateWithoutVideosInput = {
@@ -2035,12 +2557,16 @@ export type VenueUncheckedUpdateWithoutVideosInput = {
   deletedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  basePricePerSlot?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
+  currency?: Prisma.StringFieldUpdateOperationsInput | string
   images?: Prisma.VenueImageUncheckedUpdateManyWithoutVenueNestedInput
   amenities?: Prisma.VenueAmenityUncheckedUpdateManyWithoutVenueNestedInput
   eventTypes?: Prisma.VenueEventTypeUncheckedUpdateManyWithoutVenueNestedInput
   availability?: Prisma.VenueAvailabilityUncheckedUpdateManyWithoutVenueNestedInput
   slotTemplates?: Prisma.VenueSlotTemplateUncheckedUpdateManyWithoutVenueNestedInput
   dateSlots?: Prisma.VenueDateSlotUncheckedUpdateManyWithoutVenueNestedInput
+  bookings?: Prisma.BookingUncheckedUpdateManyWithoutVenueNestedInput
+  bookingSlots?: Prisma.BookingSlotUncheckedUpdateManyWithoutVenueNestedInput
 }
 
 export type VenueCreateManyOwnerInput = {
@@ -2065,6 +2591,8 @@ export type VenueCreateManyOwnerInput = {
   deletedAt?: Date | string | null
   createdAt?: Date | string
   updatedAt?: Date | string
+  basePricePerSlot: runtime.Decimal | runtime.DecimalJsLike | number | string
+  currency?: string
 }
 
 export type VenueUpdateWithoutOwnerInput = {
@@ -2089,6 +2617,8 @@ export type VenueUpdateWithoutOwnerInput = {
   deletedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  basePricePerSlot?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
+  currency?: Prisma.StringFieldUpdateOperationsInput | string
   images?: Prisma.VenueImageUpdateManyWithoutVenueNestedInput
   videos?: Prisma.VenueVideoUpdateManyWithoutVenueNestedInput
   amenities?: Prisma.VenueAmenityUpdateManyWithoutVenueNestedInput
@@ -2096,6 +2626,8 @@ export type VenueUpdateWithoutOwnerInput = {
   availability?: Prisma.VenueAvailabilityUpdateManyWithoutVenueNestedInput
   slotTemplates?: Prisma.VenueSlotTemplateUpdateManyWithoutVenueNestedInput
   dateSlots?: Prisma.VenueDateSlotUpdateManyWithoutVenueNestedInput
+  bookings?: Prisma.BookingUpdateManyWithoutVenueNestedInput
+  bookingSlots?: Prisma.BookingSlotUpdateManyWithoutVenueNestedInput
 }
 
 export type VenueUncheckedUpdateWithoutOwnerInput = {
@@ -2120,6 +2652,8 @@ export type VenueUncheckedUpdateWithoutOwnerInput = {
   deletedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  basePricePerSlot?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
+  currency?: Prisma.StringFieldUpdateOperationsInput | string
   images?: Prisma.VenueImageUncheckedUpdateManyWithoutVenueNestedInput
   videos?: Prisma.VenueVideoUncheckedUpdateManyWithoutVenueNestedInput
   amenities?: Prisma.VenueAmenityUncheckedUpdateManyWithoutVenueNestedInput
@@ -2127,6 +2661,8 @@ export type VenueUncheckedUpdateWithoutOwnerInput = {
   availability?: Prisma.VenueAvailabilityUncheckedUpdateManyWithoutVenueNestedInput
   slotTemplates?: Prisma.VenueSlotTemplateUncheckedUpdateManyWithoutVenueNestedInput
   dateSlots?: Prisma.VenueDateSlotUncheckedUpdateManyWithoutVenueNestedInput
+  bookings?: Prisma.BookingUncheckedUpdateManyWithoutVenueNestedInput
+  bookingSlots?: Prisma.BookingSlotUncheckedUpdateManyWithoutVenueNestedInput
 }
 
 export type VenueUncheckedUpdateManyWithoutOwnerInput = {
@@ -2151,6 +2687,8 @@ export type VenueUncheckedUpdateManyWithoutOwnerInput = {
   deletedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  basePricePerSlot?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
+  currency?: Prisma.StringFieldUpdateOperationsInput | string
 }
 
 
@@ -2166,6 +2704,8 @@ export type VenueCountOutputType = {
   availability: number
   slotTemplates: number
   dateSlots: number
+  bookings: number
+  bookingSlots: number
 }
 
 export type VenueCountOutputTypeSelect<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
@@ -2176,6 +2716,8 @@ export type VenueCountOutputTypeSelect<ExtArgs extends runtime.Types.Extensions.
   availability?: boolean | VenueCountOutputTypeCountAvailabilityArgs
   slotTemplates?: boolean | VenueCountOutputTypeCountSlotTemplatesArgs
   dateSlots?: boolean | VenueCountOutputTypeCountDateSlotsArgs
+  bookings?: boolean | VenueCountOutputTypeCountBookingsArgs
+  bookingSlots?: boolean | VenueCountOutputTypeCountBookingSlotsArgs
 }
 
 /**
@@ -2237,6 +2779,20 @@ export type VenueCountOutputTypeCountDateSlotsArgs<ExtArgs extends runtime.Types
   where?: Prisma.VenueDateSlotWhereInput
 }
 
+/**
+ * VenueCountOutputType without action
+ */
+export type VenueCountOutputTypeCountBookingsArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  where?: Prisma.BookingWhereInput
+}
+
+/**
+ * VenueCountOutputType without action
+ */
+export type VenueCountOutputTypeCountBookingSlotsArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  where?: Prisma.BookingSlotWhereInput
+}
+
 
 export type VenueSelect<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetSelect<{
   id?: boolean
@@ -2261,6 +2817,8 @@ export type VenueSelect<ExtArgs extends runtime.Types.Extensions.InternalArgs = 
   deletedAt?: boolean
   createdAt?: boolean
   updatedAt?: boolean
+  basePricePerSlot?: boolean
+  currency?: boolean
   owner?: boolean | Prisma.ProfileDefaultArgs<ExtArgs>
   images?: boolean | Prisma.Venue$imagesArgs<ExtArgs>
   videos?: boolean | Prisma.Venue$videosArgs<ExtArgs>
@@ -2269,6 +2827,8 @@ export type VenueSelect<ExtArgs extends runtime.Types.Extensions.InternalArgs = 
   availability?: boolean | Prisma.Venue$availabilityArgs<ExtArgs>
   slotTemplates?: boolean | Prisma.Venue$slotTemplatesArgs<ExtArgs>
   dateSlots?: boolean | Prisma.Venue$dateSlotsArgs<ExtArgs>
+  bookings?: boolean | Prisma.Venue$bookingsArgs<ExtArgs>
+  bookingSlots?: boolean | Prisma.Venue$bookingSlotsArgs<ExtArgs>
   _count?: boolean | Prisma.VenueCountOutputTypeDefaultArgs<ExtArgs>
 }, ExtArgs["result"]["venue"]>
 
@@ -2295,6 +2855,8 @@ export type VenueSelectCreateManyAndReturn<ExtArgs extends runtime.Types.Extensi
   deletedAt?: boolean
   createdAt?: boolean
   updatedAt?: boolean
+  basePricePerSlot?: boolean
+  currency?: boolean
   owner?: boolean | Prisma.ProfileDefaultArgs<ExtArgs>
 }, ExtArgs["result"]["venue"]>
 
@@ -2321,6 +2883,8 @@ export type VenueSelectUpdateManyAndReturn<ExtArgs extends runtime.Types.Extensi
   deletedAt?: boolean
   createdAt?: boolean
   updatedAt?: boolean
+  basePricePerSlot?: boolean
+  currency?: boolean
   owner?: boolean | Prisma.ProfileDefaultArgs<ExtArgs>
 }, ExtArgs["result"]["venue"]>
 
@@ -2347,9 +2911,11 @@ export type VenueSelectScalar = {
   deletedAt?: boolean
   createdAt?: boolean
   updatedAt?: boolean
+  basePricePerSlot?: boolean
+  currency?: boolean
 }
 
-export type VenueOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "ownerId" | "name" | "slug" | "shortDescription" | "description" | "status" | "capacityMin" | "capacityMax" | "addressLine1" | "addressLine2" | "city" | "district" | "state" | "country" | "postalCode" | "rejectionReason" | "reviewedBy" | "reviewedAt" | "deletedAt" | "createdAt" | "updatedAt", ExtArgs["result"]["venue"]>
+export type VenueOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "ownerId" | "name" | "slug" | "shortDescription" | "description" | "status" | "capacityMin" | "capacityMax" | "addressLine1" | "addressLine2" | "city" | "district" | "state" | "country" | "postalCode" | "rejectionReason" | "reviewedBy" | "reviewedAt" | "deletedAt" | "createdAt" | "updatedAt" | "basePricePerSlot" | "currency", ExtArgs["result"]["venue"]>
 export type VenueInclude<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   owner?: boolean | Prisma.ProfileDefaultArgs<ExtArgs>
   images?: boolean | Prisma.Venue$imagesArgs<ExtArgs>
@@ -2359,6 +2925,8 @@ export type VenueInclude<ExtArgs extends runtime.Types.Extensions.InternalArgs =
   availability?: boolean | Prisma.Venue$availabilityArgs<ExtArgs>
   slotTemplates?: boolean | Prisma.Venue$slotTemplatesArgs<ExtArgs>
   dateSlots?: boolean | Prisma.Venue$dateSlotsArgs<ExtArgs>
+  bookings?: boolean | Prisma.Venue$bookingsArgs<ExtArgs>
+  bookingSlots?: boolean | Prisma.Venue$bookingSlotsArgs<ExtArgs>
   _count?: boolean | Prisma.VenueCountOutputTypeDefaultArgs<ExtArgs>
 }
 export type VenueIncludeCreateManyAndReturn<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
@@ -2379,6 +2947,8 @@ export type $VenuePayload<ExtArgs extends runtime.Types.Extensions.InternalArgs 
     availability: Prisma.$VenueAvailabilityPayload<ExtArgs>[]
     slotTemplates: Prisma.$VenueSlotTemplatePayload<ExtArgs>[]
     dateSlots: Prisma.$VenueDateSlotPayload<ExtArgs>[]
+    bookings: Prisma.$BookingPayload<ExtArgs>[]
+    bookingSlots: Prisma.$BookingSlotPayload<ExtArgs>[]
   }
   scalars: runtime.Types.Extensions.GetPayloadResult<{
     id: string
@@ -2403,6 +2973,8 @@ export type $VenuePayload<ExtArgs extends runtime.Types.Extensions.InternalArgs 
     deletedAt: Date | null
     createdAt: Date
     updatedAt: Date
+    basePricePerSlot: runtime.Decimal
+    currency: string
   }, ExtArgs["result"]["venue"]>
   composites: {}
 }
@@ -2805,6 +3377,8 @@ export interface Prisma__VenueClient<T, Null = never, ExtArgs extends runtime.Ty
   availability<T extends Prisma.Venue$availabilityArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.Venue$availabilityArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$VenueAvailabilityPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
   slotTemplates<T extends Prisma.Venue$slotTemplatesArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.Venue$slotTemplatesArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$VenueSlotTemplatePayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
   dateSlots<T extends Prisma.Venue$dateSlotsArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.Venue$dateSlotsArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$VenueDateSlotPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
+  bookings<T extends Prisma.Venue$bookingsArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.Venue$bookingsArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$BookingPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
+  bookingSlots<T extends Prisma.Venue$bookingSlotsArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.Venue$bookingSlotsArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$BookingSlotPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
   /**
    * Attaches callbacks for the resolution and/or rejection of the Promise.
    * @param onfulfilled The callback to execute when the Promise is resolved.
@@ -2856,6 +3430,8 @@ export interface VenueFieldRefs {
   readonly deletedAt: Prisma.FieldRef<"Venue", 'DateTime'>
   readonly createdAt: Prisma.FieldRef<"Venue", 'DateTime'>
   readonly updatedAt: Prisma.FieldRef<"Venue", 'DateTime'>
+  readonly basePricePerSlot: Prisma.FieldRef<"Venue", 'Decimal'>
+  readonly currency: Prisma.FieldRef<"Venue", 'String'>
 }
     
 
@@ -3422,6 +3998,54 @@ export type Venue$dateSlotsArgs<ExtArgs extends runtime.Types.Extensions.Interna
   take?: number
   skip?: number
   distinct?: Prisma.VenueDateSlotScalarFieldEnum | Prisma.VenueDateSlotScalarFieldEnum[]
+}
+
+/**
+ * Venue.bookings
+ */
+export type Venue$bookingsArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  /**
+   * Select specific fields to fetch from the Booking
+   */
+  select?: Prisma.BookingSelect<ExtArgs> | null
+  /**
+   * Omit specific fields from the Booking
+   */
+  omit?: Prisma.BookingOmit<ExtArgs> | null
+  /**
+   * Choose, which related nodes to fetch as well
+   */
+  include?: Prisma.BookingInclude<ExtArgs> | null
+  where?: Prisma.BookingWhereInput
+  orderBy?: Prisma.BookingOrderByWithRelationInput | Prisma.BookingOrderByWithRelationInput[]
+  cursor?: Prisma.BookingWhereUniqueInput
+  take?: number
+  skip?: number
+  distinct?: Prisma.BookingScalarFieldEnum | Prisma.BookingScalarFieldEnum[]
+}
+
+/**
+ * Venue.bookingSlots
+ */
+export type Venue$bookingSlotsArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  /**
+   * Select specific fields to fetch from the BookingSlot
+   */
+  select?: Prisma.BookingSlotSelect<ExtArgs> | null
+  /**
+   * Omit specific fields from the BookingSlot
+   */
+  omit?: Prisma.BookingSlotOmit<ExtArgs> | null
+  /**
+   * Choose, which related nodes to fetch as well
+   */
+  include?: Prisma.BookingSlotInclude<ExtArgs> | null
+  where?: Prisma.BookingSlotWhereInput
+  orderBy?: Prisma.BookingSlotOrderByWithRelationInput | Prisma.BookingSlotOrderByWithRelationInput[]
+  cursor?: Prisma.BookingSlotWhereUniqueInput
+  take?: number
+  skip?: number
+  distinct?: Prisma.BookingSlotScalarFieldEnum | Prisma.BookingSlotScalarFieldEnum[]
 }
 
 /**

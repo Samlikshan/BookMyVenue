@@ -10,6 +10,8 @@ model Profile {
 
   ownerApplication OwnerApplication?
   venues           Venue[]
+  userBookings     Booking[] @relation("BookingUser")
+  ownerBookings    Booking[] @relation("BookingOwner")
 
   @@map("profiles")
 }
