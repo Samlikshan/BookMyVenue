@@ -8,6 +8,8 @@
  *
  * 🟢 You can import this file directly.
  */
+export type * from './models/Booking.js'
+export type * from './models/BookingSlot.js'
 export type * from './models/OwnerApplication.js'
 export type * from './models/Profile.js'
 export type * from './models/VenueAvailability.js'

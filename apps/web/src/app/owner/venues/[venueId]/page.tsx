@@ -128,6 +128,7 @@ export default function EditVenuePage() {
     const capMaxRaw = formData.get("capacityMax");
     const capacityMin = capMinRaw ? Number(capMinRaw) : null;
     const capacityMax = capMaxRaw ? Number(capMaxRaw) : null;
+    const basePricePerSlot = Number(formData.get("basePricePerSlot"));
 
     if (capacityMin && capacityMax && capacityMin > capacityMax) {
       toast.error("Validation error", {
@@ -153,6 +154,7 @@ export default function EditVenuePage() {
           description,
           capacityMin,
           capacityMax,
+          basePricePerSlot,
         },
         accessToken
       );
@@ -568,6 +570,11 @@ export default function EditVenuePage() {
                         defaultValue={venue.shortDescription ?? ""}
                         disabled={!isEditable}
                       />
+                    </div>
+                    <div className="space-y-2 md:col-span-2">
+                      <Label htmlFor="basePricePerSlot">Default price per slot (INR)</Label>
+                      <Input id="basePricePerSlot" name="basePricePerSlot" type="number" min="0.01" step="0.01" defaultValue={venue.basePricePerSlot} disabled={!isEditable} required />
+                      <p className="text-xs text-zinc-500">This price will be used for all slots unless a custom slot price is provided.</p>
                     </div>
 
                     <div className="space-y-2 md:col-span-2">

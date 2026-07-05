@@ -422,24 +422,8 @@ export type OwnerApplicationNullableScalarRelationFilter = {
   isNot?: Prisma.OwnerApplicationWhereInput | null
 }
 
-export type StringFieldUpdateOperationsInput = {
-  set?: string
-}
-
 export type EnumApplicationStatusFieldUpdateOperationsInput = {
   set?: $Enums.ApplicationStatus
-}
-
-export type NullableStringFieldUpdateOperationsInput = {
-  set?: string | null
-}
-
-export type NullableDateTimeFieldUpdateOperationsInput = {
-  set?: Date | string | null
-}
-
-export type DateTimeFieldUpdateOperationsInput = {
-  set?: Date | string
 }
 
 export type OwnerApplicationCreateNestedOneWithoutUserInput = {

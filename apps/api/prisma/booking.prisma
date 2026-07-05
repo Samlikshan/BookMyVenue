@@ -1,0 +1,56 @@
+enum BookingStatus {
+  PAYMENT_PENDING
+  CONFIRMED
+  PAYMENT_FAILED
+  EXPIRED
+  CANCELLED
+  COMPLETED
+}
+
+model Booking {
+  id               String        @id @default(uuid())
+  userId           String        @map("user_id") @db.Uuid
+  venueId          String        @map("venue_id")
+  ownerId          String        @map("owner_id") @db.Uuid
+  bookingDate      DateTime      @map("booking_date")
+  status           BookingStatus @default(PAYMENT_PENDING)
+  totalAmount      Decimal       @map("total_amount") @db.Decimal(10, 2)
+  totalSlots       Int           @map("total_slots")
+  paymentExpiresAt DateTime?     @map("payment_expires_at")
+  paymentMockId    String?       @map("payment_mock_id")
+  notes             String?
+  createdAt         DateTime      @default(now()) @map("created_at")
+  updatedAt         DateTime      @updatedAt @map("updated_at")
+
+  user  Profile @relation("BookingUser", fields: [userId], references: [id])
+  owner Profile @relation("BookingOwner", fields: [ownerId], references: [id])
+  venue Venue   @relation(fields: [venueId], references: [id])
+  slots BookingSlot[]
+
+  @@index([userId])
+  @@index([venueId])
+  @@index([ownerId])
+  @@index([bookingDate])
+  @@index([status])
+  @@index([paymentExpiresAt])
+  @@map("bookings")
+}
+
+model BookingSlot {
+  id        String   @id @default(uuid())
+  bookingId String   @map("booking_id")
+  venueId   String   @map("venue_id")
+  date      DateTime
+  startTime String   @map("start_time")
+  endTime   String   @map("end_time")
+  price     Decimal  @db.Decimal(10, 2)
+  createdAt DateTime @default(now()) @map("created_at")
+
+  booking Booking @relation(fields: [bookingId], references: [id], onDelete: Cascade)
+  venue   Venue   @relation(fields: [venueId], references: [id])
+
+  @@unique([venueId, date, startTime, endTime])
+  @@index([bookingId])
+  @@index([venueId, date])
+  @@map("booking_slots")
+}

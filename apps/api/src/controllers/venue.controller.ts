@@ -24,7 +24,7 @@ export async function createVenue(req: Request, res: Response) {
     });
   }
 
-  const result = await createVenueService(parsed.data);
+  const result = await createVenueService(req.user!.profile.id, parsed.data);
   return res.status(result.statusCode).json(result);
 }
 
@@ -46,13 +46,13 @@ export async function updateVenue(req: Request, res: Response) {
   }
 
   const venueId = paramString(req.params.venueId, "venueId");
-  const result = await updateVenueService(venueId, parsed.data);
+  const result = await updateVenueService(req.user!.profile.id, venueId, parsed.data);
   return res.status(result.statusCode).json(result);
 }
 
 export async function deleteVenue(req: Request, res: Response) {
   const venueId = paramString(req.params.venueId, "venueId");
-  const result = await deleteVenueService(venueId);
+  const result = await deleteVenueService(req.user!.profile.id, venueId);
   return res.status(result.statusCode).json(result);
 }
 

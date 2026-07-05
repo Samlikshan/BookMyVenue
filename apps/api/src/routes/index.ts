@@ -4,6 +4,7 @@ import authRoutes from "./auth.routes.js";
 import catalogRoutes from "./catalog.routes.js";
 import venueRoutes from "./venue.routes.js";
 import adminVenueRoutes from "./admin-venue.routes.js";
+import bookingRoutes from "./booking.routes.js";
 
 const router = Router();
 
@@ -12,5 +13,6 @@ router.use("/catalog", catalogRoutes);
 router.use("/venues", venueRoutes);
 router.use("/admin/venues", adminVenueRoutes);
 router.use("/admin", adminRoutes);
+router.use("/bookings", bookingRoutes);
 
 export default router;

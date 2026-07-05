@@ -20,8 +20,18 @@ export type VenueSlotTemplateModel = runtime.Types.Result.DefaultSelection<Prism
 
 export type AggregateVenueSlotTemplate = {
   _count: VenueSlotTemplateCountAggregateOutputType | null
+  _avg: VenueSlotTemplateAvgAggregateOutputType | null
+  _sum: VenueSlotTemplateSumAggregateOutputType | null
   _min: VenueSlotTemplateMinAggregateOutputType | null
   _max: VenueSlotTemplateMaxAggregateOutputType | null
+}
+
+export type VenueSlotTemplateAvgAggregateOutputType = {
+  priceOverride: runtime.Decimal | null
+}
+
+export type VenueSlotTemplateSumAggregateOutputType = {
+  priceOverride: runtime.Decimal | null
 }
 
 export type VenueSlotTemplateMinAggregateOutputType = {
@@ -30,6 +40,7 @@ export type VenueSlotTemplateMinAggregateOutputType = {
   name: string | null
   startTime: string | null
   endTime: string | null
+  priceOverride: runtime.Decimal | null
   isActive: boolean | null
   createdAt: Date | null
   updatedAt: Date | null
@@ -41,6 +52,7 @@ export type VenueSlotTemplateMaxAggregateOutputType = {
   name: string | null
   startTime: string | null
   endTime: string | null
+  priceOverride: runtime.Decimal | null
   isActive: boolean | null
   createdAt: Date | null
   updatedAt: Date | null
@@ -52,6 +64,7 @@ export type VenueSlotTemplateCountAggregateOutputType = {
   name: number
   startTime: number
   endTime: number
+  priceOverride: number
   isActive: number
   createdAt: number
   updatedAt: number
@@ -59,12 +72,21 @@ export type VenueSlotTemplateCountAggregateOutputType = {
 }
 
 
+export type VenueSlotTemplateAvgAggregateInputType = {
+  priceOverride?: true
+}
+
+export type VenueSlotTemplateSumAggregateInputType = {
+  priceOverride?: true
+}
+
 export type VenueSlotTemplateMinAggregateInputType = {
   id?: true
   venueId?: true
   name?: true
   startTime?: true
   endTime?: true
+  priceOverride?: true
   isActive?: true
   createdAt?: true
   updatedAt?: true
@@ -76,6 +98,7 @@ export type VenueSlotTemplateMaxAggregateInputType = {
   name?: true
   startTime?: true
   endTime?: true
+  priceOverride?: true
   isActive?: true
   createdAt?: true
   updatedAt?: true
@@ -87,6 +110,7 @@ export type VenueSlotTemplateCountAggregateInputType = {
   name?: true
   startTime?: true
   endTime?: true
+  priceOverride?: true
   isActive?: true
   createdAt?: true
   updatedAt?: true
@@ -131,6 +155,18 @@ export type VenueSlotTemplateAggregateArgs<ExtArgs extends runtime.Types.Extensi
   /**
    * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
    * 
+   * Select which fields to average
+  **/
+  _avg?: VenueSlotTemplateAvgAggregateInputType
+  /**
+   * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+   * 
+   * Select which fields to sum
+  **/
+  _sum?: VenueSlotTemplateSumAggregateInputType
+  /**
+   * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+   * 
    * Select which fields to find the minimum value
   **/
   _min?: VenueSlotTemplateMinAggregateInputType
@@ -161,6 +197,8 @@ export type VenueSlotTemplateGroupByArgs<ExtArgs extends runtime.Types.Extension
   take?: number
   skip?: number
   _count?: VenueSlotTemplateCountAggregateInputType | true
+  _avg?: VenueSlotTemplateAvgAggregateInputType
+  _sum?: VenueSlotTemplateSumAggregateInputType
   _min?: VenueSlotTemplateMinAggregateInputType
   _max?: VenueSlotTemplateMaxAggregateInputType
 }
@@ -171,10 +209,13 @@ export type VenueSlotTemplateGroupByOutputType = {
   name: string | null
   startTime: string
   endTime: string
+  priceOverride: runtime.Decimal | null
   isActive: boolean
   createdAt: Date
   updatedAt: Date
   _count: VenueSlotTemplateCountAggregateOutputType | null
+  _avg: VenueSlotTemplateAvgAggregateOutputType | null
+  _sum: VenueSlotTemplateSumAggregateOutputType | null
   _min: VenueSlotTemplateMinAggregateOutputType | null
   _max: VenueSlotTemplateMaxAggregateOutputType | null
 }
@@ -203,6 +244,7 @@ export type VenueSlotTemplateWhereInput = {
   name?: Prisma.StringNullableFilter<"VenueSlotTemplate"> | string | null
   startTime?: Prisma.StringFilter<"VenueSlotTemplate"> | string
   endTime?: Prisma.StringFilter<"VenueSlotTemplate"> | string
+  priceOverride?: Prisma.DecimalNullableFilter<"VenueSlotTemplate"> | runtime.Decimal | runtime.DecimalJsLike | number | string | null
   isActive?: Prisma.BoolFilter<"VenueSlotTemplate"> | boolean
   createdAt?: Prisma.DateTimeFilter<"VenueSlotTemplate"> | Date | string
   updatedAt?: Prisma.DateTimeFilter<"VenueSlotTemplate"> | Date | string
@@ -216,6 +258,7 @@ export type VenueSlotTemplateOrderByWithRelationInput = {
   name?: Prisma.SortOrderInput | Prisma.SortOrder
   startTime?: Prisma.SortOrder
   endTime?: Prisma.SortOrder
+  priceOverride?: Prisma.SortOrderInput | Prisma.SortOrder
   isActive?: Prisma.SortOrder
   createdAt?: Prisma.SortOrder
   updatedAt?: Prisma.SortOrder
@@ -232,6 +275,7 @@ export type VenueSlotTemplateWhereUniqueInput = Prisma.AtLeast<{
   name?: Prisma.StringNullableFilter<"VenueSlotTemplate"> | string | null
   startTime?: Prisma.StringFilter<"VenueSlotTemplate"> | string
   endTime?: Prisma.StringFilter<"VenueSlotTemplate"> | string
+  priceOverride?: Prisma.DecimalNullableFilter<"VenueSlotTemplate"> | runtime.Decimal | runtime.DecimalJsLike | number | string | null
   isActive?: Prisma.BoolFilter<"VenueSlotTemplate"> | boolean
   createdAt?: Prisma.DateTimeFilter<"VenueSlotTemplate"> | Date | string
   updatedAt?: Prisma.DateTimeFilter<"VenueSlotTemplate"> | Date | string
@@ -245,12 +289,15 @@ export type VenueSlotTemplateOrderByWithAggregationInput = {
   name?: Prisma.SortOrderInput | Prisma.SortOrder
   startTime?: Prisma.SortOrder
   endTime?: Prisma.SortOrder
+  priceOverride?: Prisma.SortOrderInput | Prisma.SortOrder
   isActive?: Prisma.SortOrder
   createdAt?: Prisma.SortOrder
   updatedAt?: Prisma.SortOrder
   _count?: Prisma.VenueSlotTemplateCountOrderByAggregateInput
+  _avg?: Prisma.VenueSlotTemplateAvgOrderByAggregateInput
   _max?: Prisma.VenueSlotTemplateMaxOrderByAggregateInput
   _min?: Prisma.VenueSlotTemplateMinOrderByAggregateInput
+  _sum?: Prisma.VenueSlotTemplateSumOrderByAggregateInput
 }
 
 export type VenueSlotTemplateScalarWhereWithAggregatesInput = {
@@ -262,6 +309,7 @@ export type VenueSlotTemplateScalarWhereWithAggregatesInput = {
   name?: Prisma.StringNullableWithAggregatesFilter<"VenueSlotTemplate"> | string | null
   startTime?: Prisma.StringWithAggregatesFilter<"VenueSlotTemplate"> | string
   endTime?: Prisma.StringWithAggregatesFilter<"VenueSlotTemplate"> | string
+  priceOverride?: Prisma.DecimalNullableWithAggregatesFilter<"VenueSlotTemplate"> | runtime.Decimal | runtime.DecimalJsLike | number | string | null
   isActive?: Prisma.BoolWithAggregatesFilter<"VenueSlotTemplate"> | boolean
   createdAt?: Prisma.DateTimeWithAggregatesFilter<"VenueSlotTemplate"> | Date | string
   updatedAt?: Prisma.DateTimeWithAggregatesFilter<"VenueSlotTemplate"> | Date | string
@@ -272,6 +320,7 @@ export type VenueSlotTemplateCreateInput = {
   name?: string | null
   startTime: string
   endTime: string
+  priceOverride?: runtime.Decimal | runtime.DecimalJsLike | number | string | null
   isActive?: boolean
   createdAt?: Date | string
   updatedAt?: Date | string
@@ -285,6 +334,7 @@ export type VenueSlotTemplateUncheckedCreateInput = {
   name?: string | null
   startTime: string
   endTime: string
+  priceOverride?: runtime.Decimal | runtime.DecimalJsLike | number | string | null
   isActive?: boolean
   createdAt?: Date | string
   updatedAt?: Date | string
@@ -296,6 +346,7 @@ export type VenueSlotTemplateUpdateInput = {
   name?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   startTime?: Prisma.StringFieldUpdateOperationsInput | string
   endTime?: Prisma.StringFieldUpdateOperationsInput | string
+  priceOverride?: Prisma.NullableDecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string | null
   isActive?: Prisma.BoolFieldUpdateOperationsInput | boolean
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
@@ -309,6 +360,7 @@ export type VenueSlotTemplateUncheckedUpdateInput = {
   name?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   startTime?: Prisma.StringFieldUpdateOperationsInput | string
   endTime?: Prisma.StringFieldUpdateOperationsInput | string
+  priceOverride?: Prisma.NullableDecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string | null
   isActive?: Prisma.BoolFieldUpdateOperationsInput | boolean
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
@@ -321,6 +373,7 @@ export type VenueSlotTemplateCreateManyInput = {
   name?: string | null
   startTime: string
   endTime: string
+  priceOverride?: runtime.Decimal | runtime.DecimalJsLike | number | string | null
   isActive?: boolean
   createdAt?: Date | string
   updatedAt?: Date | string
@@ -331,6 +384,7 @@ export type VenueSlotTemplateUpdateManyMutationInput = {
   name?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   startTime?: Prisma.StringFieldUpdateOperationsInput | string
   endTime?: Prisma.StringFieldUpdateOperationsInput | string
+  priceOverride?: Prisma.NullableDecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string | null
   isActive?: Prisma.BoolFieldUpdateOperationsInput | boolean
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
@@ -342,6 +396,7 @@ export type VenueSlotTemplateUncheckedUpdateManyInput = {
   name?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   startTime?: Prisma.StringFieldUpdateOperationsInput | string
   endTime?: Prisma.StringFieldUpdateOperationsInput | string
+  priceOverride?: Prisma.NullableDecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string | null
   isActive?: Prisma.BoolFieldUpdateOperationsInput | boolean
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
@@ -353,9 +408,14 @@ export type VenueSlotTemplateCountOrderByAggregateInput = {
   name?: Prisma.SortOrder
   startTime?: Prisma.SortOrder
   endTime?: Prisma.SortOrder
+  priceOverride?: Prisma.SortOrder
   isActive?: Prisma.SortOrder
   createdAt?: Prisma.SortOrder
   updatedAt?: Prisma.SortOrder
+}
+
+export type VenueSlotTemplateAvgOrderByAggregateInput = {
+  priceOverride?: Prisma.SortOrder
 }
 
 export type VenueSlotTemplateMaxOrderByAggregateInput = {
@@ -364,6 +424,7 @@ export type VenueSlotTemplateMaxOrderByAggregateInput = {
   name?: Prisma.SortOrder
   startTime?: Prisma.SortOrder
   endTime?: Prisma.SortOrder
+  priceOverride?: Prisma.SortOrder
   isActive?: Prisma.SortOrder
   createdAt?: Prisma.SortOrder
   updatedAt?: Prisma.SortOrder
@@ -375,9 +436,14 @@ export type VenueSlotTemplateMinOrderByAggregateInput = {
   name?: Prisma.SortOrder
   startTime?: Prisma.SortOrder
   endTime?: Prisma.SortOrder
+  priceOverride?: Prisma.SortOrder
   isActive?: Prisma.SortOrder
   createdAt?: Prisma.SortOrder
   updatedAt?: Prisma.SortOrder
+}
+
+export type VenueSlotTemplateSumOrderByAggregateInput = {
+  priceOverride?: Prisma.SortOrder
 }
 
 export type VenueSlotTemplateNullableScalarRelationFilter = {
@@ -393,6 +459,14 @@ export type VenueSlotTemplateListRelationFilter = {
 
 export type VenueSlotTemplateOrderByRelationAggregateInput = {
   _count?: Prisma.SortOrder
+}
+
+export type NullableDecimalFieldUpdateOperationsInput = {
+  set?: runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  increment?: runtime.Decimal | runtime.DecimalJsLike | number | string
+  decrement?: runtime.Decimal | runtime.DecimalJsLike | number | string
+  multiply?: runtime.Decimal | runtime.DecimalJsLike | number | string
+  divide?: runtime.Decimal | runtime.DecimalJsLike | number | string
 }
 
 export type VenueSlotTemplateCreateNestedOneWithoutDateSlotsInput = {
@@ -458,6 +532,7 @@ export type VenueSlotTemplateCreateWithoutDateSlotsInput = {
   name?: string | null
   startTime: string
   endTime: string
+  priceOverride?: runtime.Decimal | runtime.DecimalJsLike | number | string | null
   isActive?: boolean
   createdAt?: Date | string
   updatedAt?: Date | string
@@ -470,6 +545,7 @@ export type VenueSlotTemplateUncheckedCreateWithoutDateSlotsInput = {
   name?: string | null
   startTime: string
   endTime: string
+  priceOverride?: runtime.Decimal | runtime.DecimalJsLike | number | string | null
   isActive?: boolean
   createdAt?: Date | string
   updatedAt?: Date | string
@@ -496,6 +572,7 @@ export type VenueSlotTemplateUpdateWithoutDateSlotsInput = {
   name?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   startTime?: Prisma.StringFieldUpdateOperationsInput | string
   endTime?: Prisma.StringFieldUpdateOperationsInput | string
+  priceOverride?: Prisma.NullableDecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string | null
   isActive?: Prisma.BoolFieldUpdateOperationsInput | boolean
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
@@ -508,6 +585,7 @@ export type VenueSlotTemplateUncheckedUpdateWithoutDateSlotsInput = {
   name?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   startTime?: Prisma.StringFieldUpdateOperationsInput | string
   endTime?: Prisma.StringFieldUpdateOperationsInput | string
+  priceOverride?: Prisma.NullableDecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string | null
   isActive?: Prisma.BoolFieldUpdateOperationsInput | boolean
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
@@ -518,6 +596,7 @@ export type VenueSlotTemplateCreateWithoutVenueInput = {
   name?: string | null
   startTime: string
   endTime: string
+  priceOverride?: runtime.Decimal | runtime.DecimalJsLike | number | string | null
   isActive?: boolean
   createdAt?: Date | string
   updatedAt?: Date | string
@@ -529,6 +608,7 @@ export type VenueSlotTemplateUncheckedCreateWithoutVenueInput = {
   name?: string | null
   startTime: string
   endTime: string
+  priceOverride?: runtime.Decimal | runtime.DecimalJsLike | number | string | null
   isActive?: boolean
   createdAt?: Date | string
   updatedAt?: Date | string
@@ -570,6 +650,7 @@ export type VenueSlotTemplateScalarWhereInput = {
   name?: Prisma.StringNullableFilter<"VenueSlotTemplate"> | string | null
   startTime?: Prisma.StringFilter<"VenueSlotTemplate"> | string
   endTime?: Prisma.StringFilter<"VenueSlotTemplate"> | string
+  priceOverride?: Prisma.DecimalNullableFilter<"VenueSlotTemplate"> | runtime.Decimal | runtime.DecimalJsLike | number | string | null
   isActive?: Prisma.BoolFilter<"VenueSlotTemplate"> | boolean
   createdAt?: Prisma.DateTimeFilter<"VenueSlotTemplate"> | Date | string
   updatedAt?: Prisma.DateTimeFilter<"VenueSlotTemplate"> | Date | string
@@ -580,6 +661,7 @@ export type VenueSlotTemplateCreateManyVenueInput = {
   name?: string | null
   startTime: string
   endTime: string
+  priceOverride?: runtime.Decimal | runtime.DecimalJsLike | number | string | null
   isActive?: boolean
   createdAt?: Date | string
   updatedAt?: Date | string
@@ -590,6 +672,7 @@ export type VenueSlotTemplateUpdateWithoutVenueInput = {
   name?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   startTime?: Prisma.StringFieldUpdateOperationsInput | string
   endTime?: Prisma.StringFieldUpdateOperationsInput | string
+  priceOverride?: Prisma.NullableDecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string | null
   isActive?: Prisma.BoolFieldUpdateOperationsInput | boolean
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
@@ -601,6 +684,7 @@ export type VenueSlotTemplateUncheckedUpdateWithoutVenueInput = {
   name?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   startTime?: Prisma.StringFieldUpdateOperationsInput | string
   endTime?: Prisma.StringFieldUpdateOperationsInput | string
+  priceOverride?: Prisma.NullableDecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string | null
   isActive?: Prisma.BoolFieldUpdateOperationsInput | boolean
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
@@ -612,6 +696,7 @@ export type VenueSlotTemplateUncheckedUpdateManyWithoutVenueInput = {
   name?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   startTime?: Prisma.StringFieldUpdateOperationsInput | string
   endTime?: Prisma.StringFieldUpdateOperationsInput | string
+  priceOverride?: Prisma.NullableDecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string | null
   isActive?: Prisma.BoolFieldUpdateOperationsInput | boolean
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
@@ -654,6 +739,7 @@ export type VenueSlotTemplateSelect<ExtArgs extends runtime.Types.Extensions.Int
   name?: boolean
   startTime?: boolean
   endTime?: boolean
+  priceOverride?: boolean
   isActive?: boolean
   createdAt?: boolean
   updatedAt?: boolean
@@ -668,6 +754,7 @@ export type VenueSlotTemplateSelectCreateManyAndReturn<ExtArgs extends runtime.T
   name?: boolean
   startTime?: boolean
   endTime?: boolean
+  priceOverride?: boolean
   isActive?: boolean
   createdAt?: boolean
   updatedAt?: boolean
@@ -680,6 +767,7 @@ export type VenueSlotTemplateSelectUpdateManyAndReturn<ExtArgs extends runtime.T
   name?: boolean
   startTime?: boolean
   endTime?: boolean
+  priceOverride?: boolean
   isActive?: boolean
   createdAt?: boolean
   updatedAt?: boolean
@@ -692,12 +780,13 @@ export type VenueSlotTemplateSelectScalar = {
   name?: boolean
   startTime?: boolean
   endTime?: boolean
+  priceOverride?: boolean
   isActive?: boolean
   createdAt?: boolean
   updatedAt?: boolean
 }
 
-export type VenueSlotTemplateOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "venueId" | "name" | "startTime" | "endTime" | "isActive" | "createdAt" | "updatedAt", ExtArgs["result"]["venueSlotTemplate"]>
+export type VenueSlotTemplateOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "venueId" | "name" | "startTime" | "endTime" | "priceOverride" | "isActive" | "createdAt" | "updatedAt", ExtArgs["result"]["venueSlotTemplate"]>
 export type VenueSlotTemplateInclude<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   venue?: boolean | Prisma.VenueDefaultArgs<ExtArgs>
   dateSlots?: boolean | Prisma.VenueSlotTemplate$dateSlotsArgs<ExtArgs>
@@ -722,6 +811,7 @@ export type $VenueSlotTemplatePayload<ExtArgs extends runtime.Types.Extensions.I
     name: string | null
     startTime: string
     endTime: string
+    priceOverride: runtime.Decimal | null
     isActive: boolean
     createdAt: Date
     updatedAt: Date
@@ -1155,6 +1245,7 @@ export interface VenueSlotTemplateFieldRefs {
   readonly name: Prisma.FieldRef<"VenueSlotTemplate", 'String'>
   readonly startTime: Prisma.FieldRef<"VenueSlotTemplate", 'String'>
   readonly endTime: Prisma.FieldRef<"VenueSlotTemplate", 'String'>
+  readonly priceOverride: Prisma.FieldRef<"VenueSlotTemplate", 'Decimal'>
   readonly isActive: Prisma.FieldRef<"VenueSlotTemplate", 'Boolean'>
   readonly createdAt: Prisma.FieldRef<"VenueSlotTemplate", 'DateTime'>
   readonly updatedAt: Prisma.FieldRef<"VenueSlotTemplate", 'DateTime'>

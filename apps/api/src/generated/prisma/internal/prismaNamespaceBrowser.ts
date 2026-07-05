@@ -51,6 +51,8 @@ export const AnyNull = runtime.AnyNull
 
 
 export const ModelName = {
+  Booking: 'Booking',
+  BookingSlot: 'BookingSlot',
   OwnerApplication: 'OwnerApplication',
   Profile: 'Profile',
   VenueAvailability: 'VenueAvailability',
@@ -78,6 +80,39 @@ export const TransactionIsolationLevel = runtime.makeStrictEnum({
 } as const)
 
 export type TransactionIsolationLevel = (typeof TransactionIsolationLevel)[keyof typeof TransactionIsolationLevel]
+
+
+export const BookingScalarFieldEnum = {
+  id: 'id',
+  userId: 'userId',
+  venueId: 'venueId',
+  ownerId: 'ownerId',
+  bookingDate: 'bookingDate',
+  status: 'status',
+  totalAmount: 'totalAmount',
+  totalSlots: 'totalSlots',
+  paymentExpiresAt: 'paymentExpiresAt',
+  paymentMockId: 'paymentMockId',
+  notes: 'notes',
+  createdAt: 'createdAt',
+  updatedAt: 'updatedAt'
+} as const
+
+export type BookingScalarFieldEnum = (typeof BookingScalarFieldEnum)[keyof typeof BookingScalarFieldEnum]
+
+
+export const BookingSlotScalarFieldEnum = {
+  id: 'id',
+  bookingId: 'bookingId',
+  venueId: 'venueId',
+  date: 'date',
+  startTime: 'startTime',
+  endTime: 'endTime',
+  price: 'price',
+  createdAt: 'createdAt'
+} as const
+
+export type BookingSlotScalarFieldEnum = (typeof BookingSlotScalarFieldEnum)[keyof typeof BookingSlotScalarFieldEnum]
 
 
 export const OwnerApplicationScalarFieldEnum = {
@@ -130,6 +165,7 @@ export const VenueSlotTemplateScalarFieldEnum = {
   name: 'name',
   startTime: 'startTime',
   endTime: 'endTime',
+  priceOverride: 'priceOverride',
   isActive: 'isActive',
   createdAt: 'createdAt',
   updatedAt: 'updatedAt'
@@ -145,6 +181,7 @@ export const VenueDateSlotScalarFieldEnum = {
   date: 'date',
   startTime: 'startTime',
   endTime: 'endTime',
+  priceOverride: 'priceOverride',
   isAvailable: 'isAvailable',
   source: 'source',
   createdAt: 'createdAt',
@@ -226,7 +263,9 @@ export const VenueScalarFieldEnum = {
   reviewedAt: 'reviewedAt',
   deletedAt: 'deletedAt',
   createdAt: 'createdAt',
-  updatedAt: 'updatedAt'
+  updatedAt: 'updatedAt',
+  basePricePerSlot: 'basePricePerSlot',
+  currency: 'currency'
 } as const
 
 export type VenueScalarFieldEnum = (typeof VenueScalarFieldEnum)[keyof typeof VenueScalarFieldEnum]

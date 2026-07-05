@@ -323,13 +323,7 @@ function VenueCard({ venue, index }: { venue: Venue; index: number }) {
               ? `${venue.capacityMin}–${venue.capacityMax} guests`
               : "Flexible capacity"}
           </span>
-          <Button
-            type="button"
-            size="sm"
-            className="rounded-full bg-zinc-900 text-white hover:bg-zinc-800 dark:bg-zinc-100 dark:text-zinc-900 dark:hover:bg-zinc-200"
-          >
-            View
-          </Button>
+          <Link href={`/venues/${venue.id}`}><Button type="button" size="sm" className="rounded-full bg-zinc-900 text-white hover:bg-zinc-800 dark:bg-zinc-100 dark:text-zinc-900 dark:hover:bg-zinc-200">View</Button></Link>
         </div>
       </div>
     </article>

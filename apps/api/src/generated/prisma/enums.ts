@@ -9,6 +9,18 @@
 * 🟢 You can import this file directly.
 */
 
+export const BookingStatus = {
+  PAYMENT_PENDING: 'PAYMENT_PENDING',
+  CONFIRMED: 'CONFIRMED',
+  PAYMENT_FAILED: 'PAYMENT_FAILED',
+  EXPIRED: 'EXPIRED',
+  CANCELLED: 'CANCELLED',
+  COMPLETED: 'COMPLETED'
+} as const
+
+export type BookingStatus = (typeof BookingStatus)[keyof typeof BookingStatus]
+
+
 export const UserRole = {
   USER: 'USER',
   OWNER: 'OWNER',

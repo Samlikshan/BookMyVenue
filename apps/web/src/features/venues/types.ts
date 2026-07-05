@@ -61,6 +61,7 @@ export interface VenueSlotTemplate {
   isActive: boolean;
   createdAt: string;
   updatedAt: string;
+  priceOverride: number | null;
 }
 
 export type VenueDateSlotSource = "TEMPLATE" | "CUSTOM";
@@ -76,6 +77,7 @@ export interface VenueDateSlot {
   source: VenueDateSlotSource;
   createdAt: string;
   updatedAt: string;
+  priceOverride: number | null;
 }
 
 export interface Venue {
@@ -100,6 +102,8 @@ export interface Venue {
   reviewedAt: string | null;
   createdAt: string;
   updatedAt: string;
+  basePricePerSlot: number;
+  currency: string;
   images: VenueImage[];
   videos: VenueVideo[];
   amenities: VenueAmenity[];
@@ -107,7 +111,6 @@ export interface Venue {
 }
 
 export interface CreateVenueInput {
-  ownerId: string;
   name: string;
   addressLine1: string;
   city: string;
@@ -123,9 +126,11 @@ export interface CreateVenueInput {
   eventTypeIds?: string[];
   amenityNames?: string[];
   status?: VenueStatus;
+  basePricePerSlot: number;
+  currency?: string;
 }
 
-export type UpdateVenueInput = Partial<Omit<CreateVenueInput, "ownerId">>;
+export type UpdateVenueInput = Partial<CreateVenueInput>;
 
 export interface CreateVenueAvailabilityPayload {
   dayOfWeek: number;
@@ -144,6 +149,7 @@ export interface CreateVenueSlotTemplatePayload {
   name?: string | null;
   startTime: string;
   endTime: string;
+  priceOverride?: number | null;
 }
 
 export interface UpdateVenueSlotTemplatePayload {
@@ -151,6 +157,7 @@ export interface UpdateVenueSlotTemplatePayload {
   startTime?: string;
   endTime?: string;
   isActive?: boolean;
+  priceOverride?: number | null;
 }
 
 export interface ApplyVenueSlotTemplatesPayload {
@@ -163,10 +170,12 @@ export interface CreateCustomVenueDateSlotPayload {
   date: string;
   startTime: string;
   endTime: string;
+  priceOverride?: number | null;
 }
 
 export interface UpdateVenueDateSlotPayload {
   startTime?: string;
   endTime?: string;
   isAvailable?: boolean;
+  priceOverride?: number | null;
 }

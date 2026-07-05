@@ -22,6 +22,8 @@ const optionalVenueFields = {
   status: venueStatusSchema.optional(),
 };
 
+const priceSchema = z.number().finite().positive("Price must be greater than zero");
+
 function capacityRefine(
   data: { capacityMin?: number | null; capacityMax?: number | null },
   ctx: z.RefinementCtx
@@ -41,11 +43,12 @@ function capacityRefine(
 
 export const createVenueSchema = z
   .object({
-    ownerId: z.string().uuid("Invalid owner ID"),
     name: z.string().min(2, "Name must be at least 2 characters"),
     addressLine1: z.string().min(1, "Address line 1 is required"),
     city: z.string().min(1, "City is required"),
     state: z.string().min(1, "State is required"),
+    basePricePerSlot: priceSchema,
+    currency: z.string().trim().length(3).toUpperCase().optional(),
     ...optionalVenueFields,
   })
   .superRefine(capacityRefine);
@@ -56,6 +59,8 @@ export const updateVenueSchema = z
     addressLine1: z.string().min(1).optional(),
     city: z.string().min(1).optional(),
     state: z.string().min(1).optional(),
+    basePricePerSlot: priceSchema.optional(),
+    currency: z.string().trim().length(3).toUpperCase().optional(),
     ...optionalVenueFields,
   })
   .superRefine(capacityRefine);

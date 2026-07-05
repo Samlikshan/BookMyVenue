@@ -94,6 +94,7 @@ export async function applyVenueSlotTemplatesService(
         startTime: string;
         endTime: string;
         isAvailable: boolean;
+        priceOverride: number | null;
         source: "TEMPLATE";
       }[] = [];
       const skippedDuplicates: {
@@ -169,6 +170,7 @@ export async function applyVenueSlotTemplatesService(
             startTime: template.startTime,
             endTime: template.endTime,
             isAvailable: true,
+            priceOverride: template.priceOverride?.toNumber() ?? null,
             source: "TEMPLATE",
           });
         }
@@ -222,6 +224,7 @@ export async function createCustomVenueDateSlotService(
           endTime: payload.endTime,
           isAvailable: true,
           source: "CUSTOM",
+          priceOverride: payload.priceOverride ?? null,
         },
       });
     });
@@ -288,6 +291,9 @@ export async function updateVenueDateSlotService(
             ? { isAvailable: payload.isAvailable }
             : {}),
           ...(timeChanged ? { source: "CUSTOM" } : {}),
+          ...(payload.priceOverride !== undefined
+            ? { priceOverride: payload.priceOverride }
+            : {}),
         },
       });
     });

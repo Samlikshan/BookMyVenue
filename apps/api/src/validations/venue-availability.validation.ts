@@ -11,6 +11,13 @@ const dayOfWeekSchema = z
   .min(0, "dayOfWeek must be between 0 and 6")
   .max(6, "dayOfWeek must be between 0 and 6");
 
+const priceOverrideSchema = z
+  .number()
+  .finite()
+  .positive("priceOverride must be greater than zero")
+  .nullable()
+  .optional();
+
 function refineTimeRange(
   data: { startTime?: string; endTime?: string },
   ctx: z.RefinementCtx
@@ -36,6 +43,7 @@ export const createVenueAvailabilitySchema = z
     dayOfWeek: dayOfWeekSchema,
     startTime: timeSchema,
     endTime: timeSchema,
+    priceOverride: priceOverrideSchema,
   })
   .strict()
   .superRefine(refineTimeRange);
@@ -46,6 +54,7 @@ export const updateVenueAvailabilitySchema = z
     startTime: timeSchema.optional(),
     endTime: timeSchema.optional(),
     isActive: z.boolean().optional(),
+    priceOverride: priceOverrideSchema,
   })
   .strict()
   .refine((data) => Object.keys(data).length > 0, {
@@ -69,6 +78,7 @@ export const createVenueSlotTemplateSchema = z
     name: z.string().trim().min(1).nullable().optional(),
     startTime: timeSchema,
     endTime: timeSchema,
+    priceOverride: priceOverrideSchema,
   })
   .strict()
   .superRefine(refineTimeRange);
@@ -79,6 +89,7 @@ export const updateVenueSlotTemplateSchema = z
     startTime: timeSchema.optional(),
     endTime: timeSchema.optional(),
     isActive: z.boolean().optional(),
+    priceOverride: priceOverrideSchema,
   })
   .strict()
   .refine((data) => Object.keys(data).length > 0, {
@@ -108,6 +119,7 @@ export const createCustomVenueDateSlotSchema = z
     date: dateOnlySchema,
     startTime: timeSchema,
     endTime: timeSchema,
+    priceOverride: priceOverrideSchema,
   })
   .strict()
   .superRefine(refineTimeRange);
@@ -117,6 +129,7 @@ export const updateVenueDateSlotSchema = z
     startTime: timeSchema.optional(),
     endTime: timeSchema.optional(),
     isAvailable: z.boolean().optional(),
+    priceOverride: priceOverrideSchema,
   })
   .strict()
   .refine((data) => Object.keys(data).length > 0, {

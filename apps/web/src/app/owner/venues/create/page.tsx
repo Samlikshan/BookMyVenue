@@ -81,6 +81,7 @@ export default function CreateVenuePage() {
     const capMaxRaw = formData.get("capacityMax");
     const capacityMin = capMinRaw ? Number(capMinRaw) : undefined;
     const capacityMax = capMaxRaw ? Number(capMaxRaw) : undefined;
+    const basePricePerSlot = Number(formData.get("basePricePerSlot"));
 
     if (capacityMin && capacityMax && capacityMin > capacityMax) {
       toast.error("Validation error", {
@@ -94,7 +95,6 @@ export default function CreateVenuePage() {
     try {
       const result = await createVenueApi(
         {
-          ownerId: user.id,
           name,
           addressLine1,
           addressLine2,
@@ -110,6 +110,8 @@ export default function CreateVenuePage() {
           eventTypeIds: selectedEventTypes,
           amenityNames: amenities,
           status: "DRAFT",
+          basePricePerSlot,
+          currency: "INR",
         },
         accessToken
       );
@@ -178,6 +180,11 @@ export default function CreateVenuePage() {
                 <div className="space-y-2 md:col-span-2">
                   <Label htmlFor="shortDescription">Short Description</Label>
                   <Input id="shortDescription" name="shortDescription" placeholder="A brief catchphrase for your listing (max 100 characters)" />
+                </div>
+                <div className="space-y-2 md:col-span-2">
+                  <Label htmlFor="basePricePerSlot">Default price per slot (INR)</Label>
+                  <Input id="basePricePerSlot" name="basePricePerSlot" type="number" min="0.01" step="0.01" required placeholder="1000" />
+                  <p className="text-xs text-zinc-500">This price will be used for all slots unless a custom slot price is provided.</p>
                 </div>
 
                 <div className="space-y-2 md:col-span-2">

@@ -208,6 +208,8 @@ export type ProfileWhereInput = {
   updatedAt?: Prisma.DateTimeFilter<"Profile"> | Date | string
   ownerApplication?: Prisma.XOR<Prisma.OwnerApplicationNullableScalarRelationFilter, Prisma.OwnerApplicationWhereInput> | null
   venues?: Prisma.VenueListRelationFilter
+  userBookings?: Prisma.BookingListRelationFilter
+  ownerBookings?: Prisma.BookingListRelationFilter
 }
 
 export type ProfileOrderByWithRelationInput = {
@@ -221,6 +223,8 @@ export type ProfileOrderByWithRelationInput = {
   updatedAt?: Prisma.SortOrder
   ownerApplication?: Prisma.OwnerApplicationOrderByWithRelationInput
   venues?: Prisma.VenueOrderByRelationAggregateInput
+  userBookings?: Prisma.BookingOrderByRelationAggregateInput
+  ownerBookings?: Prisma.BookingOrderByRelationAggregateInput
 }
 
 export type ProfileWhereUniqueInput = Prisma.AtLeast<{
@@ -237,6 +241,8 @@ export type ProfileWhereUniqueInput = Prisma.AtLeast<{
   updatedAt?: Prisma.DateTimeFilter<"Profile"> | Date | string
   ownerApplication?: Prisma.XOR<Prisma.OwnerApplicationNullableScalarRelationFilter, Prisma.OwnerApplicationWhereInput> | null
   venues?: Prisma.VenueListRelationFilter
+  userBookings?: Prisma.BookingListRelationFilter
+  ownerBookings?: Prisma.BookingListRelationFilter
 }, "id" | "email">
 
 export type ProfileOrderByWithAggregationInput = {
@@ -278,6 +284,8 @@ export type ProfileCreateInput = {
   updatedAt?: Date | string
   ownerApplication?: Prisma.OwnerApplicationCreateNestedOneWithoutUserInput
   venues?: Prisma.VenueCreateNestedManyWithoutOwnerInput
+  userBookings?: Prisma.BookingCreateNestedManyWithoutUserInput
+  ownerBookings?: Prisma.BookingCreateNestedManyWithoutOwnerInput
 }
 
 export type ProfileUncheckedCreateInput = {
@@ -291,6 +299,8 @@ export type ProfileUncheckedCreateInput = {
   updatedAt?: Date | string
   ownerApplication?: Prisma.OwnerApplicationUncheckedCreateNestedOneWithoutUserInput
   venues?: Prisma.VenueUncheckedCreateNestedManyWithoutOwnerInput
+  userBookings?: Prisma.BookingUncheckedCreateNestedManyWithoutUserInput
+  ownerBookings?: Prisma.BookingUncheckedCreateNestedManyWithoutOwnerInput
 }
 
 export type ProfileUpdateInput = {
@@ -304,6 +314,8 @@ export type ProfileUpdateInput = {
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   ownerApplication?: Prisma.OwnerApplicationUpdateOneWithoutUserNestedInput
   venues?: Prisma.VenueUpdateManyWithoutOwnerNestedInput
+  userBookings?: Prisma.BookingUpdateManyWithoutUserNestedInput
+  ownerBookings?: Prisma.BookingUpdateManyWithoutOwnerNestedInput
 }
 
 export type ProfileUncheckedUpdateInput = {
@@ -317,6 +329,8 @@ export type ProfileUncheckedUpdateInput = {
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   ownerApplication?: Prisma.OwnerApplicationUncheckedUpdateOneWithoutUserNestedInput
   venues?: Prisma.VenueUncheckedUpdateManyWithoutOwnerNestedInput
+  userBookings?: Prisma.BookingUncheckedUpdateManyWithoutUserNestedInput
+  ownerBookings?: Prisma.BookingUncheckedUpdateManyWithoutOwnerNestedInput
 }
 
 export type ProfileCreateManyInput = {
@@ -390,6 +404,34 @@ export type ProfileMinOrderByAggregateInput = {
   updatedAt?: Prisma.SortOrder
 }
 
+export type ProfileCreateNestedOneWithoutUserBookingsInput = {
+  create?: Prisma.XOR<Prisma.ProfileCreateWithoutUserBookingsInput, Prisma.ProfileUncheckedCreateWithoutUserBookingsInput>
+  connectOrCreate?: Prisma.ProfileCreateOrConnectWithoutUserBookingsInput
+  connect?: Prisma.ProfileWhereUniqueInput
+}
+
+export type ProfileCreateNestedOneWithoutOwnerBookingsInput = {
+  create?: Prisma.XOR<Prisma.ProfileCreateWithoutOwnerBookingsInput, Prisma.ProfileUncheckedCreateWithoutOwnerBookingsInput>
+  connectOrCreate?: Prisma.ProfileCreateOrConnectWithoutOwnerBookingsInput
+  connect?: Prisma.ProfileWhereUniqueInput
+}
+
+export type ProfileUpdateOneRequiredWithoutUserBookingsNestedInput = {
+  create?: Prisma.XOR<Prisma.ProfileCreateWithoutUserBookingsInput, Prisma.ProfileUncheckedCreateWithoutUserBookingsInput>
+  connectOrCreate?: Prisma.ProfileCreateOrConnectWithoutUserBookingsInput
+  upsert?: Prisma.ProfileUpsertWithoutUserBookingsInput
+  connect?: Prisma.ProfileWhereUniqueInput
+  update?: Prisma.XOR<Prisma.XOR<Prisma.ProfileUpdateToOneWithWhereWithoutUserBookingsInput, Prisma.ProfileUpdateWithoutUserBookingsInput>, Prisma.ProfileUncheckedUpdateWithoutUserBookingsInput>
+}
+
+export type ProfileUpdateOneRequiredWithoutOwnerBookingsNestedInput = {
+  create?: Prisma.XOR<Prisma.ProfileCreateWithoutOwnerBookingsInput, Prisma.ProfileUncheckedCreateWithoutOwnerBookingsInput>
+  connectOrCreate?: Prisma.ProfileCreateOrConnectWithoutOwnerBookingsInput
+  upsert?: Prisma.ProfileUpsertWithoutOwnerBookingsInput
+  connect?: Prisma.ProfileWhereUniqueInput
+  update?: Prisma.XOR<Prisma.XOR<Prisma.ProfileUpdateToOneWithWhereWithoutOwnerBookingsInput, Prisma.ProfileUpdateWithoutOwnerBookingsInput>, Prisma.ProfileUncheckedUpdateWithoutOwnerBookingsInput>
+}
+
 export type ProfileCreateNestedOneWithoutOwnerApplicationInput = {
   create?: Prisma.XOR<Prisma.ProfileCreateWithoutOwnerApplicationInput, Prisma.ProfileUncheckedCreateWithoutOwnerApplicationInput>
   connectOrCreate?: Prisma.ProfileCreateOrConnectWithoutOwnerApplicationInput
@@ -426,6 +468,150 @@ export type ProfileUpdateOneRequiredWithoutVenuesNestedInput = {
   update?: Prisma.XOR<Prisma.XOR<Prisma.ProfileUpdateToOneWithWhereWithoutVenuesInput, Prisma.ProfileUpdateWithoutVenuesInput>, Prisma.ProfileUncheckedUpdateWithoutVenuesInput>
 }
 
+export type ProfileCreateWithoutUserBookingsInput = {
+  id: string
+  fullName: string
+  email: string
+  phone?: string | null
+  role: $Enums.UserRole
+  status?: $Enums.UserStatus
+  createdAt?: Date | string
+  updatedAt?: Date | string
+  ownerApplication?: Prisma.OwnerApplicationCreateNestedOneWithoutUserInput
+  venues?: Prisma.VenueCreateNestedManyWithoutOwnerInput
+  ownerBookings?: Prisma.BookingCreateNestedManyWithoutOwnerInput
+}
+
+export type ProfileUncheckedCreateWithoutUserBookingsInput = {
+  id: string
+  fullName: string
+  email: string
+  phone?: string | null
+  role: $Enums.UserRole
+  status?: $Enums.UserStatus
+  createdAt?: Date | string
+  updatedAt?: Date | string
+  ownerApplication?: Prisma.OwnerApplicationUncheckedCreateNestedOneWithoutUserInput
+  venues?: Prisma.VenueUncheckedCreateNestedManyWithoutOwnerInput
+  ownerBookings?: Prisma.BookingUncheckedCreateNestedManyWithoutOwnerInput
+}
+
+export type ProfileCreateOrConnectWithoutUserBookingsInput = {
+  where: Prisma.ProfileWhereUniqueInput
+  create: Prisma.XOR<Prisma.ProfileCreateWithoutUserBookingsInput, Prisma.ProfileUncheckedCreateWithoutUserBookingsInput>
+}
+
+export type ProfileCreateWithoutOwnerBookingsInput = {
+  id: string
+  fullName: string
+  email: string
+  phone?: string | null
+  role: $Enums.UserRole
+  status?: $Enums.UserStatus
+  createdAt?: Date | string
+  updatedAt?: Date | string
+  ownerApplication?: Prisma.OwnerApplicationCreateNestedOneWithoutUserInput
+  venues?: Prisma.VenueCreateNestedManyWithoutOwnerInput
+  userBookings?: Prisma.BookingCreateNestedManyWithoutUserInput
+}
+
+export type ProfileUncheckedCreateWithoutOwnerBookingsInput = {
+  id: string
+  fullName: string
+  email: string
+  phone?: string | null
+  role: $Enums.UserRole
+  status?: $Enums.UserStatus
+  createdAt?: Date | string
+  updatedAt?: Date | string
+  ownerApplication?: Prisma.OwnerApplicationUncheckedCreateNestedOneWithoutUserInput
+  venues?: Prisma.VenueUncheckedCreateNestedManyWithoutOwnerInput
+  userBookings?: Prisma.BookingUncheckedCreateNestedManyWithoutUserInput
+}
+
+export type ProfileCreateOrConnectWithoutOwnerBookingsInput = {
+  where: Prisma.ProfileWhereUniqueInput
+  create: Prisma.XOR<Prisma.ProfileCreateWithoutOwnerBookingsInput, Prisma.ProfileUncheckedCreateWithoutOwnerBookingsInput>
+}
+
+export type ProfileUpsertWithoutUserBookingsInput = {
+  update: Prisma.XOR<Prisma.ProfileUpdateWithoutUserBookingsInput, Prisma.ProfileUncheckedUpdateWithoutUserBookingsInput>
+  create: Prisma.XOR<Prisma.ProfileCreateWithoutUserBookingsInput, Prisma.ProfileUncheckedCreateWithoutUserBookingsInput>
+  where?: Prisma.ProfileWhereInput
+}
+
+export type ProfileUpdateToOneWithWhereWithoutUserBookingsInput = {
+  where?: Prisma.ProfileWhereInput
+  data: Prisma.XOR<Prisma.ProfileUpdateWithoutUserBookingsInput, Prisma.ProfileUncheckedUpdateWithoutUserBookingsInput>
+}
+
+export type ProfileUpdateWithoutUserBookingsInput = {
+  id?: Prisma.StringFieldUpdateOperationsInput | string
+  fullName?: Prisma.StringFieldUpdateOperationsInput | string
+  email?: Prisma.StringFieldUpdateOperationsInput | string
+  phone?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  role?: Prisma.EnumUserRoleFieldUpdateOperationsInput | $Enums.UserRole
+  status?: Prisma.EnumUserStatusFieldUpdateOperationsInput | $Enums.UserStatus
+  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  ownerApplication?: Prisma.OwnerApplicationUpdateOneWithoutUserNestedInput
+  venues?: Prisma.VenueUpdateManyWithoutOwnerNestedInput
+  ownerBookings?: Prisma.BookingUpdateManyWithoutOwnerNestedInput
+}
+
+export type ProfileUncheckedUpdateWithoutUserBookingsInput = {
+  id?: Prisma.StringFieldUpdateOperationsInput | string
+  fullName?: Prisma.StringFieldUpdateOperationsInput | string
+  email?: Prisma.StringFieldUpdateOperationsInput | string
+  phone?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  role?: Prisma.EnumUserRoleFieldUpdateOperationsInput | $Enums.UserRole
+  status?: Prisma.EnumUserStatusFieldUpdateOperationsInput | $Enums.UserStatus
+  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  ownerApplication?: Prisma.OwnerApplicationUncheckedUpdateOneWithoutUserNestedInput
+  venues?: Prisma.VenueUncheckedUpdateManyWithoutOwnerNestedInput
+  ownerBookings?: Prisma.BookingUncheckedUpdateManyWithoutOwnerNestedInput
+}
+
+export type ProfileUpsertWithoutOwnerBookingsInput = {
+  update: Prisma.XOR<Prisma.ProfileUpdateWithoutOwnerBookingsInput, Prisma.ProfileUncheckedUpdateWithoutOwnerBookingsInput>
+  create: Prisma.XOR<Prisma.ProfileCreateWithoutOwnerBookingsInput, Prisma.ProfileUncheckedCreateWithoutOwnerBookingsInput>
+  where?: Prisma.ProfileWhereInput
+}
+
+export type ProfileUpdateToOneWithWhereWithoutOwnerBookingsInput = {
+  where?: Prisma.ProfileWhereInput
+  data: Prisma.XOR<Prisma.ProfileUpdateWithoutOwnerBookingsInput, Prisma.ProfileUncheckedUpdateWithoutOwnerBookingsInput>
+}
+
+export type ProfileUpdateWithoutOwnerBookingsInput = {
+  id?: Prisma.StringFieldUpdateOperationsInput | string
+  fullName?: Prisma.StringFieldUpdateOperationsInput | string
+  email?: Prisma.StringFieldUpdateOperationsInput | string
+  phone?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  role?: Prisma.EnumUserRoleFieldUpdateOperationsInput | $Enums.UserRole
+  status?: Prisma.EnumUserStatusFieldUpdateOperationsInput | $Enums.UserStatus
+  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  ownerApplication?: Prisma.OwnerApplicationUpdateOneWithoutUserNestedInput
+  venues?: Prisma.VenueUpdateManyWithoutOwnerNestedInput
+  userBookings?: Prisma.BookingUpdateManyWithoutUserNestedInput
+}
+
+export type ProfileUncheckedUpdateWithoutOwnerBookingsInput = {
+  id?: Prisma.StringFieldUpdateOperationsInput | string
+  fullName?: Prisma.StringFieldUpdateOperationsInput | string
+  email?: Prisma.StringFieldUpdateOperationsInput | string
+  phone?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  role?: Prisma.EnumUserRoleFieldUpdateOperationsInput | $Enums.UserRole
+  status?: Prisma.EnumUserStatusFieldUpdateOperationsInput | $Enums.UserStatus
+  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  ownerApplication?: Prisma.OwnerApplicationUncheckedUpdateOneWithoutUserNestedInput
+  venues?: Prisma.VenueUncheckedUpdateManyWithoutOwnerNestedInput
+  userBookings?: Prisma.BookingUncheckedUpdateManyWithoutUserNestedInput
+}
+
 export type ProfileCreateWithoutOwnerApplicationInput = {
   id: string
   fullName: string
@@ -436,6 +622,8 @@ export type ProfileCreateWithoutOwnerApplicationInput = {
   createdAt?: Date | string
   updatedAt?: Date | string
   venues?: Prisma.VenueCreateNestedManyWithoutOwnerInput
+  userBookings?: Prisma.BookingCreateNestedManyWithoutUserInput
+  ownerBookings?: Prisma.BookingCreateNestedManyWithoutOwnerInput
 }
 
 export type ProfileUncheckedCreateWithoutOwnerApplicationInput = {
@@ -448,6 +636,8 @@ export type ProfileUncheckedCreateWithoutOwnerApplicationInput = {
   createdAt?: Date | string
   updatedAt?: Date | string
   venues?: Prisma.VenueUncheckedCreateNestedManyWithoutOwnerInput
+  userBookings?: Prisma.BookingUncheckedCreateNestedManyWithoutUserInput
+  ownerBookings?: Prisma.BookingUncheckedCreateNestedManyWithoutOwnerInput
 }
 
 export type ProfileCreateOrConnectWithoutOwnerApplicationInput = {
@@ -476,6 +666,8 @@ export type ProfileUpdateWithoutOwnerApplicationInput = {
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   venues?: Prisma.VenueUpdateManyWithoutOwnerNestedInput
+  userBookings?: Prisma.BookingUpdateManyWithoutUserNestedInput
+  ownerBookings?: Prisma.BookingUpdateManyWithoutOwnerNestedInput
 }
 
 export type ProfileUncheckedUpdateWithoutOwnerApplicationInput = {
@@ -488,6 +680,8 @@ export type ProfileUncheckedUpdateWithoutOwnerApplicationInput = {
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   venues?: Prisma.VenueUncheckedUpdateManyWithoutOwnerNestedInput
+  userBookings?: Prisma.BookingUncheckedUpdateManyWithoutUserNestedInput
+  ownerBookings?: Prisma.BookingUncheckedUpdateManyWithoutOwnerNestedInput
 }
 
 export type ProfileCreateWithoutVenuesInput = {
@@ -500,6 +694,8 @@ export type ProfileCreateWithoutVenuesInput = {
   createdAt?: Date | string
   updatedAt?: Date | string
   ownerApplication?: Prisma.OwnerApplicationCreateNestedOneWithoutUserInput
+  userBookings?: Prisma.BookingCreateNestedManyWithoutUserInput
+  ownerBookings?: Prisma.BookingCreateNestedManyWithoutOwnerInput
 }
 
 export type ProfileUncheckedCreateWithoutVenuesInput = {
@@ -512,6 +708,8 @@ export type ProfileUncheckedCreateWithoutVenuesInput = {
   createdAt?: Date | string
   updatedAt?: Date | string
   ownerApplication?: Prisma.OwnerApplicationUncheckedCreateNestedOneWithoutUserInput
+  userBookings?: Prisma.BookingUncheckedCreateNestedManyWithoutUserInput
+  ownerBookings?: Prisma.BookingUncheckedCreateNestedManyWithoutOwnerInput
 }
 
 export type ProfileCreateOrConnectWithoutVenuesInput = {
@@ -540,6 +738,8 @@ export type ProfileUpdateWithoutVenuesInput = {
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   ownerApplication?: Prisma.OwnerApplicationUpdateOneWithoutUserNestedInput
+  userBookings?: Prisma.BookingUpdateManyWithoutUserNestedInput
+  ownerBookings?: Prisma.BookingUpdateManyWithoutOwnerNestedInput
 }
 
 export type ProfileUncheckedUpdateWithoutVenuesInput = {
@@ -552,6 +752,8 @@ export type ProfileUncheckedUpdateWithoutVenuesInput = {
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   ownerApplication?: Prisma.OwnerApplicationUncheckedUpdateOneWithoutUserNestedInput
+  userBookings?: Prisma.BookingUncheckedUpdateManyWithoutUserNestedInput
+  ownerBookings?: Prisma.BookingUncheckedUpdateManyWithoutOwnerNestedInput
 }
 
 
@@ -561,10 +763,14 @@ export type ProfileUncheckedUpdateWithoutVenuesInput = {
 
 export type ProfileCountOutputType = {
   venues: number
+  userBookings: number
+  ownerBookings: number
 }
 
 export type ProfileCountOutputTypeSelect<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   venues?: boolean | ProfileCountOutputTypeCountVenuesArgs
+  userBookings?: boolean | ProfileCountOutputTypeCountUserBookingsArgs
+  ownerBookings?: boolean | ProfileCountOutputTypeCountOwnerBookingsArgs
 }
 
 /**
@@ -584,6 +790,20 @@ export type ProfileCountOutputTypeCountVenuesArgs<ExtArgs extends runtime.Types.
   where?: Prisma.VenueWhereInput
 }
 
+/**
+ * ProfileCountOutputType without action
+ */
+export type ProfileCountOutputTypeCountUserBookingsArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  where?: Prisma.BookingWhereInput
+}
+
+/**
+ * ProfileCountOutputType without action
+ */
+export type ProfileCountOutputTypeCountOwnerBookingsArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  where?: Prisma.BookingWhereInput
+}
+
 
 export type ProfileSelect<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetSelect<{
   id?: boolean
@@ -596,6 +816,8 @@ export type ProfileSelect<ExtArgs extends runtime.Types.Extensions.InternalArgs 
   updatedAt?: boolean
   ownerApplication?: boolean | Prisma.Profile$ownerApplicationArgs<ExtArgs>
   venues?: boolean | Prisma.Profile$venuesArgs<ExtArgs>
+  userBookings?: boolean | Prisma.Profile$userBookingsArgs<ExtArgs>
+  ownerBookings?: boolean | Prisma.Profile$ownerBookingsArgs<ExtArgs>
   _count?: boolean | Prisma.ProfileCountOutputTypeDefaultArgs<ExtArgs>
 }, ExtArgs["result"]["profile"]>
 
@@ -636,6 +858,8 @@ export type ProfileOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = 
 export type ProfileInclude<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   ownerApplication?: boolean | Prisma.Profile$ownerApplicationArgs<ExtArgs>
   venues?: boolean | Prisma.Profile$venuesArgs<ExtArgs>
+  userBookings?: boolean | Prisma.Profile$userBookingsArgs<ExtArgs>
+  ownerBookings?: boolean | Prisma.Profile$ownerBookingsArgs<ExtArgs>
   _count?: boolean | Prisma.ProfileCountOutputTypeDefaultArgs<ExtArgs>
 }
 export type ProfileIncludeCreateManyAndReturn<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {}
@@ -646,6 +870,8 @@ export type $ProfilePayload<ExtArgs extends runtime.Types.Extensions.InternalArg
   objects: {
     ownerApplication: Prisma.$OwnerApplicationPayload<ExtArgs> | null
     venues: Prisma.$VenuePayload<ExtArgs>[]
+    userBookings: Prisma.$BookingPayload<ExtArgs>[]
+    ownerBookings: Prisma.$BookingPayload<ExtArgs>[]
   }
   scalars: runtime.Types.Extensions.GetPayloadResult<{
     id: string
@@ -1052,6 +1278,8 @@ export interface Prisma__ProfileClient<T, Null = never, ExtArgs extends runtime.
   readonly [Symbol.toStringTag]: "PrismaPromise"
   ownerApplication<T extends Prisma.Profile$ownerApplicationArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.Profile$ownerApplicationArgs<ExtArgs>>): Prisma.Prisma__OwnerApplicationClient<runtime.Types.Result.GetResult<Prisma.$OwnerApplicationPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
   venues<T extends Prisma.Profile$venuesArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.Profile$venuesArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$VenuePayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
+  userBookings<T extends Prisma.Profile$userBookingsArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.Profile$userBookingsArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$BookingPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
+  ownerBookings<T extends Prisma.Profile$ownerBookingsArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.Profile$ownerBookingsArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$BookingPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
   /**
    * Attaches callbacks for the resolution and/or rejection of the Promise.
    * @param onfulfilled The callback to execute when the Promise is resolved.
@@ -1522,6 +1750,54 @@ export type Profile$venuesArgs<ExtArgs extends runtime.Types.Extensions.Internal
   take?: number
   skip?: number
   distinct?: Prisma.VenueScalarFieldEnum | Prisma.VenueScalarFieldEnum[]
+}
+
+/**
+ * Profile.userBookings
+ */
+export type Profile$userBookingsArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  /**
+   * Select specific fields to fetch from the Booking
+   */
+  select?: Prisma.BookingSelect<ExtArgs> | null
+  /**
+   * Omit specific fields from the Booking
+   */
+  omit?: Prisma.BookingOmit<ExtArgs> | null
+  /**
+   * Choose, which related nodes to fetch as well
+   */
+  include?: Prisma.BookingInclude<ExtArgs> | null
+  where?: Prisma.BookingWhereInput
+  orderBy?: Prisma.BookingOrderByWithRelationInput | Prisma.BookingOrderByWithRelationInput[]
+  cursor?: Prisma.BookingWhereUniqueInput
+  take?: number
+  skip?: number
+  distinct?: Prisma.BookingScalarFieldEnum | Prisma.BookingScalarFieldEnum[]
+}
+
+/**
+ * Profile.ownerBookings
+ */
+export type Profile$ownerBookingsArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  /**
+   * Select specific fields to fetch from the Booking
+   */
+  select?: Prisma.BookingSelect<ExtArgs> | null
+  /**
+   * Omit specific fields from the Booking
+   */
+  omit?: Prisma.BookingOmit<ExtArgs> | null
+  /**
+   * Choose, which related nodes to fetch as well
+   */
+  include?: Prisma.BookingInclude<ExtArgs> | null
+  where?: Prisma.BookingWhereInput
+  orderBy?: Prisma.BookingOrderByWithRelationInput | Prisma.BookingOrderByWithRelationInput[]
+  cursor?: Prisma.BookingWhereUniqueInput
+  take?: number
+  skip?: number
+  distinct?: Prisma.BookingScalarFieldEnum | Prisma.BookingScalarFieldEnum[]
 }
 
 /**
